@@ -7,43 +7,62 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <conio.h>
 
 using namespace std;
-// Структура для хранения данных
-struct Location {
+class Location {
+	// Инкапсуляция данных для безопасности
+private:
 	string Name;
 	string Address;
 	string City;
 	string ZipCode;
+public:
+	// Конструктор класса для удобного создания и инициализации объектов
+	Location(const  string name, const  string  address, const  string  city, const  string zipcode)
+		: Name(name), Address(address), City(city), ZipCode(zipcode) {}
+	// метод для вывода данных авто 
+	vector<string> GetAllInfoAboutLocation()
+	{
+		return { Name, Address, City, ZipCode };
+	}
+	string GetZipCode() {
+		return ZipCode;
+	}
 };
 
 
 
-vector<Location> readLocationsFromFile(const  string& filename) {
-	ifstream file(filename); // Открываем файл с данными
-	vector<Location> locations;
 
+vector<Location> readLocationsFromFile(const  string filename) {
+	ifstream file(filename); // Открываем файл с данными
+	vector<Location> Locations;
+
+	//Получилось открыть файл?
 	if (file.is_open()) {
 		string line;
 		while (getline(file, line)) {
-			// Создаем объект Location для каждой строки
-			Location location;
-			stringstream ss(line);
-			getline(ss, location.Name, ',');
-			getline(ss, location.Address, ',');
-			getline(ss, location.City, ',');
-			getline(ss, location.ZipCode, ',');
+			stringstream ss(line);//Обернем строку Line в ss для работы как с потоком
+			vector<string> LocationInfo;//Создаем вектор в который запишем всю информацию об автомобиле
+			string info;//временная переменная, которая будет хранить часть ss
 
-			// Добавляем объект в вектор
-			locations.push_back(location);
+			//Разделим нашу строку по символу ;
+			while (getline(ss, info, ';')) {
+				LocationInfo.push_back(info);
+			}
+			// Проверяем корректное количество полей
+			Location location(LocationInfo[0], LocationInfo[1], LocationInfo[2], LocationInfo[3]);
+			Locations.push_back(location);
+
 		}
 		file.close();
 	}
-	else {
+	else {//Не получилось
+
 		cout << "Ошибка открытия файла.\n";
 	}
 
-	return locations;
+	return Locations;
 }
 // Класс для хранения данных об 1 автомобиле
 class Car {
@@ -59,10 +78,10 @@ private:
 	string Link;
 public:
 	// Конструктор класса для удобного создания и инициализации объектов
-	Car(const  string& name, const  string& primaryDamage, const  string& saleDate,
-		const  string& auctionStartTime, const  string& vin, const  string& lot,
-		const  string& buyNowCost, const  string& link)
-		: Name(name), PrimaryDamage(primaryDamage), SaleDate(saleDate), AuctionStartTime(auctionStartTime),	Vin(vin), Lot(lot), BuyNowCost(buyNowCost), Link(link) {}
+	Car(const  string  name, const  string  primaryDamage, const  string  saleDate,
+		const  string  auctionStartTime, const  string  vin, const  string  lot,
+		const  string  buyNowCost, const  string  link)
+		: Name(name), PrimaryDamage(primaryDamage), SaleDate(saleDate), AuctionStartTime(auctionStartTime), Vin(vin), Lot(lot), BuyNowCost(buyNowCost), Link(link) {}
 	// метод для вывода данных авто 
 	vector<string> GetAllInfoAboutCar()
 	{
@@ -76,13 +95,13 @@ vector<Car> readCarsFromFile(const  string filename) {
 	//Получилось открыть файл?
 	if (file.is_open()) {
 		string line;
-		while ( getline(file, line)) {
+		while (getline(file, line)) {
 			stringstream ss(line);//Обернем строку Line в ss для работы как с потоком
 			vector< string> carInfo;//Создаем вектор в который запишем всю информацию об автомобиле
 			string info;//временная переменная, которая будет хранить часть ss
 
 			//Разделим нашу строку по символу ;
-			while ( getline(ss, info, ';')) {
+			while (getline(ss, info, ';')) {
 				carInfo.push_back(info);
 			}
 
@@ -91,7 +110,7 @@ vector<Car> readCarsFromFile(const  string filename) {
 				cars.push_back(car);
 			}
 			else {
-				 cout << "Некорректное количество полей в строке: " << line <<  endl;
+				cout << "Некорректное количество полей в строке: " << line << endl;
 			}
 		}
 		file.close();
@@ -104,19 +123,38 @@ vector<Car> readCarsFromFile(const  string filename) {
 	return cars;
 }
 int main() {
-	 setlocale(LC_ALL, "ru_RU.UTF-8");
+	setlocale(LC_ALL, "ru_RU.UTF-8");
 
-	 vector<Car> cars = readCarsFromFile("FL 32824.txt");
+	vector<Location> locations = readLocationsFromFile("List_Of_Jards.txt");
 
-	 // Выводим информацию о каждом автомобиле после считывания
-	 for (Car car : cars) {
-		 vector<string> carInfo = car.GetAllInfoAboutCar();
-		 for (string info : carInfo) {
-			 cout << info << " ";
-		 }
-		 cout << endl;
-	 }
+	// Выводим информацию о каждом автомобиле после считывания
+	for (Location location : locations) {
+		vector<string> locationsInfo = location.GetAllInfoAboutLocation();
+		for (string info : locationsInfo) {
+			cout << info << " ";
+		}
+		cout << endl;
+	}
 
+
+
+
+	cout << "Введите номер локации :";
+
+	int i = _getch();
+	cout << locations[i - 48].GetZipCode() + ".txt";
+
+	string s = locations[i-48].GetZipCode()+".txt";
+	vector<Car> carsFromLocation = readCarsFromFile("FL 32824.txt");
+
+	// Выводим информацию о каждом автомобиле после считывания
+	for (Car car : carsFromLocation) {
+		vector<string> carInfo = car.GetAllInfoAboutCar();
+		for (string info : carInfo) {
+			cout << info << " ";
+		}
+		cout << endl;
+	}
 	return 0;
 }
 
