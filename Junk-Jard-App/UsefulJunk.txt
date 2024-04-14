@@ -1,0 +1,62 @@
+// Выводим данные из вектора
+        for (const auto& location : locations) {
+             cout << "Name: " << location.Name << "\n";
+             cout << "Address: " << location.Address << "\n";
+             cout << "City: " << location.City << "\n";
+             cout << "Zip Code: " << location.ZipCode << "\n\n";
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+ifstream file("List_Of_Jards.txt"); // Открываем файл с данными
+     vector<Location> locations;
+
+    if (file.is_open()) {
+         string line;
+        while ( getline(file, line)) {
+            // Создаем объект Location для каждой строки
+            Location location;
+             stringstream ss(line);
+             getline(ss, location.Address, ',');
+             getline(ss, location.Name, ',');
+             getline(ss, location.City, ',');
+             getline(ss, location.ZipCode, ',');
+
+            // Добавляем объект в вектор
+            locations.push_back(location);
+        }
+        file.close();
+
+        
+    }
+    else {
+         cout << "Ошибка открытия файла.\n";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+// Вызываем метод для считывания данных из файла и получаем вектор объектов Location
+     vector<Location> locations = readLocationsFromFile("locations.txt");
+
+
+
+
+

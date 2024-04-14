@@ -13,10 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Addictional files">
+      <UniqueIdentifier>{9ac9f7f8-9a42-4e21-868f-1fa92b4cf96d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Junk Jards from all US.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="List_Of_Jards.txt">
+      <Filter>Addictional files</Filter>
+    </Text>
+    <Text Include="FL 32824.txt">
+      <Filter>Addictional files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
