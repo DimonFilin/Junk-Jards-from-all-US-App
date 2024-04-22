@@ -142,6 +142,7 @@
     <ClCompile Include="Junk Jards from all US.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="FL 32771.txt" />
     <Text Include="FL 32824.txt" />
     <Text Include="List_Of_Jards.txt" />
   </ItemGroup>

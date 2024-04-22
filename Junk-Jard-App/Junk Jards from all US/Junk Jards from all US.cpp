@@ -2,14 +2,22 @@
 //
 
 
+
+
+//Проблема — ввод русский не воспринимает, надо ли это решать
+//Добавить - ввод сохранение в файл (метод подготовлен)
+
+
+//Различные библиотеки
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <string>
 #include <conio.h>
-
 using namespace std;
+
+//Класс для хранения данных об локации
 class Location {
 	// Инкапсуляция данных для безопасности
 private:
@@ -26,14 +34,18 @@ public:
 	{
 		return { Name, Address, City, ZipCode };
 	}
+	string FormStringToAddToFile()
+	{
+		string stroke;
+		
+		stroke = Name+";"+Address + ";" + City + ";" + ZipCode;
+
+		return stroke;
+	}
 	string GetZipCode() {
 		return ZipCode;
 	}
 };
-
-
-
-
 vector<Location> readLocationsFromFile(const  string filename) {
 	ifstream file(filename); // Открываем файл с данными
 	vector<Location> Locations;
@@ -64,7 +76,36 @@ vector<Location> readLocationsFromFile(const  string filename) {
 
 	return Locations;
 }
-// Класс для хранения данных об 1 автомобиле
+
+
+Location UpdateLocationField() {
+
+	//Очистим консоль
+	system("cls");
+
+	//Масси для ввода значений
+	string* InfoOfLocation = new string[4];
+
+	//Заполним массив
+	cout << "Введите название";
+	cin >> InfoOfLocation[0];
+	cout << "Введите адрес";
+	cin >> InfoOfLocation[1];
+	cout << "Введите город";
+	cin >> InfoOfLocation[2];
+	cout << "Введите код локации";
+	cin >> InfoOfLocation[3];
+
+	//Вернем готовый объект для добавления в вектор
+	return Location(InfoOfLocation[0], InfoOfLocation[1], InfoOfLocation[2], InfoOfLocation[3]);
+}
+
+
+void InsertLocationToFile (Location location) {
+
+}
+
+//Класс для хранения данных об автомобиле
 class Car {
 	// Инкапсуляция данных для безопасности
 private:
@@ -78,14 +119,38 @@ private:
 	string Link;
 public:
 	// Конструктор класса для удобного создания и инициализации объектов
-	Car(const  string  name, const  string  primaryDamage, const  string  saleDate,
-		const  string  auctionStartTime, const  string  vin, const  string  lot,
-		const  string  buyNowCost, const  string  link)
+	Car(const  string  name, const  string  primaryDamage, const  string  saleDate, const  string  auctionStartTime, const  string  vin, const  string  lot, const  string  buyNowCost, const  string  link)
 		: Name(name), PrimaryDamage(primaryDamage), SaleDate(saleDate), AuctionStartTime(auctionStartTime), Vin(vin), Lot(lot), BuyNowCost(buyNowCost), Link(link) {}
+
 	// метод для вывода данных авто 
 	vector<string> GetAllInfoAboutCar()
 	{
 		return { Name, PrimaryDamage, SaleDate, AuctionStartTime, Vin, Lot, BuyNowCost, Link };
+	}
+
+	//Вывод информации об авто в виде списка удобного
+	void CoutAllInfo()
+	{
+
+		printf("Name: %-10s, Primary Damage: %-10s, Sale Date: %-10s, Auction Time: %-10s, VIN: %-10s, Lot: %-10s, Cost: %-10s, Link: %.10s%s\n", Name.c_str(), PrimaryDamage.c_str(), SaleDate.c_str(), AuctionStartTime.c_str(), Vin.c_str(), Lot.c_str(), BuyNowCost.c_str(), Link.c_str(), (Link.length() > 10) ? "..." : "");
+	}
+
+	//вывод инфы в продвинутом виде
+	void CoutAdvancedeInfo() 
+	{
+		printf("Name: %s\n", Name.c_str());
+		printf("Primary Damage: %s\n", PrimaryDamage.c_str());
+		printf("Sale Date: %s\n", SaleDate.c_str());
+		printf("Auction Start Time: %s\n", AuctionStartTime.c_str());
+		printf("Vin: %s\n", Vin.c_str());
+		printf("Lot: %s\n", Lot.c_str());
+		printf("Buy Now Cost: %s\n", BuyNowCost.c_str());
+		printf("Link: %s\n", Link.c_str());
+
+	}
+
+	string GetName() {
+		return Name;
 	}
 };
 vector<Car> readCarsFromFile(const  string filename) {
@@ -95,11 +160,12 @@ vector<Car> readCarsFromFile(const  string filename) {
 	//Получилось открыть файл?
 	if (file.is_open()) {
 		string line;
+		int i = 0;
 		while (getline(file, line)) {
 			stringstream ss(line);//Обернем строку Line в ss для работы как с потоком
 			vector< string> carInfo;//Создаем вектор в который запишем всю информацию об автомобиле
 			string info;//временная переменная, которая будет хранить часть ss
-
+			
 			//Разделим нашу строку по символу ;
 			while (getline(ss, info, ';')) {
 				carInfo.push_back(info);
@@ -122,10 +188,41 @@ vector<Car> readCarsFromFile(const  string filename) {
 
 	return cars;
 }
-int main() {
-	setlocale(LC_ALL, "ru_RU.UTF-8");
 
-	vector<Location> locations = readLocationsFromFile("List_Of_Jards.txt");
+vector<Car> carsFromLocation;
+vector<Location> locations;
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+//	wcout.imbue(std::locale("Russian_Russia.UTF-8"));
+
+	 locations = readLocationsFromFile("List_Of_Jards.txt");
+
+	// Выводим информацию о каждом автомобиле после считывания
+	for (Location location : locations) {
+		vector<string> locationsInfo = location.GetAllInfoAboutLocation();
+		for (string info : locationsInfo) {
+			cout << info << " ";
+		}
+		cout << endl;
+	}
+
+	cout << "Выберите из списка:\n";
+	
+
+	string s = locations[_getch() - 48].GetZipCode() + ".txt";
+
+	//system("cls");
+
+
+
+
+
+	//Добавим поле в вектор
+
+	locations.push_back(UpdateLocationField());
+
+
 
 	// Выводим информацию о каждом автомобиле после считывания
 	for (Location location : locations) {
@@ -137,26 +234,24 @@ int main() {
 	}
 
 
-
-
-	cout << "Введите номер локации :";
-
-	int i = _getch();
-	cout << locations[i - 48].GetZipCode() + ".txt";
-
-	string s = locations[i-48].GetZipCode()+".txt";
-	vector<Car> carsFromLocation = readCarsFromFile("FL 32824.txt");
+	//Вехтор для хранения автомобилей
+	carsFromLocation = readCarsFromFile(s);
+	//Сохраним данные об локации в отделюную переменную
+	string infoAboutLocation = carsFromLocation[0].GetName();
+	carsFromLocation.erase(carsFromLocation.begin());
 
 	// Выводим информацию о каждом автомобиле после считывания
 	for (Car car : carsFromLocation) {
 		vector<string> carInfo = car.GetAllInfoAboutCar();
-		for (string info : carInfo) {
-			cout << info << " ";
-		}
+		car.CoutAllInfo();
+		car.CoutAdvancedeInfo();
 		cout << endl;
 	}
+
+
 	return 0;
 }
+
 
 
 //#include <iostream>
