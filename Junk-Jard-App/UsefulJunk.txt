@@ -58,5 +58,7 @@ ifstream file("List_Of_Jards.txt"); // Открываем файл с данны
 
 
 
+//Добавим поле в вектор
+	locations.push_back(UpdateLocationField());
 
 
