@@ -2,5 +2,4 @@ Below are the cities that the US Postal Service accepts for the ZIP code 32824. 
 2015 Tesla Model S;Front End;Tuesday, April 16, 2024;10:00 AM EDT;5YJSA1E23FF******;377512345;$5,500;https://abetter.bid/en/1037750603-2015-tesla-model_s;
 2016 Toyota Corolla L 1.8L 4;Rear End;MONDAY, APRIL, 15, 2024;02.00 PM;2T1BURHE5GC******;4325*****;$1,322;https://abetter.bid/en/1043254173-2016-toyota-corolla_l;
 2014 Land Rover Range Rove 5.0L 8;Unknown;Thursday, April 18, 2024;10:00 AM;SALWR2TF0EA******;4234*****;$10,600;https://abetter.bid/en/1042349153-2014-land_rover-range_rove;
-
 Name;Primary damage; Sale date; Auction Starts;Vin#;Lot#;Buy now;Link

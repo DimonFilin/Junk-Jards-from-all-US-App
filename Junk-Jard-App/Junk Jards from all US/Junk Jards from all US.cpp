@@ -123,6 +123,19 @@ void InsertLocationsToFile(vector<Location> locationsToFile) {
 
 	}
 }
+//Вывод списка локаций
+void OutputLocationsInfo(vector <Location> locations) {
+	for (Location location : locations) {
+		vector<string> locationsInfo = location.GetAllInfoAboutLocation();
+		for (string info : locationsInfo) {
+			cout << info << " ";
+		}
+		cout << endl;
+	}
+}
+
+
+
 
 //Класс для хранения данных об автомобиле
 class Car {
@@ -267,7 +280,15 @@ void InsertCarsToFile(vector<Car> carsToFile, const string filename) {
 
 	}
 }
-
+//Вывод списка авто
+void OutputCarsInfo(vector <Car> Cars) {
+	for (Car car : Cars) {
+		vector<string> carInfo = car.GetAllInfoAboutCar();
+		//car.CoutAllInfo();
+		car.CoutAdvancedeInfo();
+		cout << endl;
+	}
+}
 
 //Переменные для работы кода
 vector<Car> carsFromLocation;
@@ -282,15 +303,11 @@ int main() {
 	locations = readLocationsFromFile("List_Of_Jards.txt");
 
 	// Выводим информацию о каждом автомобиле после считывания
-	for (Location location : locations) {
-		vector<string> locationsInfo = location.GetAllInfoAboutLocation();
-		for (string info : locationsInfo) {
-			cout << info << " ";
-		}
-		cout << endl;
-	}
+	OutputLocationsInfo(locations);
 
-	//cout << "Выберите из списка:\n";
+
+
+	cout << "Выберите из списка:\n";
 
 
 	string s = locations[_getch() - 48].GetZipCode() + ".txt";
@@ -300,27 +317,6 @@ int main() {
 
 
 
-	//Добавим поле в вектор
-	locations.push_back(UpdateLocationField());
-
-	//Перенесем текст в файл
-	InsertLocationsToFile(locations);
-
-
-
-	/*
-
-
-
-
-	// Выводим информацию о каждом автомобиле после считывания
-	for (Location location : locations) {
-		vector<string> locationsInfo = location.GetAllInfoAboutLocation();
-		for (string info : locationsInfo) {
-			cout << info << " ";
-		}
-		cout << endl;
-	}
 
 
 	//Вектор для хранения автомобилей
@@ -329,14 +325,10 @@ int main() {
 	string infoAboutLocation = carsFromLocation[0].GetName();
 	carsFromLocation.erase(carsFromLocation.begin());
 
+
 	// Выводим информацию о каждом автомобиле после считывания
-	for (Car car : carsFromLocation) {
-		vector<string> carInfo = car.GetAllInfoAboutCar();
-		car.CoutAllInfo();
-		car.CoutAdvancedeInfo();
-		cout << endl;
-	}
-	*/
+	OutputCarsInfo(carsFromLocation);
+	
 
 	return 0;
 }
