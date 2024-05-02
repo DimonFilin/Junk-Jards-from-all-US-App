@@ -1,5 +1,4 @@
-﻿
-// Junk Jards from all US.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+﻿// Junk Jards from all US.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
 
@@ -236,7 +235,7 @@ Car UpdateCarsField() {
 	system("cls");
 
 	//Массив для ввода значений
-	vector <string> InfoOfCar;
+	vector <string> InfoOfCar(8);
 	//Заполним вектор
 	cout << "Введите название";
 	cin >> InfoOfCar[0];
@@ -269,7 +268,8 @@ void InsertCarsToFile(vector<Car> carsToFile, const string filename) {
 	}
 	//cout << s;//Выведем для проверки действия
 
-	ofstream OutputToFile(filename); // Открываем файл с данными
+	ofstream OutputToFile; // Открываем файл с данными
+	OutputToFile.open(filename);
 	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
@@ -290,11 +290,14 @@ void OutputCarsInfo(vector <Car> Cars) {
 	}
 }
 
+
 //Переменные для работы кода
-vector<Car> carsFromLocation;
-vector<Location> locations;
+
 
 int main() {
+
+	vector<Car> carsFromLocation;
+	vector<Location> locations;
 
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -323,14 +326,13 @@ int main() {
 	carsFromLocation = readCarsFromFile(s);
 	//Сохраним данные об локации в отделюную переменную
 	string infoAboutLocation = carsFromLocation[0].GetName();
+	//И удалим ее из основного вектора
 	carsFromLocation.erase(carsFromLocation.begin());
 
-
-	// Выводим информацию о каждом автомобиле после считывания
-	OutputCarsInfo(carsFromLocation);
 	
 
-	return 0;
+
+	OutputCarsInfo(carsFromLocation);
 }
 
 
@@ -354,3 +356,5 @@ int main() {
 //   4. В окне "Список ошибок" можно просматривать ошибки.
 //   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
 //   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+
+

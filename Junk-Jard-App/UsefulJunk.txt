@@ -67,6 +67,15 @@ ifstream file("List_Of_Jards.txt"); // Открываем файл с данны
 	InsertLocationsToFile(locations);
 
 
+
+carsFromLocation.push_back(UpdateCarsField());
+
+	// Выводим информацию о каждом автомобиле после считывания
+	OutputCarsInfo(carsFromLocation);
+	//Вывод информации в файл
+	InsertCarsToFile(carsFromLocation, s);
+
+
 //смена цвета 
  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 
