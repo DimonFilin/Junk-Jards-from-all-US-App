@@ -4,8 +4,6 @@
 
 
 
-//Проблема — ввод русский не воспринимает, надо ли это решать
-//Добавить - ввод сохранение в файл (метод подготовлен)
 
 
 //Различные библиотеки
@@ -16,7 +14,14 @@
 #include <string>
 #include <conio.h>
 #include <Windows.h>
+#include <iomanip>
 using namespace std;
+
+void MainSettings() {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	//	wcout.imbue(std::locale("Russian_Russia.UTF-8"));
+}
 
 //Класс для хранения данных об локации
 class Location {
@@ -191,6 +196,10 @@ public:
 	string GetName() {
 		return Name;
 	}
+
+	oid OrderAPaidReport() {
+	}
+
 };
 //Функция для вывода списка об автомобилях из файла
 vector <Car> readCarsFromFile(const  string filename) {
@@ -289,19 +298,150 @@ void OutputCarsInfo(vector <Car> Cars) {
 		cout << endl;
 	}
 }
+// Функция для получения значения из списка
+template <size_t N>
+int getValueFromList(const string(&options)[N]) {
+	for (size_t i = 0; i < N; i++) {
+		cout << i + 1 << ". " << options[i] << endl;
+	}
+
+	int choice;
+	cout << "Введите номер: ";
+	cin >> choice;
+
+	// Проверка на правильность ввода
+	if (choice < 1 || choice > N) {
+		cout << "Некорректный выбор. Пожалуйста, выберите значение из списка." << endl;
+		return getValueFromList(options);
+	}
+
+	return choice;
+}
+// Примеры списков возможных вариантов
+const string carTypes[] = { "Седан", "Хэтчбек", "Купе", "Кабриолет", "Кроссовер", "Пикап", "Внедорожник", "Минивэн", "Грузовик", "Кей-кар", "Мотоцикл", "Квадроцикл", "Багги", "Гидроцикл" };
+const string engineTypes[] = { "Электро", "Гибрид", "Бензин", "Дизель" };
+const string productionYears[] = { "менее года", "до 3 лет", "от 3 до 5 лет", "от 5 до 30 лет", "более 30 лет (раритет)" };
+const string customsTypes[] = { "полная", "льготная" };
+// Функция для рассчета стоимости привоза автомобиля
+void calculateShippingCost() {
+
+	// Получение информации о типе автомобиля, типе двигателя, годе производства и других параметрах
+	double engineVolume, carCost;
+
+	// Ввод данных пользователь
+	cout << "Выберите тип автомобиля:" << endl;
+	int carTypeIndex = getValueFromList(carTypes);
+
+	cout << "Выберите тип двигателя:" << endl;
+	int engineTypeIndex = getValueFromList(engineTypes);
+
+	cout << "Выберите год производства автомобиля:" << endl;
+	int productionYearIndex = getValueFromList(productionYears);
+
+	cout << "Введите объем двигателя автомобиля: ";
+	cin >> engineVolume;
+
+	cout << "Введите стоимость автомобиля в долларах: ";
+	cin >> carCost;
+
+	system("cls");
+
+		// Расчет стоимости привоза
+	double totalCost = 1.1; cout << carTypeIndex << " byltrc";
+	//В зависимости от места в контейрнере
+	switch (carTypeIndex)
+	{
+	case 1:
+	case 2:
+	case 3:
+	case 4://простые авто
+		totalCost *= 2;
+		break;
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+		totalCost *= 4;
+		break;//кроссоверы
+	case 9://грузовик
+		totalCost *= 5;
+		break;
+	case 10://кей кар
+		totalCost *= 1;
+		break;
+	case 11:
+	case 12:
+	case 13:
+	case 14://водный мото транспорт
+		totalCost *= 0.5;
+		break;
+	}
+	//От типа двигателя
+	switch (engineTypeIndex)
+	{
+	case'1':
+		totalCost *= 1.1;
+		break;
+	case'2':
+		totalCost *= 1.2;
+		break;
+	case'3':
+		totalCost *= 1.6;
+		break;
+	case'4':
+		totalCost *= 1.7;
+		break;
+
+	}
+	//От года производства
+	switch (productionYearIndex)
+	{
+	case'1':
+		totalCost *= 1;
+		break;
+	case'2':
+		totalCost *= 1.5;
+		break;
+	case'3':
+		totalCost *= 1.9;
+		break;
+	case'4':
+		totalCost *= 2;
+		break;
+	case'5':
+		totalCost *= 1;
+		break;
+	}
+
+	if (engineVolume > 1)
+	{
+		if (engineVolume < 1500)
+			totalCost *= engineVolume / 10;
+		else
+			totalCost *= engineVolume / 50;
+	}
+
+
+	cout << "Cтоимость авто: " << carCost << "$" << endl;
+	cout << "Аукционный сбор: " << fixed << setprecision(2) << carCost / 110 << "$" << endl;
+	cout << "Цена доставки : " << totalCost << "$" << endl;
+	cout <<	"Итоговая цена : " << totalCost+carCost << "$" << endl;
+}
+
 
 
 //Переменные для работы кода
+vector<Car> carsFromLocation;
+vector<Location> locations;
 
 
-int main() {
+void test() {
 
-	vector<Car> carsFromLocation;
-	vector<Location> locations;
+	
+	/*string t;
+	cin >> t;
 
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
-	//	wcout.imbue(std::locale("Russian_Russia.UTF-8"));
+
 
 	locations = readLocationsFromFile("List_Of_Jards.txt");
 
@@ -321,7 +461,6 @@ int main() {
 
 
 
-
 	//Вектор для хранения автомобилей
 	carsFromLocation = readCarsFromFile(s);
 	//Сохраним данные об локации в отделюную переменную
@@ -329,10 +468,18 @@ int main() {
 	//И удалим ее из основного вектора
 	carsFromLocation.erase(carsFromLocation.begin());
 
-	
 
 
-	OutputCarsInfo(carsFromLocation);
+
+	OutputCarsInfo(carsFromLocation);*/
+}
+
+
+
+int main() {
+	MainSettings();
+	test();
+
 }
 
 

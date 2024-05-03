@@ -76,6 +76,13 @@ carsFromLocation.push_back(UpdateCarsField());
 	InsertCarsToFile(carsFromLocation, s);
 
 
+
+
+//Посчитать цену привоза авто
+	calculateShippingCost();
+
+
+
 //смена цвета 
  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 
