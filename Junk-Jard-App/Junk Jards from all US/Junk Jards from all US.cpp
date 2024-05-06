@@ -1,9 +1,14 @@
 ﻿// Junk Jards from all US.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
+/*
+не вавтает Входа админ, пользователь
+сортировки
+заказа платного осмортра
+*/
 
 
-
+Не хватает паролья в User
 
 
 //Различные библиотеки
@@ -15,8 +20,15 @@
 #include <conio.h>
 #include <Windows.h>
 #include <iomanip>
+#include <tuple>
 using namespace std;
 
+
+//Последнее id для юзеров
+int LastId = 0;
+
+
+//Основные настройки
 void MainSettings() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -197,7 +209,8 @@ public:
 		return Name;
 	}
 
-	oid OrderAPaidReport() {
+	void OrderAPaidReport() {
+
 	}
 
 };
@@ -430,14 +443,298 @@ void calculateShippingCost() {
 
 
 
+//Класс для пользователей
+class User {
+	// Инкапсуляция данных для безопасности
+private:
+	int Id;
+	string Name;
+	string Email;
+	string PhoneNumber;
+public:
+	// Конструктор класса для удобного создания и инициализации объектов
+	User(const int id, const  string name, const  string  email, const  string  phonenumber)
+		: Id(id), Name(name), Email(email), PhoneNumber(phonenumber) {}
+	// метод для вывода данных авто 
+	tuple<int,string,string,string> GetAllInfoAboutReport()
+	{
+		return { make_tuple(Id,Name, Email, PhoneNumber)};
+	}
+	string FormStringToAddToFile()
+	{
+		string stroke;
+
+		stroke = Id+";" + Name + ";" + Email + ";" + PhoneNumber;
+
+		return stroke;
+	}
+	~User() {}
+};
+//Функция для вывода пользователей из файла в вектор
+vector<User> readUsersFromFile(const  string filename) {
+	ifstream file(filename); // Открываем файл с данными
+	vector<User> Users;
+
+	//Получилось открыть файл?
+	if (file.is_open()) {
+		string line;
+		while (getline(file, line)) {
+			stringstream ss(line);//Обернем строку Line в ss для работы как с потоком
+			vector<string> UsersInfo;//Создаем вектор в который запишем всю информацию об автомобиле
+			string info;//временная переменная, которая будет хранить часть ss
+			int i = 0, id;
+			//Разделим нашу строку по символу ;
+			while (getline(ss, info, ';')) {
+				if (i == 0)
+				{
+					id = stoi(info);
+					LastId = id;
+				}
+				else {
+					UsersInfo.push_back(info);
+				}
+				i++;
+			}
+			// Проверяем корректное количество полей
+			User user(id, UsersInfo[0], UsersInfo[1], UsersInfo[2]);
+			Users.push_back(user);
+
+		}
+		file.close();
+	}
+	else {//Не получилось
+
+		cout << "Ошибка открытия файла.\n";
+	}
+
+	return Users;
+}
+//Фукнция для добавления поля в список пользователей
+User UpdateUserField() {
+
+	//Очистим консоль
+	system("cls");
+
+	//Массив для ввода значений
+	string* InfoOfReport = new string[3]; int Id;
+
+	//Заполним массив
+	Id = ++LastId;
+	cout << "Введите название";
+	cin >> InfoOfReport[0];
+	cout << "Введите адрес почты";
+	cin >> InfoOfReport[1];
+	cout << "Введите номер телефона +375";
+	cin >> InfoOfReport[2];
+
+	//Вернем готовый объект для добавления в вектор
+	return User(Id, InfoOfReport[0], InfoOfReport[1], InfoOfReport[2]);
+}
+//Ввод информации из вектора в файл пользователей
+void InsertUserToFile(vector<User> reportsToFile) {
+
+	string s = "";//строка в которую добавим текст для будущего добавления в файл
+	for (int i = 0; i < reportsToFile.size(); i++)//Введем все данные в строку
+	{
+		s += reportsToFile[i].FormStringToAddToFile();
+		s += "\n";//Добавим Enter
+	}
+	//cout << s;//Выведем для проверки действия
+
+	ofstream OutputToFile("List_Of_Jards.txt"); // Открываем файл с данными
+	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
+		OutputToFile << s; //Вводим в файл
+		OutputToFile.close();//Закроем файл
+		cout << "Строка успешно записана в файл." << std::endl;//Ура, запись произошла
+	}
+	else {
+		cout << "Ошибка открытия файла для записи." << std::endl;//Возникла ошибка при открытии файла
+
+	}
+}
+//Вывод списка пользователей
+void OutputUsersAll(vector <User> reports) {
+	
+		for (User report : reports) {
+			tuple<int, string, string, string> reportsInfo = report.GetAllInfoAboutReport();
+
+			cout << get<0>(reportsInfo) << " ";
+			cout << get<2>(reportsInfo) << " ";
+			cout << get<3>(reportsInfo) << " ";
+			cout << endl;
+		}
+}
+
+
+
+
+//Класс для платных запросов
+class PaidReport {
+	// Инкапсуляция данных для безопасности
+private:
+	int Id;
+	string SolvedOrNot;
+	Car Title;
+	string Answer;
+public:
+	// Конструктор класса для удобного создания и инициализации объектов
+	PaidReport(const int id, const string solved, const Car car, const std::string answer)
+		: Id(id), SolvedOrNot(solved), Title(car), Answer(answer) {}
+	// метод для вывода данных авто 
+	tuple<int, string, vector<string>, string> GetAllInfoAboutReport()
+	{
+		return { make_tuple(Id,SolvedOrNot, Title.GetAllInfoAboutCar(), Answer) };
+	}
+	string FormStringToAddToFile()
+	{
+		string stroke;
+
+		stroke = Id + ";" + SolvedOrNot + ";" + Title.FormStringToAddToFile()+ ";" + Answer;
+
+		return stroke;
+	}
+	~PaidReport() {}
+};
+//Функция для вывода запросов из файла в вектор
+vector<PaidReport> readPaidReportsFromFile(const  string filename) {
+	ifstream file(filename); // Открываем файл с данными
+	vector<PaidReport> PaidReports;
+
+	//Получилось открыть файл?
+	if (file.is_open()) {
+		string line;
+		while (getline(file, line)) {
+			stringstream ss(line);//Обернем строку Line в ss для работы как с потоком
+			vector<string> PaidReportsInfo;//Создаем вектор в который запишем всю информацию об автомобиле
+			string info;//временная переменная, которая будет хранить часть ss
+			int i = 0, id;
+			//Разделим нашу строку по символу ;
+			while (getline(ss, info, ';')) {
+				if (i == 0)
+				{
+					id = stoi(info);
+					LastId = id;
+				}
+				else {
+					PaidReportsInfo.push_back(info);
+				}
+				i++;
+			}
+			// Проверяем корректное количество полей
+			PaidReport paidReport(id, PaidReportsInfo[0], Car(PaidReportsInfo[1], PaidReportsInfo[2], PaidReportsInfo[3], PaidReportsInfo[4], PaidReportsInfo[5], PaidReportsInfo[6], PaidReportsInfo[7], PaidReportsInfo[8]), PaidReportsInfo[9]);
+			PaidReports.push_back(paidReport);
+
+		}
+		file.close();
+	}
+	else {//Не получилось
+
+		cout << "Ошибка открытия файла.\n";
+	}
+
+	return PaidReports;
+}
+//Фукнция для добавления поля в список запросов
+PaidReport UpdatePaidReportField() {
+
+	//Очистим консоль
+	system("cls");
+
+	//Массив для ввода значений
+	string* PaidReportsInfo = new string[10]; int Id;
+
+	//Заполним массив
+	cout << "Введите id человека, который прислал запрос";
+	cin >> Id;
+	cout << "Введите тип (solved/un solved/problem)";
+	cin >> PaidReportsInfo[0];
+	cout << "Введите название автомобиля";
+	cin >> PaidReportsInfo[1];
+	cout << "Введите вид ущерба автомобиля";
+	cin >> PaidReportsInfo[2];
+	cout << "Введите дату аукциона автомобиля";
+	cin >> PaidReportsInfo[3];
+	cout << "Введите время начала аукциона автомобиля";
+	cin >> PaidReportsInfo[4];
+	cout << "Введите вин номер автомобиля";
+	cin >> PaidReportsInfo[5];
+	cout << "Введите номер лота авто";
+	cin >> PaidReportsInfo[6];
+	cout << "Введите цену покупки автомобиля (Buy now) без знака $";
+	cin >> PaidReportsInfo[7];
+	cout << "Введите ссылку на аукцион авто";
+	cin >> PaidReportsInfo[8];
+	cout << "Введите ответ от администратора";
+	cin >> PaidReportsInfo[9];
+
+	//Вернем готовый объект для добавления в вектор
+	return PaidReport(Id, PaidReportsInfo[0], Car(PaidReportsInfo[1], PaidReportsInfo[2], PaidReportsInfo[3], PaidReportsInfo[4], PaidReportsInfo[5], PaidReportsInfo[6], PaidReportsInfo[7], PaidReportsInfo[8]), PaidReportsInfo[9]);
+}
+//Ввод информации из вектора в файл запросов
+void InsertPaidReportsToFile(vector<PaidReport> reportsToFile) {
+
+	string s = "";//строка в которую добавим текст для будущего добавления в файл
+	for (int i = 0; i < reportsToFile.size(); i++)//Введем все данные в строку
+	{
+		s += reportsToFile[i].FormStringToAddToFile();
+		s += "\n";//Добавим Enter
+	}
+	//cout << s;//Выведем для проверки действия
+
+	ofstream OutputToFile("List_Of_Jards.txt"); // Открываем файл с данными
+	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
+		OutputToFile << s; //Вводим в файл
+		OutputToFile.close();//Закроем файл
+		cout << "Строка успешно записана в файл." << std::endl;//Ура, запись произошла
+	}
+	else {
+		cout << "Ошибка открытия файла для записи." << std::endl;//Возникла ошибка при открытии файла
+
+	}
+}
+//Вывод списка запросов
+void OutputPaidReportsAll(vector <PaidReport> reports, int mode) {
+
+	if (mode = 0)
+	{
+		for (PaidReport report : reports) {
+			tuple<int, string, vector<string>, string> reportsInfo = report.GetAllInfoAboutReport();
+
+			cout << get<0>(reportsInfo) << " ";
+			for (int i = 0; i < sizeof(get<2>(reportsInfo)); i++)
+			{
+				cout << get<2>(reportsInfo)[1] << " ";
+			}
+			cout << get<3>(reportsInfo) << " ";
+			cout << endl;
+		}
+	}
+	for (PaidReport report : reports) {
+		tuple<int, string, vector<string>, string> reportsInfo = report.GetAllInfoAboutReport();
+
+		cout << get<0>(reportsInfo) << " ";
+		for (int i = 0; i < sizeof(get<2>(reportsInfo)); i++)
+		{
+			cout << get<2>(reportsInfo)[1] << " ";
+		}
+		cout << get<3>(reportsInfo) << " ";
+		cout << endl;
+	}
+}
+
+
 //Переменные для работы кода
 vector<Car> carsFromLocation;
 vector<Location> locations;
-
+vector<PaidReport> reports;
+vector<User> users;
 
 void test() {
 
+	users = readUsersFromFile("Users.txt");
+	OutputUsersAll(users);
 	
+
 	/*string t;
 	cin >> t;
 

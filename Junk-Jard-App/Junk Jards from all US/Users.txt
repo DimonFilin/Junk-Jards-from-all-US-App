@@ -1,0 +1,3 @@
+1;Aretk;artek2001;artek@gmail.com;+375303333333;
+2;Filin;filinn;F@gmail.com;+375223334444;
+3;Artem;Artemm;Artem@mail.ru;+375295556644;

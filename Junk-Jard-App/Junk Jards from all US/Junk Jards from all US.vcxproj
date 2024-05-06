@@ -142,9 +142,12 @@
     <ClCompile Include="Junk Jards from all US.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Admins.txt" />
     <Text Include="FL 32771.txt" />
     <Text Include="FL 32824.txt" />
     <Text Include="List_Of_Jards.txt" />
+    <Text Include="PaidReport.txt" />
+    <Text Include="Users.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
