@@ -1,4 +1,5 @@
-﻿// Junk Jards from all US.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+﻿
+// Junk Jards from all US.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
 /*
@@ -6,9 +7,13 @@
 сортировки
 заказа платного осмортра
 */
+//рпешил проблему с выводом полей в платных запросах
+//сделал сортировку/запрос платных репортов
+//нужно сделать по аналогии 
 
 
-Не хватает паролья в User
+//Не хватает паролья в User ( поля пасворд няма, нужно добавить, вот в чем ошиблка
+
 
 
 //Различные библиотеки
@@ -21,6 +26,7 @@
 #include <Windows.h>
 #include <iomanip>
 #include <tuple>
+#include <algorithm>
 using namespace std;
 
 
@@ -28,43 +34,51 @@ using namespace std;
 int LastId = 0;
 
 
+
 //Основные настройки
 void MainSettings() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	//	wcout.imbue(std::locale("Russian_Russia.UTF-8"));
+	//	wcout.imbue(locale("Russian_Russia.UTF-8"));
 }
 
 //Класс для хранения данных об локации
 class Location {
 	// Инкапсуляция данных для безопасности
 private:
+	string State;
 	string Name;
-	string Address;
 	string City;
 	string ZipCode;
 public:
+
 	// Конструктор класса для удобного создания и инициализации объектов
-	Location(const  string name, const  string  address, const  string  city, const  string zipcode)
-		: Name(name), Address(address), City(city), ZipCode(zipcode) {}
+	Location(const  string state, const  string  name, const  string  city, const  string zipcode)
+		: State(state), Name(name), City(city), ZipCode(zipcode) {}
 	// метод для вывода данных авто 
 	vector<string> GetAllInfoAboutLocation()
 	{
-		return { Name, Address, City, ZipCode };
+		return { State, Name, City, ZipCode };
 	}
 	string FormStringToAddToFile()
 	{
 		string stroke;
 
-		stroke = Name + ";" + Address + ";" + City + ";" + ZipCode;
+		stroke = State + ";" + Name + ";" + City + ";" + ZipCode;
 
 		return stroke;
 	}
 	string GetZipCode() {
 		return ZipCode;
 	}
+	string GetName() {
+		return Name;
+	}
+	string GetState() {
+		return State;
+	}
 };
-//Функция для вывода локаций из файла в вектор
+//Метод для вывода локаций из файла в вектор
 vector<Location> readLocationsFromFile(const  string filename) {
 	ifstream file(filename); // Открываем файл с данными
 	vector<Location> Locations;
@@ -95,7 +109,7 @@ vector<Location> readLocationsFromFile(const  string filename) {
 
 	return Locations;
 }
-//Фукнция для добавления поля в список локаций
+//Метод для добавления поля в список локаций
 Location UpdateLocationField() {
 
 	//Очистим консоль
@@ -132,10 +146,10 @@ void InsertLocationsToFile(vector<Location> locationsToFile) {
 	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
-		cout << "Строка успешно записана в файл." << std::endl;//Ура, запись произошла
+		cout << "Строка успешно записана в файл." << endl;//Ура, запись произошла
 	}
 	else {
-		cout << "Ошибка открытия файла для записи." << std::endl;//Возникла ошибка при открытии файла
+		cout << "Ошибка открытия файла для записи." << endl;//Возникла ошибка при открытии файла
 
 	}
 }
@@ -157,7 +171,7 @@ void OutputLocationsInfo(vector <Location> locations) {
 class Car {
 	// Инкапсуляция данных для безопасности
 private:
-	string  Name;
+	string Name;
 	string PrimaryDamage;
 	string SaleDate;
 	string AuctionStartTime;
@@ -166,6 +180,7 @@ private:
 	string BuyNowCost;
 	string Link;
 public:
+
 	// Конструктор класса для удобного создания и инициализации объектов
 	Car(const  string  name, const  string  primaryDamage, const  string  saleDate, const  string  auctionStartTime, const  string  vin, const  string  lot, const  string  buyNowCost, const  string  link)
 		: Name(name), PrimaryDamage(primaryDamage), SaleDate(saleDate), AuctionStartTime(auctionStartTime), Vin(vin), Lot(lot), BuyNowCost(buyNowCost), Link(link) {}
@@ -208,13 +223,19 @@ public:
 	string GetName() {
 		return Name;
 	}
-
+	string GetPrimaryDate() {
+		return PrimaryDamage;
+	}
+	//Возврат даты 
+	string GetSaleDate() const {
+		return SaleDate;
+	}
 	void OrderAPaidReport() {
 
 	}
 
 };
-//Функция для вывода списка об автомобилях из файла
+//Метод для вывода списка об автомобилях из файла
 vector <Car> readCarsFromFile(const  string filename) {
 	ifstream file(filename); // Открываем файл с данными
 	vector<Car> cars;
@@ -250,7 +271,7 @@ vector <Car> readCarsFromFile(const  string filename) {
 
 	return cars;
 }
-//Фукнция для добавления поля в список локаций
+//Метод для добавления поля в список локаций
 Car UpdateCarsField() {
 
 	//Очистим консоль
@@ -295,10 +316,10 @@ void InsertCarsToFile(vector<Car> carsToFile, const string filename) {
 	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
-		cout << "Строка успешно записана в файл." << std::endl;//Ура, запись произошла
+		cout << "Строка успешно записана в файл." << endl;//Ура, запись произошла
 	}
 	else {
-		cout << "Ошибка открытия файла для записи." << std::endl;//Возникла ошибка при открытии файла
+		cout << "Ошибка открытия файла для записи." << endl;//Возникла ошибка при открытии файла
 
 	}
 }
@@ -311,7 +332,7 @@ void OutputCarsInfo(vector <Car> Cars) {
 		cout << endl;
 	}
 }
-// Функция для получения значения из списка
+// Метод для получения значения из списка
 template <size_t N>
 int getValueFromList(const string(&options)[N]) {
 	for (size_t i = 0; i < N; i++) {
@@ -335,7 +356,7 @@ const string carTypes[] = { "Седан", "Хэтчбек", "Купе", "Каб�
 const string engineTypes[] = { "Электро", "Гибрид", "Бензин", "Дизель" };
 const string productionYears[] = { "менее года", "до 3 лет", "от 3 до 5 лет", "от 5 до 30 лет", "более 30 лет (раритет)" };
 const string customsTypes[] = { "полная", "льготная" };
-// Функция для рассчета стоимости привоза автомобиля
+// Метод для рассчета стоимости привоза автомобиля
 void calculateShippingCost() {
 
 	// Получение информации о типе автомобиля, типе двигателя, годе производства и других параметрах
@@ -359,7 +380,7 @@ void calculateShippingCost() {
 
 	system("cls");
 
-		// Расчет стоимости привоза
+	// Расчет стоимости привоза
 	double totalCost = 1.1; cout << carTypeIndex << " byltrc";
 	//В зависимости от места в контейрнере
 	switch (carTypeIndex)
@@ -438,7 +459,7 @@ void calculateShippingCost() {
 	cout << "Cтоимость авто: " << carCost << "$" << endl;
 	cout << "Аукционный сбор: " << fixed << setprecision(2) << carCost / 110 << "$" << endl;
 	cout << "Цена доставки : " << totalCost << "$" << endl;
-	cout <<	"Итоговая цена : " << totalCost+carCost << "$" << endl;
+	cout << "Итоговая цена : " << totalCost + carCost << "$" << endl;
 }
 
 
@@ -456,21 +477,21 @@ public:
 	User(const int id, const  string name, const  string  email, const  string  phonenumber)
 		: Id(id), Name(name), Email(email), PhoneNumber(phonenumber) {}
 	// метод для вывода данных авто 
-	tuple<int,string,string,string> GetAllInfoAboutReport()
+	tuple<int, string, string, string> GetAllInfoAboutReport()
 	{
-		return { make_tuple(Id,Name, Email, PhoneNumber)};
+		return { make_tuple(Id,Name, Email, PhoneNumber) };
 	}
 	string FormStringToAddToFile()
 	{
 		string stroke;
 
-		stroke = Id+";" + Name + ";" + Email + ";" + PhoneNumber;
+		stroke = Id + ";" + Name + ";" + Email + ";" + PhoneNumber;
 
 		return stroke;
 	}
 	~User() {}
 };
-//Функция для вывода пользователей из файла в вектор
+//Метод для вывода пользователей из файла в вектор
 vector<User> readUsersFromFile(const  string filename) {
 	ifstream file(filename); // Открываем файл с данными
 	vector<User> Users;
@@ -509,7 +530,7 @@ vector<User> readUsersFromFile(const  string filename) {
 
 	return Users;
 }
-//Фукнция для добавления поля в список пользователей
+//Метод для добавления поля в список пользователей
 User UpdateUserField() {
 
 	//Очистим консоль
@@ -545,24 +566,24 @@ void InsertUserToFile(vector<User> reportsToFile) {
 	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
-		cout << "Строка успешно записана в файл." << std::endl;//Ура, запись произошла
+		cout << "Строка успешно записана в файл." << endl;//Ура, запись произошла
 	}
 	else {
-		cout << "Ошибка открытия файла для записи." << std::endl;//Возникла ошибка при открытии файла
+		cout << "Ошибка открытия файла для записи." << endl;//Возникла ошибка при открытии файла
 
 	}
 }
 //Вывод списка пользователей
 void OutputUsersAll(vector <User> reports) {
-	
-		for (User report : reports) {
-			tuple<int, string, string, string> reportsInfo = report.GetAllInfoAboutReport();
 
-			cout << get<0>(reportsInfo) << " ";
-			cout << get<2>(reportsInfo) << " ";
-			cout << get<3>(reportsInfo) << " ";
-			cout << endl;
-		}
+	for (User report : reports) {
+		tuple<int, string, string, string> reportsInfo = report.GetAllInfoAboutReport();
+
+		cout << get<0>(reportsInfo) << " ";
+		cout << get<2>(reportsInfo) << " ";
+		cout << get<3>(reportsInfo) << " ";
+		cout << endl;
+	}
 }
 
 
@@ -577,8 +598,16 @@ private:
 	Car Title;
 	string Answer;
 public:
+	//Получить имя
+	string GetSolvedOrNot() {
+		return SolvedOrNot;
+	}
+	// Получить айди 
+	int GetId() {
+		return Id;
+	}
 	// Конструктор класса для удобного создания и инициализации объектов
-	PaidReport(const int id, const string solved, const Car car, const std::string answer)
+	PaidReport(const int id, const string solved, const Car car, const string answer)
 		: Id(id), SolvedOrNot(solved), Title(car), Answer(answer) {}
 	// метод для вывода данных авто 
 	tuple<int, string, vector<string>, string> GetAllInfoAboutReport()
@@ -589,13 +618,13 @@ public:
 	{
 		string stroke;
 
-		stroke = Id + ";" + SolvedOrNot + ";" + Title.FormStringToAddToFile()+ ";" + Answer;
+		stroke = Id + ";" + SolvedOrNot + ";" + Title.FormStringToAddToFile() + ";" + Answer;
 
 		return stroke;
 	}
 	~PaidReport() {}
 };
-//Функция для вывода запросов из файла в вектор
+//Метод для вывода запросов из файла в вектор
 vector<PaidReport> readPaidReportsFromFile(const  string filename) {
 	ifstream file(filename); // Открываем файл с данными
 	vector<PaidReport> PaidReports;
@@ -634,7 +663,7 @@ vector<PaidReport> readPaidReportsFromFile(const  string filename) {
 
 	return PaidReports;
 }
-//Фукнция для добавления поля в список запросов
+//Метод для добавления поля в список запросов
 PaidReport UpdatePaidReportField() {
 
 	//Очистим консоль
@@ -685,31 +714,31 @@ void InsertPaidReportsToFile(vector<PaidReport> reportsToFile) {
 	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
-		cout << "Строка успешно записана в файл." << std::endl;//Ура, запись произошла
+		cout << "Строка успешно записана в файл." << endl;//Ура, запись произошла
 	}
 	else {
-		cout << "Ошибка открытия файла для записи." << std::endl;//Возникла ошибка при открытии файла
+		cout << "Ошибка открытия файла для записи." << endl;//Возникла ошибка при открытии файла
 
 	}
 }
 //Вывод списка запросов
 void OutputPaidReportsAll(vector <PaidReport> reports, int mode) {
 
-	if (mode = 0)
-	{
-		for (PaidReport report : reports) {
-			tuple<int, string, vector<string>, string> reportsInfo = report.GetAllInfoAboutReport();
 
-			cout << get<0>(reportsInfo) << " ";
-			for (int i = 0; i < sizeof(get<2>(reportsInfo)); i++)
-			{
-				cout << get<2>(reportsInfo)[1] << " ";
-			}
-			cout << get<3>(reportsInfo) << " ";
-			cout << endl;
-		}
-	}
 	for (PaidReport report : reports) {
+		tuple<int, string, vector<string>, string> reportsInfo = report.GetAllInfoAboutReport();
+
+		cout << get<0>(reportsInfo) << " ";
+		cout << get<1>(reportsInfo) << " ";
+		for (int i = 0; i < 8; i++)
+		{
+			cout << get<2>(reportsInfo)[i] << " ";
+		}
+		cout << get<3>(reportsInfo) << " ";
+		cout << endl;
+	}
+
+	/*for (PaidReport report : reports) {
 		tuple<int, string, vector<string>, string> reportsInfo = report.GetAllInfoAboutReport();
 
 		cout << get<0>(reportsInfo) << " ";
@@ -718,9 +747,109 @@ void OutputPaidReportsAll(vector <PaidReport> reports, int mode) {
 			cout << get<2>(reportsInfo)[1] << " ";
 		}
 		cout << get<3>(reportsInfo) << " ";
-		cout << endl;
-	}
+		cout << endl;*/
+
 }
+
+
+
+
+// Метод сравнения для сортировки по id
+void SortPaidReportsById(vector<PaidReport>& reports) {
+	sort(reports.begin(), reports.end(), [](PaidReport& a, PaidReport& b) {
+		return a.GetId() < b.GetId();
+		});
+}
+// Метод сравнения для сортировки по решенности
+void SortPaidReportsBySolvedOrNot(vector<PaidReport>& reports) {
+	sort(reports.begin(), reports.end(), [](PaidReport& a, PaidReport& b) {
+		return a.GetSolvedOrNot() < b.GetSolvedOrNot();
+		});
+}
+// Методы для запроса по критерию
+vector<PaidReport> PaidReportRequestBySolvMode(vector<PaidReport>& reports, string solvMode) {
+	vector<PaidReport> reportsafter;
+	for (PaidReport report : reports)
+	{
+		if (report.GetSolvedOrNot() == solvMode)
+		{
+			reportsafter.push_back(report);
+		}
+	}
+	return reportsafter;
+}
+vector<PaidReport> PaidReportRequestById(vector<PaidReport>& reports, int Id) {
+	vector<PaidReport> reportsafter;
+	for (PaidReport report : reports)
+	{
+		if (report.GetId() == Id)
+		{
+			reportsafter.push_back(report);
+		}
+	}
+	return reportsafter;
+}
+
+
+
+
+// Метод для сортировки по имени
+template <typename T>
+void SortByName(vector<T>& items) {
+	sort(items.begin(), items.end(), [](T& a, T& b) {
+		return a.GetName() < b.GetName();
+		});
+}
+// Метод для сортировки по штату
+void SortByState(vector<Location>& reports) {
+	sort(reports.begin(), reports.end(), [](Location& a, Location& b) {
+		return a.GetState() < b.GetState();
+		});
+}
+// Метод для сортировки по коду локации
+void SortByCode(vector<Location>& reports) {
+	sort(reports.begin(), reports.end(), [](Location& a, Location& b) {
+		return a.GetZipCode() < b.GetZipCode();
+		});
+}
+
+
+//Протестировать методы ниже
+
+// Метод для сортировки вектора Car по дате продажи
+// Лямбда-функция для преобразования строки даты в структуру tm и сравнения дат
+auto compareDates = [](const Car& a, const Car& b) {//auto - для понимания того, что вернуть
+	tm tm1 = {};
+	tm tm2 = {};
+	stringstream ss1(a.GetSaleDate());
+	stringstream ss2(b.GetSaleDate());
+	ss1 >> get_time(&tm1, "%a. %b %d, %Y");
+	ss2 >> get_time(&tm2, "%a. %b %d, %Y");
+	return mktime(&tm1) < mktime(&tm2);
+};//надо протестирвать
+void SortCarsBySaleDate(vector<Car>& cars) {
+	// Сортировка вектора Car с использованием лямбда-функции
+	sort(cars.begin(), cars.end(), compareDates);
+}
+//Метод для сортировки по дамагу
+void SortByDamage(vector<Car>& reports) {
+	sort(reports.begin(), reports.end(), [](Car& a, Car& b) {
+		return a.GetPrimaryDate() < b.GetPrimaryDate();
+		});
+}
+// Методы для запроса по критерию
+vector<Location> PaidReportRequestBySolvMode(vector<PaidReport>& reports, string solvMode) {
+	vector<PaidReport> reportsafter;
+	for (PaidReport report : reports)
+	{
+		if (report.GetSolvedOrNot() == solvMode)
+		{
+			reportsafter.push_back(report);
+		}
+	}
+	return reportsafter;
+}
+//Доделать запрос по вину и лоту, по цене buy now
 
 
 //Переменные для работы кода
@@ -731,9 +860,21 @@ vector<User> users;
 
 void test() {
 
+	locations = readLocationsFromFile("List_Of_Jards.txt");
+	SortByCode(locations);
+	OutputLocationsInfo(locations);
+
+	/*методя для репортов
+	reports = readPaidReportsFromFile("PaidReports.txt");
+	vector<PaidReport> reportsAfterReqest = PaidReportRequestBySolvMode(reports,"problem");
+	OutputPaidReportsAll(reportsAfterReqest, 0);*/
+	/*
+	работа с юзерами
 	users = readUsersFromFile("Users.txt");
 	OutputUsersAll(users);
-	
+	*/
+
+
 
 	/*string t;
 	cin >> t;
@@ -751,11 +892,6 @@ void test() {
 
 
 	string s = locations[_getch() - 48].GetZipCode() + ".txt";
-
-
-
-
-
 
 
 	//Вектор для хранения автомобилей
@@ -800,5 +936,4 @@ int main() {
 //   4. В окне "Список ошибок" можно просматривать ошибки.
 //   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
 //   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
-
 
