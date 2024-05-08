@@ -3,17 +3,9 @@
 //
 
 /*
-не вавтает Входа админ, пользователь
-сортировки
-заказа платного осмортра
-*/
-//рпешил проблему с выводом полей в платных запросах
-//сделал сортировку/запрос платных репортов
-//нужно сделать по аналогии 
+не вавтает Входа админ, пользователь*/
 
-
-//Не хватает паролья в User ( поля пасворд няма, нужно добавить, вот в чем ошиблка
-
+//исправил вход в аккаунт, доделываю регистрацию
 
 
 //Различные библиотеки
@@ -230,10 +222,15 @@ public:
 	string GetSaleDate() const {
 		return SaleDate;
 	}
-	void OrderAPaidReport() {
-
+	string GetVin() const {
+		return Vin;
 	}
-
+	string GetLot() const {
+		return Lot;
+	}
+	string GetBuyNowCost() const {
+		return BuyNowCost;
+	}
 };
 //Метод для вывода списка об автомобилях из файла
 vector <Car> readCarsFromFile(const  string filename) {
@@ -470,22 +467,38 @@ class User {
 private:
 	int Id;
 	string Name;
+	string Password;
 	string Email;
 	string PhoneNumber;
 public:
+	int GetId() {
+		return Id;
+	}
+	string GetName() {
+		return Name;
+	}
+	string GetPassword() {
+		return Password;
+	}
+	string GetEmail() {
+		return Email;
+	}
+	string GetPhoneNumer() {
+		return PhoneNumber;
+	}
 	// Конструктор класса для удобного создания и инициализации объектов
-	User(const int id, const  string name, const  string  email, const  string  phonenumber)
-		: Id(id), Name(name), Email(email), PhoneNumber(phonenumber) {}
+	User(const int id, const  string name, const string password, const  string  email, const  string  phonenumber)
+		: Id(id), Name(name), Password(password), Email(email), PhoneNumber(phonenumber) {}
 	// метод для вывода данных авто 
-	tuple<int, string, string, string> GetAllInfoAboutReport()
+	tuple<int, string, string, string, string> GetAllInfoAboutReport()
 	{
-		return { make_tuple(Id,Name, Email, PhoneNumber) };
+		return { make_tuple(Id, Name, Password, Email, PhoneNumber) };
 	}
 	string FormStringToAddToFile()
 	{
-		string stroke;
+		string stroke = "";
 
-		stroke = Id + ";" + Name + ";" + Email + ";" + PhoneNumber;
+		stroke = to_string(Id) + ";" + Name + ";" + Password + ";" + Email + ";" + PhoneNumber;
 
 		return stroke;
 	}
@@ -517,7 +530,7 @@ vector<User> readUsersFromFile(const  string filename) {
 				i++;
 			}
 			// Проверяем корректное количество полей
-			User user(id, UsersInfo[0], UsersInfo[1], UsersInfo[2]);
+			User user(id, UsersInfo[0], UsersInfo[1], UsersInfo[2], UsersInfo[3]);
 			Users.push_back(user);
 
 		}
@@ -537,19 +550,23 @@ User UpdateUserField() {
 	system("cls");
 
 	//Массив для ввода значений
-	string* InfoOfReport = new string[3]; int Id;
+	string* InfoOfReport = new string[4]; int Id;
 
 	//Заполним массив
 	Id = ++LastId;
-	cout << "Введите название";
+	//Валидация имени
+	cout << "Введите имя ";
+	
 	cin >> InfoOfReport[0];
-	cout << "Введите адрес почты";
+	cout << "Введите пароль ";
 	cin >> InfoOfReport[1];
-	cout << "Введите номер телефона +375";
+	cout << "Введите адрес почты ";
 	cin >> InfoOfReport[2];
-
+	cout << "Введите номер телефона +375";
+	cin >> InfoOfReport[3];
+	InfoOfReport[3] = "+ 375" + InfoOfReport[3];
 	//Вернем готовый объект для добавления в вектор
-	return User(Id, InfoOfReport[0], InfoOfReport[1], InfoOfReport[2]);
+	return User(Id, InfoOfReport[0], InfoOfReport[1], InfoOfReport[2], InfoOfReport[3]);
 }
 //Ввод информации из вектора в файл пользователей
 void InsertUserToFile(vector<User> reportsToFile) {
@@ -562,7 +579,7 @@ void InsertUserToFile(vector<User> reportsToFile) {
 	}
 	//cout << s;//Выведем для проверки действия
 
-	ofstream OutputToFile("List_Of_Jards.txt"); // Открываем файл с данными
+	ofstream OutputToFile("Users.txt"); // Открываем файл с данными
 	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
@@ -577,11 +594,13 @@ void InsertUserToFile(vector<User> reportsToFile) {
 void OutputUsersAll(vector <User> reports) {
 
 	for (User report : reports) {
-		tuple<int, string, string, string> reportsInfo = report.GetAllInfoAboutReport();
+		tuple<int, string, string, string, string> reportsInfo = report.GetAllInfoAboutReport();
 
 		cout << get<0>(reportsInfo) << " ";
+		cout << get<1>(reportsInfo) << " ";
 		cout << get<2>(reportsInfo) << " ";
 		cout << get<3>(reportsInfo) << " ";
+		cout << get<4>(reportsInfo) << " ";
 		cout << endl;
 	}
 }
@@ -838,33 +857,187 @@ void SortByDamage(vector<Car>& reports) {
 		});
 }
 // Методы для запроса по критерию
-vector<Location> PaidReportRequestBySolvMode(vector<PaidReport>& reports, string solvMode) {
-	vector<PaidReport> reportsafter;
-	for (PaidReport report : reports)
+vector<Car> CarByVin(vector<Car>& Cars, string vin) {
+	vector<Car> Carsafter;
+	for (Car Car : Cars)
 	{
-		if (report.GetSolvedOrNot() == solvMode)
+		if (Car.GetVin() == vin)
 		{
-			reportsafter.push_back(report);
+			Carsafter.push_back(Car);
 		}
 	}
-	return reportsafter;
+	return Carsafter;
 }
-//Доделать запрос по вину и лоту, по цене buy now
+//запрос по лоту
+vector<Car> CarByLot(vector<Car>& Cars, string lot) {
+	vector<Car> Carsafter;
+	for (Car Car : Cars)
+	{
+		if (Car.GetLot() == lot)
+		{
+			Carsafter.push_back(Car);
+		}
+	}
+	return Carsafter;
+}
+//Запрос по buy now
+vector<Car> CarByBuyNow(vector<Car>& Cars, string BuyNow) {
+	vector<Car> Carsafter;
+	for (Car Car : Cars)
+	{
+		if (Car.GetBuyNowCost() == BuyNow)
+		{
+			Carsafter.push_back(Car);
+		}
+	}
+	return Carsafter;
+}
 
+
+string NameValidation() {
+	string Name;
+
+	return Name;
+}
+
+enum class States {
+	Login,
+	Registration,
+	Locations,
+	LocationInfo,
+	Cars,
+	CarInfo
+};
+
+#define Login States::Login
+#define Registration States::Registration
+#define Locations States::Locations
+#define LocationInfo States::LocationInfo
+#define Cars States::Cars
+#define CarInfo States::CarInfo
 
 //Переменные для работы кода
 vector<Car> carsFromLocation;
 vector<Location> locations;
 vector<PaidReport> reports;
-vector<User> users;
+//vector<User> users;
 
-void test() {
 
-	locations = readLocationsFromFile("List_Of_Jards.txt");
-	SortByCode(locations);
-	OutputLocationsInfo(locations);
 
-	/*методя для репортов
+void UserTest() {
+	vector<User> users;
+	States State;
+	users = readUsersFromFile("Users.txt");
+	//OutputUsersAll(users);
+	char ch; string login, password = "";
+	User persondata = User(1, "", "", "", "");
+Start:
+	cout << "Выберите, как войти \nВход \nРегистрация\n";
+	State = static_cast<States>((int)_getch() - 49);
+
+
+	if (State == Login)
+	{
+	Identifications:
+		cout << "Введите логин ";
+
+		//Ввод логина
+		cin >> login;
+		// Cверка с существующими логинами(идентификация)
+		for (User user : users)
+		{
+			if (login == user.GetName())
+			{
+				persondata = user;
+				break;
+			}
+		}
+		if (persondata.GetName() == "")
+		{
+			system("cls");
+			cout << "Вы ввели не правильный логин\n";
+			goto Identifications;
+		}
+
+
+
+		// Ввод пароля
+		cout << "Введите пароль ";
+		while (true) {
+			ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+			if (ch == 27) {// Проверка на Esc
+				cout << endl << "Выход из входа." << endl;
+				system("cls");
+				goto Start;
+			}
+			else if (ch == 8) {// Проверка на BackSpace
+				if (!login.empty()) {
+					if (!password.empty()) {//проверка на пустой пароль
+						cout << "\b \b"; // Удаление последнего символа из консоли
+						password.pop_back(); // Удаление последнего символа из login
+					}
+				}
+			}
+			else if (ch == 13) {// Проверка на Enter
+				cout << "\b \b" << "*";
+				cout << endl;
+				break;  // Завершение ввода при нажатии клавиши Enter
+			}
+			else {
+				if (password.empty())
+				{
+					password += ch;  // Добавление символа к переменной password
+					cout << ch;  // Вывод * вместо введенных символов
+				}
+				else
+				{
+					cout << "\b \b" << "*";
+					password += ch;  // Добавление символа к переменной password
+					cout << ch;  // Вывод символа
+				}
+			}
+		}
+
+		// Cверка с паролем (аутентификации)
+		if (password != persondata.GetPassword())
+		{
+			system("cls");
+			cout << "Вы ввели неправильный пароль, войдите еще раз\n";
+			goto Identifications;
+		}
+
+	}
+	if (State == Registration)
+	{
+		persondata = UpdateUserField();
+		users.push_back(persondata);
+		InsertUserToFile(users);
+	}
+	/*while (true) {
+			ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+			if (ch == 27) {// Проверка на Esc
+				cout << endl << "Выход из ввода логина." << endl;
+				system("cls");
+				goto Start;
+			}
+			else if (ch == 8) {// Проверка на BackSpace
+				if (!login.empty()) {
+					cout << "\b \b"; // Удаление последнего символа из консоли
+					login.pop_back(); // Удаление последнего символа из login
+				}
+			}
+			else if (ch == 13) {// Проверка на Enter
+				cout << endl;
+				break;  // Завершение ввода при нажатии клавиши Enter
+			}
+			else {
+				login += ch;  // Добавление символа к переменной login
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}*/
+
+
+		/*методя для репортов
 	reports = readPaidReportsFromFile("PaidReports.txt");
 	vector<PaidReport> reportsAfterReqest = PaidReportRequestBySolvMode(reports,"problem");
 	OutputPaidReportsAll(reportsAfterReqest, 0);*/
@@ -876,12 +1049,12 @@ void test() {
 
 
 
-	/*string t;
-	cin >> t;
+	//string t;
+	//cin >> t;
 
 
 
-	locations = readLocationsFromFile("List_Of_Jards.txt");
+	/*locations = readLocationsFromFile("List_Of_Jards.txt");
 
 	// Выводим информацию о каждом автомобиле после считывания
 	OutputLocationsInfo(locations);
@@ -904,6 +1077,9 @@ void test() {
 
 
 
+	OutputCarsInfo(carsFromLocation);
+
+	SortCarsBySaleDate(carsFromLocation);
 	OutputCarsInfo(carsFromLocation);*/
 }
 
@@ -911,8 +1087,12 @@ void test() {
 
 int main() {
 	MainSettings();
-	test();
-
+	try {
+		UserTest();
+	}
+	catch (const std::exception& e) {
+		cerr << "Исключение: " << e.what() << endl;
+	}
 }
 
 
@@ -936,4 +1116,7 @@ int main() {
 //   4. В окне "Список ошибок" можно просматривать ошибки.
 //   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
 //   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+
+
+
 
