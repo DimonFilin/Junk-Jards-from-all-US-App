@@ -31,6 +31,8 @@ int LastId = 0;
 void MainSettings() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+
+
 	//	wcout.imbue(locale("Russian_Russia.UTF-8"));
 }
 
@@ -556,7 +558,7 @@ User UpdateUserField() {
 	Id = ++LastId;
 	//Валидация имени
 	cout << "Введите имя ";
-	
+
 	cin >> InfoOfReport[0];
 	cout << "Введите пароль ";
 	cin >> InfoOfReport[1];
@@ -900,6 +902,39 @@ string NameValidation() {
 	return Name;
 }
 
+HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE); // Получаем дескриптор консоли
+// Текстовый курсор в точку x,y
+void GoToXY(short x, short y)
+{
+	SetConsoleCursorPosition(hStdOut, { x, y });
+}
+COORD CalculateTextPosition(const string& text)
+{
+	CONSOLE_FONT_INFO fontInfo;
+	GetCurrentConsoleFont(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &fontInfo);
+	int fontWidth = fontInfo.dwFontSize.X;
+	int fontHeight = fontInfo.dwFontSize.Y;
+
+	int screenWidth = GetSystemMetrics(SM_CXSCREEN); // Получение ширины экрана
+	int screenHeight = GetSystemMetrics(SM_CYSCREEN); // Получение высоты экрана
+	int consoleWidth = screenWidth / fontWidth; // Ширина консоли в символах
+	int consoleHeight = screenHeight / fontHeight; // Высота конисоли в строках
+
+	// Рассчитываем центр консоли
+	int centerX = consoleWidth / 2;
+	int centerY = consoleHeight / 2;
+
+	int textWidth = static_cast<int>(text.length()); // Ширина текста
+	int textHeight = 3; // Высота текста
+
+	int startX = centerX - textWidth / 2; // Начальная позиция x для вывода текста
+	int startY = centerY - textHeight / 2; // Начальная позиция y для вывода текста
+
+	return COORD{ static_cast<short>(startX), static_cast<short>(startY) };
+}
+
+
+
 enum class States {
 	Login,
 	Registration,
@@ -925,6 +960,12 @@ vector<PaidReport> reports;
 
 
 void UserTest() {
+	
+	HWND console = GetConsoleWindow();
+	ShowWindow(console, SW_SHOWMAXIMIZED);//залочить полный экран
+	
+
+
 	vector<User> users;
 	States State;
 	users = readUsersFromFile("Users.txt");
@@ -932,7 +973,13 @@ void UserTest() {
 	char ch; string login, password = "";
 	User persondata = User(1, "", "", "", "");
 Start:
-	cout << "Выберите, как войти \nВход \nРегистрация\n";
+	COORD cords = CalculateTextPosition("Выберите, как войти");
+	GoToXY(cords.X, cords.Y);
+	cout << "Выберите, как войти" << endl;
+	GoToXY(cords.X, ++cords.Y);
+	cout << "Вход" << endl;
+	GoToXY(cords.X, ++cords.Y);
+	cout << "Регистрация" << endl;
 	State = static_cast<States>((int)_getch() - 49);
 
 
@@ -1090,7 +1137,7 @@ int main() {
 	try {
 		UserTest();
 	}
-	catch (const std::exception& e) {
+	catch (const exception& e) {
 		cerr << "Исключение: " << e.what() << endl;
 	}
 }
