@@ -19,6 +19,7 @@
 #include <iomanip>
 #include <tuple>
 #include <algorithm>
+#include <cstdlib>
 using namespace std;
 
 
@@ -31,7 +32,8 @@ int LastId = 0;
 void MainSettings() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-
+	HWND console = GetConsoleWindow();
+	ShowWindow(console, SW_SHOWMAXIMIZED);//залочить полный экран
 
 	//	wcout.imbue(locale("Russian_Russia.UTF-8"));
 }
@@ -137,7 +139,7 @@ vector<Location> readLocationsFromFile(const  string filename) {
 		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");
 	}
@@ -185,7 +187,7 @@ void InsertLocationsToFile(vector<Location> locationsToFile) {
 		COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Строка успешно записана в файл." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");// Запись в файл произошла
 	}
@@ -194,7 +196,7 @@ void InsertLocationsToFile(vector<Location> locationsToFile) {
 		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
@@ -203,10 +205,12 @@ void InsertLocationsToFile(vector<Location> locationsToFile) {
 //Вывод списка локаций
 void OutputLocationsInfo(vector <Location> locations) {
 	COORD cords = CalculateTextPosition("Florida  Central Florida Pick & Pay 10694 Cosmonaut Blvd  Orlando FL 32824");
-	int i = size(locations)/2 * (-1);
+	int i = size(locations) / 2 * (-1);
+	int iteration = 1;
 	for (Location location : locations) {
 		GoToXY(cords.X, cords.Y + i); i++;
 		vector<string> locationsInfo = location.GetAllInfoAboutLocation();
+		cout << iteration++ << ". ";
 		for (string info : locationsInfo) {
 			cout << info << " ";
 		}
@@ -326,7 +330,7 @@ vector <Car> readCarsFromFile(const  string filename) {
 		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");
 	}
@@ -382,7 +386,7 @@ void InsertCarsToFile(vector<Car> carsToFile, const string filename) {
 		COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Строка успешно записана в файл." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");// Запись в файл произошла
 
@@ -392,7 +396,7 @@ void InsertCarsToFile(vector<Car> carsToFile, const string filename) {
 		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
@@ -623,10 +627,10 @@ vector<User> readUsersFromFile(const  string filename) {
 		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла." << endl;
-		GoToXY(cords.X, cords.Y+1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");
-		
+
 	}
 
 	return Users;
@@ -643,15 +647,17 @@ User UpdateUserField() {
 	//Заполним массив
 	Id = ++LastId;
 	//Валидация имени
+	COORD cords = CalculateTextPosition("Введите пароль   ");
+	GoToXY(cords.X, ++cords.Y);
 	cout << "Введите имя ";
 
-	cin >> InfoOfReport[0];
+	cin >> InfoOfReport[0];	GoToXY(cords.X, ++cords.Y);
 	cout << "Введите пароль ";
-	cin >> InfoOfReport[1];
+	cin >> InfoOfReport[1];	GoToXY(cords.X, ++cords.Y);
 	cout << "Введите адрес почты ";
-	cin >> InfoOfReport[2];
+	cin >> InfoOfReport[2];	GoToXY(cords.X, ++cords.Y);
 	cout << "Введите номер телефона +375";
-	cin >> InfoOfReport[3];
+	cin >> InfoOfReport[3];	GoToXY(cords.X, ++cords.Y);
 	InfoOfReport[3] = "+ 375" + InfoOfReport[3];
 	//Вернем готовый объект для добавления в вектор
 	return User(Id, InfoOfReport[0], InfoOfReport[1], InfoOfReport[2], InfoOfReport[3]);
@@ -672,10 +678,10 @@ void InsertUserToFile(vector<User> reportsToFile) {
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
 		system("cls");
-		COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Вы успешно зарегистрировались");
 		GoToXY(cords.X, cords.Y);
 		cout << "Строка успешно записана в файл." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");// Запись в файл произошла
 	}
@@ -684,7 +690,7 @@ void InsertUserToFile(vector<User> reportsToFile) {
 		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
@@ -694,7 +700,7 @@ void InsertUserToFile(vector<User> reportsToFile) {
 //Вывод списка пользователей
 void OutputUsersAll(vector <User> reports) {
 	system("cls");
-	COORD cords = CalculateTextPosition("GoToXY(cords.X, cords.Y + i); i++;");
+	COORD cords = CalculateTextPosition("1 Aretk artek2001 artek@gmail.com +375303333333");
 	int i = size(reports) / 2 * (-1);
 	for (User report : reports) {
 		tuple<int, string, string, string, string> reportsInfo = report.GetAllInfoAboutReport();
@@ -706,6 +712,10 @@ void OutputUsersAll(vector <User> reports) {
 		cout << get<4>(reportsInfo) << " ";
 		cout << endl;
 	}
+	GoToXY(cords.X, cords.Y + i); i++;
+	cout << "Нажмите любую клавишу для продолжения "; char t = _getch();
+	GoToXY(cords.X, cords.Y + i);
+
 }
 
 
@@ -783,7 +793,7 @@ vector<PaidReport> readPaidReportsFromFile(const  string filename) {
 		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");
 	}
@@ -845,7 +855,7 @@ void InsertPaidReportsToFile(vector<PaidReport> reportsToFile) {
 		COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Строка успешно записана в файл." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");// Запись в файл произошла
 	}
@@ -854,7 +864,7 @@ void InsertPaidReportsToFile(vector<PaidReport> reportsToFile) {
 		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
-		GoToXY(cords.X, cords.Y + 1);
+		GoToXY(cords.X - 4, cords.Y + 2);
 		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
@@ -1019,7 +1029,7 @@ string NameValidation() {
 	string Name;
 
 	return Name;
-}
+}//Доделать
 
 
 
@@ -1029,7 +1039,12 @@ enum class States {
 	Locations,
 	LocationInfo,
 	Cars,
-	CarInfo
+	CarInfo,
+	Meny1,
+	Meny2,
+	Meny3,
+	Meny4,
+	Meny5
 };
 
 #define Login States::Login
@@ -1038,6 +1053,11 @@ enum class States {
 #define LocationInfo States::LocationInfo
 #define Cars States::Cars
 #define CarInfo States::CarInfo
+#define Meny1 States::Meny1
+#define Meny2 States::Meny2
+#define Meny3 States::Meny3
+#define Meny4 States::Meny4
+#define Meny5 States::Meny5
 
 //Переменные для работы кода
 vector<Car> cars;
@@ -1048,47 +1068,103 @@ vector<User> users;
 
 
 void UserTest() {
-	
-	HWND console = GetConsoleWindow();
-	ShowWindow(console, SW_SHOWMAXIMIZED);//залочить полный экран
-	
 
 
-	
+
+
+
+
 	States State;
-	//locations = readLocationsFromFile("List_Of_Jards.txt");
 
-	cars = readCarsFromFile("FL 32771.txt");//Вектор для хранения автомобилей
-	//Сохраним данные об локации в отделюную переменную
-	string infoAboutLocation = cars[0].GetName();
-	//И удалим ее из основного вектора
-	cars.erase(cars.begin());
+	//cars = readCarsFromFile("FL 32771.txt");//Вектор для хранения автомобилей
+	////Сохраним данные об локации в отделюную переменную
+	//string infoAboutLocation = cars[0].GetName();
+	////И удалим ее из основного вектора
+	//cars.erase(cars.begin());
 
 
 	users = readUsersFromFile("Users.txt");
 	//OutputUsersAll(users);
-	char ch; string login, password = "";
+	char ch; string login = "", password = "";
 	User persondata = User(1, "", "", "", "");
+
+
+	State = Meny1;
 
 	while (true) {
 	Start:
-		COORD cords = CalculateTextPosition("Выберите, как войти");
-		GoToXY(cords.X, cords.Y);
-		cout << "Выберите, как войти" << endl;
-		GoToXY(cords.X, ++cords.Y);
-		cout << "Вход" << endl;
-		GoToXY(cords.X, ++cords.Y);
-		cout << "Регистрация" << endl;
-		State = static_cast<States>((int)_getch() - 49);
+		system("cls");
+		if (State == Meny1) {
+			system("cls");
+			COORD cords = CalculateTextPosition("Выберите, как войти");
+			GoToXY(cords.X, cords.Y);
+			cout << "Выберите, как войти" << endl;
+			GoToXY(cords.X, ++cords.Y);
+			cout << "Вход" << endl;
+			GoToXY(cords.X, ++cords.Y);
+			cout << "Регистрация" << endl;
+			int t = _getch() - 48;
+			switch (t)
+			{
+			case 1:
+				State = Login;
+				goto Start;
+				break;
+			case 2:
+				State = Registration;
+				goto Start;
+				break;
+			default:
+				GoToXY(cords.X, ++cords.Y);
+				cout << "Такой клавиши нет";
+				GoToXY(cords.X - 8, ++cords.Y);
+				cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+				system("cls");
+				break;
+			}
 
-
+		}
 		if (State == Login)
 		{
 		Identifications:
+			COORD cords = CalculateTextPosition("Введите логин");
+			GoToXY(cords.X, cords.Y++);
+
 			cout << "Введите логин ";
 
 			//Ввод логина
-			cin >> login;
+			while (true) {
+				ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+				if (ch == 27) {// Проверка на Esc
+					system("cls");
+
+					GoToXY(cords.X, cords.Y++);
+					cout << "Выход.";
+					GoToXY(cords.X - 15, cords.Y + 2);
+					cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+					State = Meny1;
+					goto Start;
+
+				}
+				else if (ch == 8) {// Проверка на BackSpace
+					if (!login.empty()) {
+						if (!login.empty()) {//проверка на пустой пароль
+							cout << "\b \b"; // Удаление последнего символа из консоли
+							password.pop_back(); // Удаление последнего символа из login
+						}
+					}
+				}
+				else if (ch == 13) {// Проверка на Enter
+					break;  // Завершение ввода при нажатии клавиши Enter
+				}
+				else {
+
+					login += ch;  // Добавление символа к переменной password
+					cout << ch;  // Вывод символа
+
+				}
+			}
+
 			// Cверка с существующими логинами(идентификация)
 			for (User user : users)
 			{
@@ -1101,27 +1177,38 @@ void UserTest() {
 			if (persondata.GetName() == "")
 			{
 				system("cls");
+				GoToXY(cords.X, cords.Y);
 				cout << "Вы ввели не правильный логин\n";
+				login = "";
+
 				goto Identifications;
 			}
 
 
 
+
 			// Ввод пароля
+
+			GoToXY(cords.X, cords.Y);
+			cout << "                                               ";
+			GoToXY(cords.X, ++cords.Y);
 			cout << "Введите пароль ";
+			GoToXY(cords.X, ++cords.Y);
 			while (true) {
 				ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
 				if (ch == 27) {// Проверка на Esc
 					cout << endl << "Выход из входа." << endl;
 					system("cls");
-					goto Start;
+					persondata = User(1, "", "", "", "");
+					login == "";
+
+					goto Identifications;
 				}
 				else if (ch == 8) {// Проверка на BackSpace
-					if (!login.empty()) {
-						if (!password.empty()) {//проверка на пустой пароль
-							cout << "\b \b"; // Удаление последнего символа из консоли
-							password.pop_back(); // Удаление последнего символа из login
-						}
+
+					if (!password.empty()) {//проверка на пустой пароль
+						cout << "\b \b"; // Удаление последнего символа из консоли
+						password.pop_back(); // Удаление последнего символа из login
 					}
 				}
 				else if (ch == 13) {// Проверка на Enter
@@ -1149,8 +1236,10 @@ void UserTest() {
 			{
 				system("cls");
 				cout << "Вы ввели неправильный пароль, войдите еще раз\n";
+				persondata = User(1, "", "", "", "");
 				goto Identifications;
 			}
+			State = Meny2;
 
 		}
 		if (State == Registration)
@@ -1158,75 +1247,119 @@ void UserTest() {
 			persondata = UpdateUserField();
 			users.push_back(persondata);
 			InsertUserToFile(users);
+			State = Meny1;
 		}
-		/*while (true) {
-				ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
-				if (ch == 27) {// Проверка на Esc
-					cout << endl << "Выход из ввода логина." << endl;
-					system("cls");
-					goto Start;
-				}
-				else if (ch == 8) {// Проверка на BackSpace
-					if (!login.empty()) {
-						cout << "\b \b"; // Удаление последнего символа из консоли
-						login.pop_back(); // Удаление последнего символа из login
-					}
-				}
-				else if (ch == 13) {// Проверка на Enter
-					cout << endl;
-					break;  // Завершение ввода при нажатии клавиши Enter
-				}
-				else {
-					login += ch;  // Добавление символа к переменной login
-					cout << ch;  // Вывод * вместо введенных символов
-				}
-			}*/
 		if (State == Locations) {
 			system("cls");
 			OutputUsersAll(users);
 		}
+		if (State == Meny2) {
+			system("cls");
+			COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+			GoToXY(cords.X, cords.Y);
+			cout << "Вы вошли как " << persondata.GetName();
+			GoToXY(cords.X - 8, ++cords.Y);
+			cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+			system("cls");
+
+			locations = readLocationsFromFile("List_Of_Jards.txt");
+
+			OutputLocationsInfo(locations);
+
+
+			/*COORD cords = CalculateTextPosition("Вы вошли как влаолвоалв");
+			GoToXY(cords.X, cords.Y);
+			cout << "Вы вошли как " <<persondata.GetName();
+			GoToXY(cords.X, ++cords.Y);
+			cout << "Вход" << endl;
+			GoToXY(cords.X, ++cords.Y);
+			cout << "Регистрация" << endl;
+			int t = _getch() - 48;
+			switch (t)
+			{
+			case 1:
+				State = Login;
+				goto Start;
+				break;
+			case 2:
+				State = Registration;
+				goto Start;
+				break;
+			default:
+				State = Registration;
+				goto Start;
+				break;
+			}*/
+
+		}
 
 	}
+	/*while (true) {
+			ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+			if (ch == 27) {// Проверка на Esc
+				cout << endl << "Выход из ввода логина." << endl;
+				system("cls");
+				goto Start;
+			}
+			else if (ch == 8) {// Проверка на BackSpace
+				if (!login.empty()) {
+					cout << "\b \b"; // Удаление последнего символа из консоли
+					login.pop_back(); // Удаление последнего символа из login
+				}
+			}
+			else if (ch == 13) {// Проверка на Enter
+				cout << endl;
+				break;  // Завершение ввода при нажатии клавиши Enter
+			}
+			else {
+				login += ch;  // Добавление символа к переменной login
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}*/
+
+
+
+		//State = static_cast<States>((int)_getch() - 49);
 
 		/*методя для репортов
-	reports = readPaidReportsFromFile("PaidReports.txt");
-	vector<PaidReport> reportsAfterReqest = PaidReportRequestBySolvMode(reports,"problem");
-	OutputPaidReportsAll(reportsAfterReqest, 0);*/
-	/*
-	работа с юзерами
-	users = readUsersFromFile("Users.txt");
-	OutputUsersAll(users);
-	*/
+		reports = readPaidReportsFromFile("PaidReports.txt");
+		vector<PaidReport> reportsAfterReqest = PaidReportRequestBySolvMode(reports,"problem");
+		OutputPaidReportsAll(reportsAfterReqest, 0);*/
+		/*
+		работа с юзерами
+		users = readUsersFromFile("Users.txt");
+		OutputUsersAll(users);
+		*/
 
 
 
-	//string t;
-	//cin >> t;
+		//string t;
+		//cin >> t;
 
 
 
-	/*locations = readLocationsFromFile("List_Of_Jards.txt");
+		/*locations = readLocationsFromFile("List_Of_Jards.txt");
 
-	// Выводим информацию о каждом автомобиле после считывания
-	OutputLocationsInfo(locations);
-
-
-
-	cout << "Выберите из списка:\n";
+		// Выводим информацию о каждом автомобиле после считывания
+		OutputLocationsInfo(locations);
 
 
-	string s = locations[_getch() - 48].GetZipCode() + ".txt";
+
+		cout << "Выберите из списка:\n";
 
 
-	
+		string s = locations[_getch() - 48].GetZipCode() + ".txt";
 
 
 
 
-	OutputCarsInfo(carsFromLocation);
 
-	SortCarsBySaleDate(carsFromLocation);
-	OutputCarsInfo(carsFromLocation);*/
+
+
+		OutputCarsInfo(carsFromLocation);
+
+		SortCarsBySaleDate(carsFromLocation);
+		OutputCarsInfo(carsFromLocation);*/
 }
 
 
@@ -1262,6 +1395,9 @@ int main() {
 //   4. В окне "Список ошибок" можно просматривать ошибки.
 //   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
 //   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+
+
+
 
 
 
