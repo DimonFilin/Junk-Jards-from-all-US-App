@@ -1,6 +1,7 @@
 ﻿  Junk Jards from all US.cpp
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(173,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(369,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(663,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(833,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(175,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(377,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(686,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(860,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1225,12): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
   Junk Jards from all US.vcxproj -> D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Debug\Junk Jards from all US.exe
