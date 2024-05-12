@@ -667,14 +667,142 @@ User UpdateUserField() {
 	COORD cords = CalculateTextPosition("Введите пароль   ");
 	GoToXY(cords.X, ++cords.Y);
 	cout << "Введите имя ";
+	char ch;
+	while (true) {
+		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+		if (ch == 27) {// Проверка на Esc
+			cout << endl << "Выход из входа." << endl;
+			system("cls");
+			InfoOfReport[0] = "";
 
-	cin >> InfoOfReport[0];	GoToXY(cords.X, ++cords.Y);
-	cout << "Введите пароль ";
-	cin >> InfoOfReport[1];	GoToXY(cords.X, ++cords.Y);
+			return User(1, "", "", "", "");
+		}
+		else if (ch == 8) {// Проверка на BackSpace
+
+			if (!InfoOfReport[0].empty()) {//проверка на пустой пароль
+				cout << "\b \b"; // Удаление последнего символа из консоли
+				InfoOfReport[0].pop_back(); // Удаление последнего символа из login
+			}
+		}
+		else if (ch == 13) {// Проверка на Enter
+			cout << ch;
+			cout << endl;
+			goto Password;  // Завершение ввода при нажатии клавиши Enter
+		}
+		else {
+			if (size(InfoOfReport[0]) < 10)
+			{
+				InfoOfReport[0] += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}
+	}
+Password:
+	GoToXY(cords.X, ++cords.Y);
+	cout << "Введите пароль (минимум 5 символов) ";
+	while (true) {
+		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+		if (ch == 27) {// Проверка на Esc
+			system("cls");
+			InfoOfReport[1] = "";
+
+			return User(1, "", "", "", "");
+		}
+		else if (ch == 8) {// Проверка на BackSpace
+
+			if (!InfoOfReport[1].empty()) {//проверка на пустой пароль
+				cout << "\b \b"; // Удаление последнего символа из консоли
+				InfoOfReport[1].pop_back(); // Удаление последнего символа из login
+			}
+		}
+		else if (ch == 13) {// Проверка на Enter
+			if (size(InfoOfReport[1]) >4)
+			{
+				cout << ch;
+				cout << endl;
+				goto Mail;
+			}  // Завершение ввода при нажатии клавиши Enter
+		}
+		else {
+			if (size(InfoOfReport[1]) < 30)
+			{
+				InfoOfReport[1] += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}
+	}
+Mail:
+	GoToXY(cords.X, ++cords.Y);
 	cout << "Введите адрес почты ";
-	cin >> InfoOfReport[2];	GoToXY(cords.X, ++cords.Y);
+	while (true) {
+		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+		if (ch == 27) {// Проверка на Esc
+			cout << endl << "Выход из входа." << endl;
+			system("cls");
+			InfoOfReport[2] = "";
+
+			return User(1, "", "", "", "");
+		}
+		else if (ch == 8) {// Проверка на BackSpace
+
+			if (!InfoOfReport[0].empty()) {//проверка на пустой пароль
+				cout << "\b \b"; // Удаление последнего символа из консоли
+				InfoOfReport[2].pop_back(); // Удаление последнего символа из login
+			}
+		}
+		else if (ch == 13) {// Проверка на Enter
+			cout << ch;
+			cout << endl;
+			goto Telephone;  // Завершение ввода при нажатии клавиши Enter
+		}
+		else {
+			if (InfoOfReport[2].empty())
+			{
+				InfoOfReport[2] += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+			else
+			{
+				InfoOfReport[2] += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод символа
+			}
+		}
+	}
+Telephone:
+	GoToXY(cords.X, ++cords.Y);
 	cout << "Введите номер телефона +375";
-	cin >> InfoOfReport[3];	GoToXY(cords.X, ++cords.Y);
+	while (true) {
+		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+		if (ch == 27) {// Проверка на Esc
+			cout << endl << "Выход из входа." << endl;
+			system("cls");
+			InfoOfReport[3] = "";
+
+			return User(1, "", "", "", "");
+		}
+		else if (ch == 8) {// Проверка на BackSpace
+
+			if (!InfoOfReport[0].empty()) {//проверка на пустой пароль
+				cout << "\b \b"; // Удаление последнего символа из консоли
+				InfoOfReport[3].pop_back(); // Удаление последнего символа из login
+			}
+		}
+		else if (ch == 13) {// Проверка на Enter
+			cout << ch;
+			cout << endl;
+			goto End;  // Завершение ввода при нажатии клавиши Enter
+		}
+		else {
+			if (size(InfoOfReport[3]) < 7)
+
+			{
+				InfoOfReport[3] += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}
+	}
+End:
+	GoToXY(cords.X, ++cords.Y);
 	InfoOfReport[3] = "+ 375" + InfoOfReport[3];
 	//Вернем готовый объект для добавления в вектор
 	return User(Id, InfoOfReport[0], InfoOfReport[1], InfoOfReport[2], InfoOfReport[3]);
@@ -1180,9 +1308,12 @@ void UserTest() {
 					break;  // Завершение ввода при нажатии клавиши Enter
 				}
 				else {
+					if (size(login) < 10)
+					{
+						login += ch;  // Добавление символа 
+						cout << ch;  // Вывод символа
+					}
 
-					login += ch;  // Добавление символа к переменной password
-					cout << ch;  // Вывод символа
 
 				}
 			}
@@ -1201,7 +1332,7 @@ void UserTest() {
 				system("cls");
 				GoToXY(cords.X, cords.Y);
 				cout << "Вы ввели не правильный логин\n";
-				login = "";
+				login = ""; password = "";
 
 				goto Identifications;
 			}
@@ -1222,7 +1353,7 @@ void UserTest() {
 					cout << endl << "Выход из входа." << endl;
 					system("cls");
 					persondata = User(1, "", "", "", "");
-					login == "";
+					login = ""; password = "";
 
 					goto Identifications;
 				}
@@ -1242,13 +1373,16 @@ void UserTest() {
 					if (password.empty())
 					{
 						password += ch;  // Добавление символа к переменной password
-						cout << ch;  // Вывод * вместо введенных символов
+						cout << ch;  // Вывод символа
 					}
 					else
 					{
-						cout << "\b \b" << "*";
-						password += ch;  // Добавление символа к переменной password
-						cout << ch;  // Вывод символа
+						if (size(password) < 30)
+						{
+							cout << "\b \b" << "*";
+							password += ch;  // Добавление символа к переменной password
+							cout << ch;  // Вывод символа
+						}
 					}
 				}
 			}
@@ -1257,8 +1391,11 @@ void UserTest() {
 			if (password != persondata.GetPassword())
 			{
 				system("cls");
+				GoToXY(cords.X, cords.Y - 2);
+
 				cout << "Вы ввели неправильный пароль, войдите еще раз\n";
 				persondata = User(1, "", "", "", "");
+				login = ""; password = "";
 				goto Identifications;
 			}
 			login = password = "";
@@ -1269,9 +1406,14 @@ void UserTest() {
 		if (State == Registration)
 		{
 			persondata = UpdateUserField();
-			users.push_back(persondata);
-			InsertUserToFile(users);
+			if (persondata.GetName() != "")
+			{
+				users.push_back(persondata);
+				InsertUserToFile(users); cout << "yes";
+			}
+			persondata = User(1, "", "", "", "");
 			State = Meny1;
+			cout << "no";
 		}
 		if (State == Meny2) {
 			system("cls");
