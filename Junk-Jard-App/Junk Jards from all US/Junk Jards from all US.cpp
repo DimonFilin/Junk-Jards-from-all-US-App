@@ -222,7 +222,24 @@ COORD OutputLocationsInfo(vector <Location> locations) {
 
 }
 
+COORD OutputInfoOf1Location(Location location) {
+	COORD cords = CalculateTextPosition("Florida  Central Florida Pick & Pay 10694 Cosmonaut Blvd  Orlando FL 32824");
+	int i = 6 / 2 * (-1);
+	int iteration = 1;
+	cords.Y += i;
 
+		GoToXY(cords.X, cords.Y++);
+		vector<string> locationsInfo = location.GetAllInfoAboutLocation();
+		cout << iteration++ << " ";
+		for (string info : locationsInfo) {
+			cout << info << " ";
+		}
+		cout << endl;
+
+	
+	return(cords);
+
+}
 
 
 //Класс для хранения данных об автомобиле
@@ -408,16 +425,20 @@ void InsertCarsToFile(vector<Car> carsToFile, const string filename) {
 	}
 }
 //Вывод списка авто
-void OutputCarsInfo(vector <Car> Cars) {
+COORD OutputCarsInfo(vector <Car> Cars) {
 	system("cls");
-
+	COORD cords = CalculateTextPosition("fffffffffffffffffffffffff");
 	int i = size(Cars) / 2 * (-1);
+	//int iteration = 1;
+	cords.Y += i;
+
 	for (Car car : Cars) {
 		vector<string> carInfo = car.GetAllInfoAboutCar();
 		//car.CoutAllInfo(i);
 		car.CoutAdvancedeInfo(i); i += 8;
-		cout << endl;
+		GoToXY(cords.X, cords.Y); cords.Y += 8;
 	}
+	return cords;
 }
 // Метод для получения значения из списка
 template <size_t N>
@@ -666,7 +687,7 @@ User UpdateUserField() {
 	//Валидация имени
 	COORD cords = CalculateTextPosition("Введите пароль   ");
 	GoToXY(cords.X, ++cords.Y);
-	cout << "Введите имя ";
+	cout << "Введите логин ";
 	char ch;
 	while (true) {
 		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
@@ -690,7 +711,7 @@ User UpdateUserField() {
 			goto Password;  // Завершение ввода при нажатии клавиши Enter
 		}
 		else {
-			if (size(InfoOfReport[0]) < 10)
+			if (size(InfoOfReport[0]) < 16)
 			{
 				InfoOfReport[0] += ch;  // Добавление символа к переменной password
 				cout << ch;  // Вывод * вместо введенных символов
@@ -756,15 +777,10 @@ Mail:
 			goto Telephone;  // Завершение ввода при нажатии клавиши Enter
 		}
 		else {
-			if (InfoOfReport[2].empty())
+			if (size(InfoOfReport[2]) < 30)
 			{
 				InfoOfReport[2] += ch;  // Добавление символа к переменной password
 				cout << ch;  // Вывод * вместо введенных символов
-			}
-			else
-			{
-				InfoOfReport[2] += ch;  // Добавление символа к переменной password
-				cout << ch;  // Вывод символа
 			}
 		}
 	}
@@ -782,7 +798,7 @@ Telephone:
 		}
 		else if (ch == 8) {// Проверка на BackSpace
 
-			if (!InfoOfReport[0].empty()) {//проверка на пустой пароль
+			if (!InfoOfReport[3].empty()) {//проверка на пустой пароль
 				cout << "\b \b"; // Удаление последнего символа из консоли
 				InfoOfReport[3].pop_back(); // Удаление последнего символа из login
 			}
@@ -793,8 +809,7 @@ Telephone:
 			goto End;  // Завершение ввода при нажатии клавиши Enter
 		}
 		else {
-			if (size(InfoOfReport[3]) < 7)
-
+			if (size(InfoOfReport[3]) < 9)
 			{
 				InfoOfReport[3] += ch;  // Добавление символа к переменной password
 				cout << ch;  // Вывод * вместо введенных символов
@@ -1177,6 +1192,50 @@ string NameValidation() {
 
 
 
+int getConsoleWidth() {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	int columns, rows;
+
+	if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
+		columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+		rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+	}
+	else {
+		columns = 80; // Значение по умолчанию, если не удается определить ширину консоли
+		rows = 25;
+	}
+
+	return columns;
+}
+
+vector<string> splitString(const string& str, int maxLength) {
+	vector<string> result;
+	stringstream ss(str);
+	string line;
+	string word;
+
+	while (getline(ss, word, ' ')) {
+		if (line.length() + word.length() > maxLength) {
+			result.push_back(line);
+			line.clear();
+		}
+		if (!line.empty()) {
+			line += ' ';
+		}
+		line += word;
+	}
+
+	if (!line.empty()) {
+		result.push_back(line);
+	}
+
+	return result;
+}
+
+
+
+
+
 enum class States {
 	Login,
 	Registration,
@@ -1191,7 +1250,8 @@ enum class States {
 	Meny5,
 	ChangeAlignment,
 	LocationsChoose,
-	PersonData
+	PersonData,
+	CalcaulateCostShipping
 };
 
 #define Login States::Login
@@ -1208,6 +1268,7 @@ enum class States {
 #define PersonData States::PersonData
 #define ChangeAlignment States::ChangeAlignment
 #define LocationsChoose States::LocationsChoose
+#define CalcaulateCostShipping States::CalcaulateCostShipping
 
 //Переменные для работы кода
 vector<Car> cars;
@@ -1308,7 +1369,7 @@ void UserTest() {
 					break;  // Завершение ввода при нажатии клавиши Enter
 				}
 				else {
-					if (size(login) < 10)
+					if (size(login) < 16)
 					{
 						login += ch;  // Добавление символа 
 						cout << ch;  // Вывод символа
@@ -1506,10 +1567,114 @@ void UserTest() {
 					goto Start2;
 				}
 				if (State == LocationsChoose) {
-					cords = CalculateTextPosition("Тут пока что еще ничего нет(");
+					cords = OutputLocationsInfo(locations);
 					GoToXY(cords.X, cords.Y++);
-					cout << "Тут пока что еще ничего нет(";
-					State = Locations;
+					cout << "Выберите локацию (напишите номер) ";
+					int LocationChoose;
+					cin >> LocationChoose;
+					string s = locations[LocationChoose-1].GetZipCode() + ".txt";
+					State = Meny4;
+					cars = readCarsFromFile(s);
+					string Info = cars[0].GetName();
+					cars.erase(cars.begin());
+					while (true) {
+					Start3:
+						system("cls");
+
+						if (State == Meny4)
+						{
+							COORD cords = CalculateTextPosition("1.Вывести информацию об локаоции");
+							GoToXY(cords.X, cords.Y);
+							cout << "Выберите пункт меню:";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "1.Вывести информацию об локации";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "2.Вывети список автомобилей";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "3.Рассчитать стоимость привоза авто в РБ";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "4.Выйти в меню выбора локации";
+							GoToXY(cords.X, ++cords.Y);
+
+							char t = _getch(); cout << t;
+							switch (t)
+							{
+							case '1':
+								State = LocationInfo;
+								goto Start3;
+								break;
+							case '2':
+								State = Cars;
+								goto Start3;
+								break;
+							case '3':
+								State = CalcaulateCostShipping;
+								goto Start3;
+								break;
+							case '4':
+								State = Meny2;
+								//persondata = User(1, "", "", "", "");
+								goto Start2;
+								break;
+							default:
+								GoToXY(cords.X, ++cords.Y);
+								cout << "Такой клавиши нет";
+								GoToXY(cords.X - 8, ++cords.Y);
+								cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+								system("cls");
+								goto Start3;
+							}
+						}
+
+						if (State == LocationInfo)
+						{
+							COORD cords = OutputInfoOf1Location(locations[LocationChoose-1]);
+							GoToXY(cords.X, cords.Y);
+							COORD position = CalculateTextPosition("Below are the cities that the US Postal Service accepts for the ZIP code 32824. This code is specific toarea, be sure to use this ZIP code to ensure that you");
+							
+							int consoleWidth = getConsoleWidth();
+							int maxLineLength = consoleWidth / 2;
+
+							vector<string> shortStrings = splitString(Info, maxLineLength);
+
+							for (const auto& line : shortStrings) {
+								GoToXY(cords.X, cords.Y++);
+								cout << line;
+							}
+
+
+							/*GoToXY(position.X, position.Y);
+							cout << Info;
+							GoToXY(cords.X, cords.Y++);*/
+							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							State= Meny4;
+							goto Start3;
+						}
+
+						if (State == Cars)
+						{
+							COORD cords = CalculateTextPosition("1.Посмотреть контактные данные");
+							GoToXY(cords.X, cords.Y);
+							cords = OutputCarsInfo(cars);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							State = Meny4;
+							goto Start3;
+						}
+
+						if (State == CalcaulateCostShipping)
+						{
+							//COORD cords = OutputInfoOf1Location(locations[LocationChoose]);
+							GoToXY(cords.X, cords.Y);
+							cout << "Ничего ";
+							GoToXY(cords.X, cords.Y++);
+							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							State = Meny4;
+							goto Start3;
+						}
+
+
+					}
 
 					GoToXY(cords.X, cords.Y++);
 					cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
@@ -1648,11 +1813,7 @@ void UserTest() {
 
 		string s = locations[_getch() - 48].GetZipCode() + ".txt";
 
-
-
-
-
-
+		string s = locations[t].GetZipCode() + ".txt";
 
 		OutputCarsInfo(carsFromLocation);
 
