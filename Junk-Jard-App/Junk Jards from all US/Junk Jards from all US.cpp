@@ -228,15 +228,15 @@ COORD OutputInfoOf1Location(Location location) {
 	int iteration = 1;
 	cords.Y += i;
 
-		GoToXY(cords.X, cords.Y++);
-		vector<string> locationsInfo = location.GetAllInfoAboutLocation();
-		cout << iteration++ << " ";
-		for (string info : locationsInfo) {
-			cout << info << " ";
-		}
-		cout << endl;
+	GoToXY(cords.X, cords.Y++);
+	vector<string> locationsInfo = location.GetAllInfoAboutLocation();
+	cout << iteration++ << " ";
+	for (string info : locationsInfo) {
+		cout << info << " ";
+	}
+	cout << endl;
 
-	
+
 	return(cords);
 
 }
@@ -442,19 +442,24 @@ COORD OutputCarsInfo(vector <Car> Cars) {
 }
 // Метод для получения значения из списка
 template <size_t N>
-int getValueFromList(const string(&options)[N]) {
+int getValueFromList(COORD cords, const string(&options)[N]) {
+
 	for (size_t i = 0; i < N; i++) {
+		GoToXY(cords.X, cords.Y++);
 		cout << i + 1 << ". " << options[i] << endl;
 	}
-
+	GoToXY(cords.X, cords.Y++);
+AnotherStart:
 	int choice;
 	cout << "Введите номер: ";
 	cin >> choice;
 
 	// Проверка на правильность ввода
 	if (choice < 1 || choice > N) {
+		GoToXY(cords.X, cords.Y++);
 		cout << "Некорректный выбор. Пожалуйста, выберите значение из списка." << endl;
-		return getValueFromList(options);
+		GoToXY(cords.X, cords.Y++);
+		goto AnotherStart;
 	}
 
 	return choice;
@@ -467,29 +472,41 @@ const string customsTypes[] = { "полная", "льготная" };
 // Метод для рассчета стоимости привоза автомобиля
 void calculateShippingCost() {
 
+
+
 	// Получение информации о типе автомобиля, типе двигателя, годе производства и других параметрах
 	double engineVolume, carCost;
+	COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 
+	GoToXY(cords.X, cords.Y - 1);
 	// Ввод данных пользователь
 	cout << "Выберите тип автомобиля:" << endl;
-	int carTypeIndex = getValueFromList(carTypes);
-
-	cout << "Выберите тип двигателя:" << endl;
-	int engineTypeIndex = getValueFromList(engineTypes);
-
-	cout << "Выберите год производства автомобиля:" << endl;
-	int productionYearIndex = getValueFromList(productionYears);
-
-	cout << "Введите объем двигателя автомобиля: ";
-	cin >> engineVolume;
-
-	cout << "Введите стоимость автомобиля в долларах: ";
-	cin >> carCost;
-
+	int carTypeIndex = getValueFromList(cords, carTypes);
 	system("cls");
 
+	GoToXY(cords.X, cords.Y - 1);
+	cout << "Выберите тип двигателя:" << endl;
+	int engineTypeIndex = getValueFromList(cords, engineTypes);
+	system("cls");
+
+	GoToXY(cords.X, cords.Y - 1);
+	cout << "Выберите год производства автомобиля:" << endl;
+	int productionYearIndex = getValueFromList(cords, productionYears);
+	system("cls");
+
+	GoToXY(cords.X, cords.Y - 1);
+	cout << "Введите объем двигателя автомобиля: ";
+	cin >> engineVolume;
+	system("cls");
+
+	GoToXY(cords.X, cords.Y - 1);
+	cout << "Введите стоимость автомобиля в долларах: ";
+	cin >> carCost;
+	system("cls");
+
+
 	// Расчет стоимости привоза
-	double totalCost = 1.1; cout << carTypeIndex << " byltrc";
+	double totalCost = 1.1;
 	//В зависимости от места в контейрнере
 	switch (carTypeIndex)
 	{
@@ -563,11 +580,12 @@ void calculateShippingCost() {
 			totalCost *= engineVolume / 50;
 	}
 
+	GoToXY(cords.X, cords.Y++);
 
-	cout << "Cтоимость авто: " << carCost << "$" << endl;
-	cout << "Аукционный сбор: " << fixed << setprecision(2) << carCost / 110 << "$" << endl;
-	cout << "Цена доставки : " << totalCost << "$" << endl;
-	cout << "Итоговая цена : " << totalCost + carCost << "$" << endl;
+	cout << "Cтоимость авто: " << carCost << "$" << endl; GoToXY(cords.X, cords.Y++);
+	cout << "Аукционный сбор: " << fixed << setprecision(2) << carCost / 110 << "$" << endl; GoToXY(cords.X, cords.Y++);
+	cout << "Цена доставки : " << totalCost << "$" << endl; GoToXY(cords.X, cords.Y++);
+	cout << "Итоговая цена : " << totalCost + carCost + carCost / 110 << "$" << endl;
 }
 
 
@@ -737,7 +755,7 @@ Password:
 			}
 		}
 		else if (ch == 13) {// Проверка на Enter
-			if (size(InfoOfReport[1]) >4)
+			if (size(InfoOfReport[1]) > 4)
 			{
 				cout << ch;
 				cout << endl;
@@ -1248,7 +1266,8 @@ enum class States {
 	Meny3,
 	Meny4,
 	Meny5,
-	ChangeAlignment,
+	ChangeAlignmentCars,
+	ChangeAlignmentLocations,
 	LocationsChoose,
 	PersonData,
 	CalcaulateCostShipping
@@ -1266,7 +1285,8 @@ enum class States {
 #define Meny4 States::Meny4
 #define Meny5 States::Meny5
 #define PersonData States::PersonData
-#define ChangeAlignment States::ChangeAlignment
+#define ChangeAlignmentCars States::ChangeAlignmentCars
+#define ChangeAlignmentLocations States::ChangeAlignmentLocations
 #define LocationsChoose States::LocationsChoose
 #define CalcaulateCostShipping States::CalcaulateCostShipping
 
@@ -1279,10 +1299,6 @@ vector<User> users;
 
 
 void UserTest() {
-
-
-
-
 
 
 	States State;
@@ -1534,7 +1550,7 @@ void UserTest() {
 					GoToXY(cords.X, cords.Y);
 					cout << "1.Выбрать локацию";
 					GoToXY(cords.X, ++cords.Y);
-					cout << "2.Изменить выравнивание";
+					cout << "2.Изменить сортировку";
 					GoToXY(cords.X, ++cords.Y);
 					cout << "3.Выйти в меню аккаунта";
 					GoToXY(cords.X, ++cords.Y);
@@ -1546,7 +1562,7 @@ void UserTest() {
 						goto Start2;
 						break;
 					case '2':
-						State = ChangeAlignment;
+						State = ChangeAlignmentLocations;
 						goto Start2;
 						break;
 					case '3':
@@ -1572,7 +1588,7 @@ void UserTest() {
 					cout << "Выберите локацию (напишите номер) ";
 					int LocationChoose;
 					cin >> LocationChoose;
-					string s = locations[LocationChoose-1].GetZipCode() + ".txt";
+					string s = "locations\\" + locations[LocationChoose - 1].GetZipCode() + ".txt"; cout << s;
 					State = Meny4;
 					cars = readCarsFromFile(s);
 					string Info = cars[0].GetName();
@@ -1628,10 +1644,10 @@ void UserTest() {
 
 						if (State == LocationInfo)
 						{
-							COORD cords = OutputInfoOf1Location(locations[LocationChoose-1]);
+							COORD cords = OutputInfoOf1Location(locations[LocationChoose - 1]);
 							GoToXY(cords.X, cords.Y);
 							COORD position = CalculateTextPosition("Below are the cities that the US Postal Service accepts for the ZIP code 32824. This code is specific toarea, be sure to use this ZIP code to ensure that you");
-							
+
 							int consoleWidth = getConsoleWidth();
 							int maxLineLength = consoleWidth / 2;
 
@@ -1647,115 +1663,197 @@ void UserTest() {
 							cout << Info;
 							GoToXY(cords.X, cords.Y++);*/
 							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
-							State= Meny4;
+							State = Meny4;
 							goto Start3;
 						}
 
 						if (State == Cars)
 						{
-							COORD cords = CalculateTextPosition("1.Посмотреть контактные данные");
+							system("cls");
+							COORD cords = CalculateTextPosition("3.поиск локации по критерию");
 							GoToXY(cords.X, cords.Y);
-							cords = OutputCarsInfo(cars);
+							cout << "1.Выбрать автомобиль";
 							GoToXY(cords.X, ++cords.Y);
-							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
-							State = Meny4;
-							goto Start3;
+							cout << "2.Изменить сортировку";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "3.Поиск локации по критерию";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "4.Выйти в меню локации";
+							GoToXY(cords.X, ++cords.Y);
+							char t = _getch(); cout << t;
+							switch (t)
+							{
+							case '1':
+								State = LocationsChoose;
+								goto Start3;
+								break;
+							case '2':
+								State = ChangeAlignmentCars;
+								goto Start3;
+								break;
+							case '3':
+								//State = ;
+								goto Start3;
+								break;
+							case '4':
+								State = Meny2;
+								goto Start3;
+								break;
+							default:
+								GoToXY(cords.X, ++cords.Y);
+								cout << "Такой клавиши нет";
+								GoToXY(cords.X - 8, ++cords.Y);
+								cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+								system("cls");
+								goto Start3;
+							}
+
+							//Сортировка
+							if (State == ChangeAlignmentCars) {
+								cords = OutputLocationsInfo(locations);
+								GoToXY(cords.X, cords.Y);
+								cout << "1.Отсортировать по имени";
+								GoToXY(cords.X, ++cords.Y);
+								cout << "2.по дате продажи";
+								GoToXY(cords.X, ++cords.Y);
+								cout << "3.по виду урона";
+								GoToXY(cords.X, ++cords.Y);
+								cout << "4.Выйти в выбора автомобиля без изменения сортировки";
+								GoToXY(cords.X, ++cords.Y);
+
+								char t = _getch(); cout << t;
+								switch (t)
+								{
+								case '1':
+									SortByName(cars);
+									break;
+								case '2':
+									SortCarsBySaleDate(cars);
+									break;
+								case '3':
+									SortByDamage(cars);
+									break;
+								case '4':
+
+									system("cls");
+									break;
+								default:
+									GoToXY(cords.X, ++cords.Y);
+									cout << "Такой клавиши нет";
+									GoToXY(cords.X - 8, ++cords.Y);
+									cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+									system("cls");
+								}
+								State = Locations;
+								goto Start2;
+							}
+
+							/*while (true) {
+							Start4:
+								system("cls");
+
+
+
+							}*/
+
+							if (State == CalcaulateCostShipping)
+							{
+								//COORD cords = OutputInfoOf1Location(locations[LocationChoose]);
+								COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+
+								calculateShippingCost();
+								GoToXY(cords.X - 6, cords.Y + 5);
+								cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+								State = Meny4;
+								goto Start3;
+							}
+
+
 						}
 
-						if (State == CalcaulateCostShipping)
-						{
-							//COORD cords = OutputInfoOf1Location(locations[LocationChoose]);
-							GoToXY(cords.X, cords.Y);
-							cout << "Ничего ";
-							GoToXY(cords.X, cords.Y++);
-							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
-							State = Meny4;
-							goto Start3;
-						}
+						
 
-
-					}
-
-					GoToXY(cords.X, cords.Y++);
-					cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
-					system("cls");
-					goto Start2;
-				}
-				//Сортировка
-				if (State == ChangeAlignment) {
-					cords = OutputLocationsInfo(locations);
-					GoToXY(cords.X, cords.Y);
-					cout << "1.Отсортировать по имени";
-					GoToXY(cords.X, ++cords.Y);
-					cout << "2.по штату";
-					GoToXY(cords.X, ++cords.Y);
-					cout << "3.по коду локации";
-					GoToXY(cords.X, ++cords.Y);
-					cout << "4.Выйти в выбора локации без изменения сортировки";
-					GoToXY(cords.X, ++cords.Y);
-
-					char t = _getch(); cout << t;
-					switch (t)
-					{
-					case '1':
-						SortByName(locations);
-						State = Locations;
-						break;
-					case '2':
-						SortByState(locations);
-						State = Locations;
-						break;
-					case '3':
-						SortByCode(locations);
-						State = Locations;
-						break;
-					case '4':
-
-						system("cls");
-						State = Locations;
-						break;
-					default:
-						GoToXY(cords.X, ++cords.Y);
-						cout << "Такой клавиши нет";
-						GoToXY(cords.X - 8, ++cords.Y);
+						GoToXY(cords.X, cords.Y++);
 						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 						system("cls");
+						goto Start2;
 					}
-					goto Start2;
+					//Сортировка
+					if (State == ChangeAlignmentLocations) {
+						cords = OutputLocationsInfo(locations);
+						GoToXY(cords.X, cords.Y);
+						cout << "1.Отсортировать по имени";
+						GoToXY(cords.X, ++cords.Y);
+						cout << "2.по штату";
+						GoToXY(cords.X, ++cords.Y);
+						cout << "3.по коду локации";
+						GoToXY(cords.X, ++cords.Y);
+						cout << "4.Выйти в выбора локации без изменения сортировки";
+						GoToXY(cords.X, ++cords.Y);
+
+						char t = _getch(); cout << t;
+						switch (t)
+						{
+						case '1':
+							SortByName(locations);
+							State = Locations;
+							break;
+						case '2':
+							SortByState(locations);
+							State = Locations;
+							break;
+						case '3':
+							SortByCode(locations);
+							State = Locations;
+							break;
+						case '4':
+
+							system("cls");
+							State = Locations;
+							break;
+						default:
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Такой клавиши нет";
+							GoToXY(cords.X - 8, ++cords.Y);
+							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							system("cls");
+						}
+						goto Start2;
+					}
+
 				}
+				locations = readLocationsFromFile("List_Of_Jards.txt");
+
+				OutputLocationsInfo(locations);
+
+
+				/*COORD cords = CalculateTextPosition("Вы вошли как влаолвоалв");
+				GoToXY(cords.X, cords.Y);
+				cout << "Вы вошли как " <<persondata.GetName();
+				GoToXY(cords.X, ++cords.Y);
+				cout << "Вход" << endl;
+				GoToXY(cords.X, ++cords.Y);
+				cout << "Регистрация" << endl;
+				int t = _getch() - 48;
+				switch (t)
+				{
+				case 1:
+					State = Login;
+					goto Start;
+					break;
+				case 2:
+					State = Registration;
+					goto Start;
+					break;
+				default:
+					State =Meny1;
+					goto Start;
+					break;
+				}*/
 
 			}
-			locations = readLocationsFromFile("List_Of_Jards.txt");
-
-			OutputLocationsInfo(locations);
-
-
-			/*COORD cords = CalculateTextPosition("Вы вошли как влаолвоалв");
-			GoToXY(cords.X, cords.Y);
-			cout << "Вы вошли как " <<persondata.GetName();
-			GoToXY(cords.X, ++cords.Y);
-			cout << "Вход" << endl;
-			GoToXY(cords.X, ++cords.Y);
-			cout << "Регистрация" << endl;
-			int t = _getch() - 48;
-			switch (t)
-			{
-			case 1:
-				State = Login;
-				goto Start;
-				break;
-			case 2:
-				State = Registration;
-				goto Start;
-				break;
-			default:
-				State =Meny1;
-				goto Start;
-				break;
-			}*/
 
 		}
-
 	}
 	/*while (true) {
 			ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
