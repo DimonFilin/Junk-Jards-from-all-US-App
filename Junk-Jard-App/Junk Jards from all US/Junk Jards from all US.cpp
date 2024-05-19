@@ -70,7 +70,9 @@ COORD CalculateTextPosition(const string& text)
 	return COORD{ static_cast<short>(startX), static_cast<short>(startY) };
 }
 
-
+bool isCharDigit(char c) {
+	return c >= '0' && c <= '9';
+}
 
 
 
@@ -449,8 +451,10 @@ COORD OutputCarsInfo(vector <Car> Cars, COORD& coords) {
 		cords.Y += i;
 	}
 
-
+	int j = 1;
 	for (Car car : Cars) {
+		GoToXY(cords.X, cords.Y++);
+		cout << j++<<". ";
 		vector<string> carInfo = car.GetAllInfoAboutCar();
 		//car.CoutAllInfo(i);
 		car.CoutAdvancedeInfo(cords);
@@ -869,8 +873,7 @@ Telephone:
 			goto End;  // Завершение ввода при нажатии клавиши Enter
 		}
 		else {
-			if (size(InfoOfReport[3]) < 9)
-			{
+			if (size(InfoOfReport[3]) < 9 && isCharDigit(ch)) {
 				InfoOfReport[3] += ch;  // Добавление символа к переменной password
 				cout << ch;  // Вывод * вместо введенных символов
 			}
@@ -1105,7 +1108,6 @@ void InsertPaidReportsToFile(vector<PaidReport> reportsToFile) {
 }
 //Вывод списка запросов
 void OutputPaidReportsAll(vector <PaidReport> reports, COORD& cords, int PersonId) {
-	cout << "d";
 	if (cords.Y > 0)
 	{
 		cords = CalculateTextPosition("Платный репорт для автомобиля рррррррррррррррррррррррррр");
@@ -1563,10 +1565,10 @@ void UserTest() {
 			if (persondata.GetName() != "")
 			{
 				users.push_back(persondata);
-				InsertUserToFile(users); cout << "yes";
+				InsertUserToFile(users); //cout << "yes";
 			}
-			persondata = User(1, "", "", "", "");
-			State = Meny1;
+			//persondata = User(1, "", "", "", "");
+			State = Meny2;
 			cout << "no";
 		}
 		if (State == Meny2) {
@@ -1590,7 +1592,7 @@ void UserTest() {
 					GoToXY(cords.X, ++cords.Y);
 					cout << "2.Вывети список локаций";
 					GoToXY(cords.X, ++cords.Y);
-					cout << "3.Показать плантные осмотры, заказанные с вашего аккаунта";
+					cout << "3.Показать платные осмотры, заказанные с вашего аккаунта";
 					GoToXY(cords.X, ++cords.Y);
 					cout << "4.Рассчитать стоимость привоза авто в РБ";
 					GoToXY(cords.X, ++cords.Y);
@@ -2192,11 +2194,6 @@ int main() {
 //   4. В окне "Список ошибок" можно просматривать ошибки.
 //   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
 //   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
-
-
-
-
-
 
 
 
