@@ -1,1 +1,8 @@
-﻿  Junk Jards from all US.vcxproj -> D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Debug\Junk Jards from all US.exe
+﻿  Junk Jards from all US.cpp
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(175,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(397,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(889,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1066,48): warning C4101: Id: неиспользованная локальная переменная
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1075,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1304,37): warning C4018: >: несоответствие типов со знаком и без знака
+  Junk Jards from all US.vcxproj -> D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Debug\Junk Jards from all US.exe
