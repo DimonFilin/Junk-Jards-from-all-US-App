@@ -223,7 +223,6 @@ COORD OutputLocationsInfo(vector <Location> locations) {
 	return(cords);
 
 }
-
 COORD OutputInfoOf1Location(Location location) {
 	COORD cords = CalculateTextPosition("Florida  Central Florida Pick & Pay 10694 Cosmonaut Blvd  Orlando FL 32824");
 	int i = 6 / 2 * (-1);
@@ -454,7 +453,7 @@ COORD OutputCarsInfo(vector <Car> Cars, COORD& coords) {
 	int j = 1;
 	for (Car car : Cars) {
 		GoToXY(cords.X, cords.Y++);
-		cout << j++<<". ";
+		cout << j++ << ". ";
 		vector<string> carInfo = car.GetAllInfoAboutCar();
 		//car.CoutAllInfo(i);
 		car.CoutAdvancedeInfo(cords);
@@ -495,19 +494,50 @@ int getValueFromList(COORD cords, const string(&options)[N]) {
 	}
 	GoToXY(cords.X, cords.Y++);
 AnotherStart:
-	int choice;
+	string choice;
 	cout << "Введите номер: ";
-	cin >> choice;
+	char ch;
+	while (true) {
+		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+		//if (ch == 27) {// Проверка на Esc
+		//	cout << endl << "Выход из входа." << endl;
+		//	system("cls");
+		//	choice = "";
+
+		//	return User(1, "", "", "", "");
+		//}
+		if (ch == 8) {// Проверка на BackSpace
+
+			if (!choice.empty()) {//проверка на пустой пароль
+				cout << "\b \b"; // Удаление последнего символа из консоли
+				choice.pop_back(); // Удаление последнего символа из login
+			}
+		}
+		else if (ch == 13 && size(choice) > 0) {// Проверка на Enter
+
+			cout << ch;
+			cout << endl;
+			goto End;  // Завершение ввода при нажатии клавиши Enter
+		}
+		else {
+			if (size(choice) < 2 && isCharDigit(ch))
+			{
+				choice += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}
+	}
+
+End:
 
 	// Проверка на правильность ввода
-	if (choice < 1 || choice > N) {
+	if (stoi(choice) < 1 || stoi(choice) > N) {
 		GoToXY(cords.X, cords.Y++);
 		cout << "Некорректный выбор. Пожалуйста, выберите значение из списка." << endl;
 		GoToXY(cords.X, cords.Y++);
 		goto AnotherStart;
 	}
-
-	return choice;
+	return stoi(choice);
 }
 // Примеры списков возможных вариантов
 const string carTypes[] = { "Седан", "Хэтчбек", "Купе", "Кабриолет", "Кроссовер", "Пикап", "Внедорожник", "Минивэн", "Грузовик", "Кей-кар", "Мотоцикл", "Квадроцикл", "Багги", "Гидроцикл" };
@@ -678,7 +708,7 @@ public:
 	}
 	void OutPutUserInfo()
 	{
-		system("cls");
+		//system("cls");
 		COORD cords = CalculateTextPosition("1 Aretk artek2001 artek@gmail.com +375303333333");
 		GoToXY(cords.X, cords.Y++);
 		cout << "ID: " << Id;		GoToXY(cords.X, cords.Y++);
@@ -751,7 +781,7 @@ User UpdateUserField() {
 	//Валидация имени
 	COORD cords = CalculateTextPosition("Введите пароль   ");
 	GoToXY(cords.X, ++cords.Y);
-	cout << "Введите логин: ";
+	cout << "Введите логин (выход на Esc): ";
 	char ch;
 	while (true) {
 		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
@@ -941,6 +971,312 @@ void OutputUsersAll(vector <User> reports) {
 
 }
 
+//Класс для администраторов
+class Admin {
+	// Инкапсуляция данных для безопасности
+private:
+	int Id;
+	string Name;
+	string Password;
+	string Email;
+	string PhoneNumber;
+public:
+	int GetId() {
+		return Id;
+	}
+	string GetName() {
+		return Name;
+	}
+	string GetPassword() {
+		return Password;
+	}
+	string GetEmail() {
+		return Email;
+	}
+	string GetPhoneNumer() {
+		return PhoneNumber;
+	}
+	// Конструктор класса для удобного создания и инициализации объектов
+	Admin(const int id, const  string name, const string password, const  string  email, const  string  phonenumber)
+		: Id(id), Name(name), Password(password), Email(email), PhoneNumber(phonenumber) {}
+	// метод для вывода данных  
+	tuple<int, string, string, string, string> GetAllInfoAboutUser()
+	{
+		return { make_tuple(Id, Name, Password, Email, PhoneNumber) };
+	}
+	string FormStringToAddToFile()
+	{
+		string stroke = "";
+
+		stroke = to_string(Id) + ";" + Name + ";" + Password + ";" + Email + ";" + PhoneNumber;
+
+		return stroke;
+	}
+	void OutPutAdminInfo()
+	{
+		//system("cls");
+		COORD cords = CalculateTextPosition("1 Aretk artek2001 artek@gmail.com +375303333333");
+		GoToXY(cords.X, cords.Y++);
+		cout << "ID: " << Id;		GoToXY(cords.X, cords.Y++);
+		cout << "Имя: " << Name;		GoToXY(cords.X, cords.Y++);
+		cout << "Пароль: " << Password;		GoToXY(cords.X, cords.Y++);
+		cout << "Email: " << Email;		GoToXY(cords.X, cords.Y++);
+		cout << "Номер телефона: " << PhoneNumber;
+		GoToXY(cords.X, cords.Y++);
+		cout << "Нажмите любую клавишу для продолжения "; char t = _getch();
+		GoToXY(cords.X, cords.Y);
+	}
+	~Admin() {}
+};
+//Метод для вывода администраторов из файла в вектор
+vector<Admin> readAdminsFromFile(const  string filename) {
+	ifstream file(filename); // Открываем файл с данными
+	vector<Admin> Admins;
+
+	//Получилось открыть файл?
+	if (file.is_open()) {
+		string line;
+		while (getline(file, line)) {
+			stringstream ss(line);//Обернем строку Line в ss для работы как с потоком
+			vector<string> AdminsInfo;//Создаем вектор в который запишем всю информацию об автомобиле
+			string info;//временная переменная, которая будет хранить часть ss
+			int i = 0, id;
+			//Разделим нашу строку по символу ;
+			while (getline(ss, info, ';')) {
+				if (i == 0)
+				{
+					id = stoi(info);
+					LastId = id;
+				}
+				else {
+					AdminsInfo.push_back(info);
+				}
+				i++;
+			}
+			// Проверяем корректное количество полей
+			Admin admin(id, AdminsInfo[0], AdminsInfo[1], AdminsInfo[2], AdminsInfo[3]);
+			Admins.push_back(admin);
+
+		}
+		file.close();
+	}
+	else {//Не получилось
+		system("cls");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
+		GoToXY(cords.X, cords.Y);
+		cout << "Ошибка открытия файла." << endl;
+		GoToXY(cords.X - 4, cords.Y + 2);
+		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		system("cls");
+
+	}
+
+	return Admins;
+}
+//Метод для добавления поля в список администраторов
+Admin UpdateAdminField() {
+
+	//Очистим консоль
+	system("cls");
+
+	//Массив для ввода значений
+	string* InfoOfReport = new string[4]; int Id;
+
+	//Заполним массив
+	Id = ++LastId;
+	//Валидация имени
+	COORD cords = CalculateTextPosition("Введите пароль   ");
+	GoToXY(cords.X, ++cords.Y);
+	cout << "Введите логин (выход на Esc): ";
+	char ch;
+	while (true) {
+		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+		if (ch == 27) {// Проверка на Esc
+			cout << endl << "Выход из входа." << endl;
+			system("cls");
+			InfoOfReport[0] = "";
+
+			return Admin(1, "", "", "", "");
+		}
+		else if (ch == 8) {// Проверка на BackSpace
+
+			if (!InfoOfReport[0].empty()) {//проверка на пустой пароль
+				cout << "\b \b"; // Удаление последнего символа из консоли
+				InfoOfReport[0].pop_back(); // Удаление последнего символа из login
+			}
+		}
+		else if (ch == 13) {// Проверка на Enter
+			cout << ch;
+			cout << endl;
+			goto Password;  // Завершение ввода при нажатии клавиши Enter
+		}
+		else {
+			if (size(InfoOfReport[0]) < 16)
+			{
+				InfoOfReport[0] += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}
+	}
+Password:
+	GoToXY(cords.X, ++cords.Y);
+	cout << "Введите пароль (минимум 5 символов): ";
+	while (true) {
+		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+		if (ch == 27) {// Проверка на Esc
+			system("cls");
+			InfoOfReport[1] = "";
+
+			return Admin(1, "", "", "", "");
+		}
+		else if (ch == 8) {// Проверка на BackSpace
+
+			if (!InfoOfReport[1].empty()) {//проверка на пустой пароль
+				cout << "\b \b"; // Удаление последнего символа из консоли
+				InfoOfReport[1].pop_back(); // Удаление последнего символа из login
+			}
+		}
+		else if (ch == 13) {// Проверка на Enter
+			if (size(InfoOfReport[1]) > 4)
+			{
+				cout << ch;
+				cout << endl;
+				goto Mail;
+			}  // Завершение ввода при нажатии клавиши Enter
+		}
+		else {
+			if (size(InfoOfReport[1]) < 30)
+			{
+				InfoOfReport[1] += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}
+	}
+Mail:
+	GoToXY(cords.X, ++cords.Y);
+	cout << "Введите адрес почты: ";
+	while (true) {
+		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+		if (ch == 27) {// Проверка на Esc
+			cout << endl << "Выход из входа." << endl;
+			system("cls");
+			InfoOfReport[2] = "";
+
+			return Admin(1, "", "", "", "");
+		}
+		else if (ch == 8) {// Проверка на BackSpace
+
+			if (!InfoOfReport[0].empty()) {//проверка на пустой пароль
+				cout << "\b \b"; // Удаление последнего символа из консоли
+				InfoOfReport[2].pop_back(); // Удаление последнего символа из login
+			}
+		}
+		else if (ch == 13) {// Проверка на Enter
+			cout << ch;
+			cout << endl;
+			goto Telephone;  // Завершение ввода при нажатии клавиши Enter
+		}
+		else {
+			if (size(InfoOfReport[2]) < 30)
+			{
+				InfoOfReport[2] += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}
+	}
+Telephone:
+	GoToXY(cords.X, ++cords.Y);
+	cout << "Введите номер телефона: +375";
+	while (true) {
+		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+		if (ch == 27) {// Проверка на Esc
+			cout << endl << "Выход из входа." << endl;
+			system("cls");
+			InfoOfReport[3] = "";
+
+			return Admin(1, "", "", "", "");
+		}
+		else if (ch == 8) {// Проверка на BackSpace
+
+			if (!InfoOfReport[3].empty()) {//проверка на пустой пароль
+				cout << "\b \b"; // Удаление последнего символа из консоли
+				InfoOfReport[3].pop_back(); // Удаление последнего символа из login
+			}
+		}
+		else if (ch == 13) {// Проверка на Enter
+			cout << ch;
+			cout << endl;
+			goto End;  // Завершение ввода при нажатии клавиши Enter
+		}
+		else {
+			if (size(InfoOfReport[3]) < 9 && isCharDigit(ch)) {
+				InfoOfReport[3] += ch;  // Добавление символа к переменной password
+				cout << ch;  // Вывод * вместо введенных символов
+			}
+		}
+	}
+End:
+	GoToXY(cords.X, ++cords.Y);
+	InfoOfReport[3] = "+ 375" + InfoOfReport[3];
+	//Вернем готовый объект для добавления в вектор
+	return Admin(Id, InfoOfReport[0], InfoOfReport[1], InfoOfReport[2], InfoOfReport[3]);
+}
+//Ввод информации из вектора в файл администраторов
+void InsertAdminToFile(vector<Admin> reportsToFile) {
+
+	string s = "";//строка в которую добавим текст для будущего добавления в файл
+	for (int i = 0; i < reportsToFile.size(); i++)//Введем все данные в строку
+	{
+		s += reportsToFile[i].FormStringToAddToFile();
+		s += "\n";//Добавим Enter
+	}
+	//cout << s;//Выведем для проверки действия
+
+	ofstream OutputToFile("Users.txt"); // Открываем файл с данными
+	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
+		OutputToFile << s; //Вводим в файл
+		OutputToFile.close();//Закроем файл
+		system("cls");
+		COORD cords = CalculateTextPosition("Вы успешно зарегистрировались");
+		GoToXY(cords.X, cords.Y);
+		cout << "Вы успешно зарегистрировались" << endl;
+		GoToXY(cords.X - 4, cords.Y + 2);
+		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		system("cls");// Запись в файл произошла
+	}
+	else {
+		system("cls");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
+		GoToXY(cords.X, cords.Y);
+		cout << "Ошибка открытия файла для записи." << endl;
+		GoToXY(cords.X - 4, cords.Y + 2);
+		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		system("cls");//Возникла ошибка при открытии файла
+
+
+	}
+}
+//Вывод списка администраторов
+void OutputAdminsAll(vector <Admin> reports) {
+	system("cls");
+	COORD cords = CalculateTextPosition("1 Aretk artek2001 artek@gmail.com +375303333333");
+	int i = size(reports) / 2 * (-1);
+	for (Admin report : reports) {
+		tuple<int, string, string, string, string> reportsInfo = report.GetAllInfoAboutUser();
+		GoToXY(cords.X, cords.Y + i); i++;
+		cout << get<0>(reportsInfo) << " ";
+		cout << get<1>(reportsInfo) << " ";
+		cout << get<2>(reportsInfo) << " ";
+		cout << get<3>(reportsInfo) << " ";
+		cout << get<4>(reportsInfo) << " ";
+		cout << endl;
+	}
+	GoToXY(cords.X, cords.Y + i); i++;
+	cout << "Нажмите любую клавишу для продолжения "; char t = _getch();
+	GoToXY(cords.X, cords.Y + i);
+
+}
+
 
 
 
@@ -973,7 +1309,7 @@ public:
 	{
 		string stroke;
 
-		stroke =""+ to_string(Id) + ";" + SolvedOrNot + ";" + Title.FormStringToAddToFile() + ";" + Answer;
+		stroke = "" + to_string(Id) + ";" + SolvedOrNot + ";" + Title.FormStringToAddToFile() + ";" + Answer;
 
 		return stroke;
 	}
@@ -1060,7 +1396,7 @@ PaidReport UpdatePaidReportFieldByAdmin() {
 	return PaidReport(Id, PaidReportsInfo[0], Car(PaidReportsInfo[1], PaidReportsInfo[2], PaidReportsInfo[3], PaidReportsInfo[4], PaidReportsInfo[5], PaidReportsInfo[6], PaidReportsInfo[7], PaidReportsInfo[8]), PaidReportsInfo[9]);
 }
 //Метод для добавления поля в список запросов от юзера
-PaidReport UpdatePaidReportFieldByUser(User user,Car car) {
+PaidReport UpdatePaidReportFieldByUser(User user, Car car) {
 
 	//Очистим консоль
 	system("cls");
@@ -1069,7 +1405,7 @@ PaidReport UpdatePaidReportFieldByUser(User user,Car car) {
 	string* PaidReportsInfo = new string[10]; int Id;
 
 	//Вернем готовый объект для добавления в вектор
-	return PaidReport(user.GetId(),"unsolved", car, "no answer yet");
+	return PaidReport(user.GetId(), "unsolved", car, "no answer yet");
 }
 //Ввод информации из вектора в файл запросов
 void InsertPaidReportsToFile(vector<PaidReport> reportsToFile) {
@@ -1410,6 +1746,10 @@ void UserTest() {
 			cout << "1.Вход" << endl;
 			GoToXY(cords.X, ++cords.Y);
 			cout << "2.Регистрация" << endl;
+			GoToXY(cords.X, ++cords.Y);
+			cout << "3.Выход " << endl;
+			GoToXY(cords.X, ++cords.Y);
+
 			int t = _getch() - 48; cout << t;
 			switch (t)
 			{
@@ -1421,6 +1761,8 @@ void UserTest() {
 				State = Registration;
 				goto Start;
 				break;
+			case 3:
+				return;
 			default:
 				GoToXY(cords.X, ++cords.Y);
 				cout << "Такой клавиши нет";
@@ -1434,10 +1776,10 @@ void UserTest() {
 		if (State == Login)
 		{
 		Identifications:
-			COORD cords = CalculateTextPosition("Введите логин");
+			COORD cords = CalculateTextPosition("Введите логин ");
 			GoToXY(cords.X, cords.Y++);
 
-			cout << "Введите логин: ";
+			cout << "Введите логин (выход на Esc): ";
 
 			//Ввод логина
 			while (true) {
@@ -1567,30 +1909,34 @@ void UserTest() {
 				users.push_back(persondata);
 				InsertUserToFile(users); //cout << "yes";
 			}
+			else {
+				State = Meny1;
+				goto Start;
+			}
 			//persondata = User(1, "", "", "", "");
 			State = Meny2;
-			cout << "no";
+			//cout << "no";
 		}
 		if (State == Meny2) {
 			system("cls");
 			COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
-			GoToXY(cords.X, cords.Y);
-			cout << "Вы вошли как " << persondata.GetName();
-			GoToXY(cords.X - 8, ++cords.Y);
-			cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
-			system("cls");
+			GoToXY(cords.X, cords.Y++);
+			cout << "Здравствуйте,  " << persondata.GetName();
+			//GoToXY(cords.X - 8, ++cords.Y);
+			goto St2;
 			while (true) {
 			Start2:
 				system("cls");
 				if (State == Meny2)
 				{
-					COORD cords = CalculateTextPosition("1.Посмотреть контактные данные");
-					GoToXY(cords.X, cords.Y);
+				St2:
+					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+					GoToXY(cords.X, ++cords.Y);
 					cout << "Выберите пункт меню:";
 					GoToXY(cords.X, ++cords.Y);
 					cout << "1.Посмотреть контактные данные";
 					GoToXY(cords.X, ++cords.Y);
-					cout << "2.Вывети список локаций";
+					cout << "2.Вывеcти список локаций";
 					GoToXY(cords.X, ++cords.Y);
 					cout << "3.Показать платные осмотры, заказанные с вашего аккаунта";
 					GoToXY(cords.X, ++cords.Y);
@@ -1598,7 +1944,7 @@ void UserTest() {
 					GoToXY(cords.X, ++cords.Y);
 					cout << "5.Выйти в меню входа";
 					GoToXY(cords.X, ++cords.Y);
-
+					string rr;
 					char t = _getch(); cout << t;
 					switch (t)
 					{
@@ -1620,6 +1966,20 @@ void UserTest() {
 						break;
 					case '5':
 						State = Meny1;
+						system("cls");
+						COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+						GoToXY(cords.X, ++cords.Y);
+						cout << "Вы точно хотите выйти из аккаунта (да/нет): ";
+						cin >> rr;
+						if (rr == "да" || rr == "Да" || rr == "yes" || rr == "Yes")
+						{
+							goto Start;
+						}
+						else
+						{
+							GoToXY(cords.X, ++cords.Y);
+							State = Meny2; goto Start2;
+						}
 						persondata = User(1, "", "", "", "");
 						goto Start;
 						break;
@@ -1739,12 +2099,13 @@ void UserTest() {
 					goto Start2;
 				}
 				if (State == LocationsChoose) {
+					system("cls");
 					cords = OutputLocationsInfo(locations);
 					GoToXY(cords.X, cords.Y++);
 					cout << "Выберите локацию (напишите номер) ";
 					int LocationChoose;
 					cin >> LocationChoose;
-					string s = "locations\\" + locations[LocationChoose - 1].GetZipCode() + ".txt"; cout << s;
+					string s = "locations\\" + locations[LocationChoose - 1].GetZipCode() + ".txt";// cout << s;
 					State = Meny4;
 					cars = readCarsFromFile(s);
 					string Info = cars[0].GetName();
@@ -1765,7 +2126,8 @@ void UserTest() {
 							GoToXY(cords.X, ++cords.Y);
 							cout << "3.Выйти в меню выбора локации";
 							GoToXY(cords.X, ++cords.Y);
-
+							cout << "4.Выйти в меню пользователя";
+							GoToXY(cords.X, ++cords.Y);
 							char t = _getch(); cout << t;
 							switch (t)
 							{
@@ -1778,6 +2140,11 @@ void UserTest() {
 								goto Start3;
 								break;
 							case '3':
+								State = Locations;
+								//persondata = User(1, "", "", "", "");
+								goto Start2;
+								break;
+							case '4':
 								State = Meny2;
 								//persondata = User(1, "", "", "", "");
 								goto Start2;
@@ -1899,7 +2266,7 @@ void UserTest() {
 								}//добавить платный реборт в основное меню просмотр
 								if (State == OrderPaidReport)
 								{
-									reports.push_back(UpdatePaidReportFieldByUser(persondata,ChoosenCar));
+									reports.push_back(UpdatePaidReportFieldByUser(persondata, ChoosenCar));
 									InsertPaidReportsToFile(reports);
 									COORD cords = CalculateTextPosition("Спасибо за ваш запрос, администратор в ближайшее время свяжется с вами по вашему телефону или по email.");
 									GoToXY(cords.X, cords.Y++);
@@ -1926,7 +2293,7 @@ void UserTest() {
 									cout << "Выберите автомобиль (напишите номер) ";
 									int CarNumber;
 									cin >> CarNumber;
-									ChoosenCar = cars[CarNumber-1];
+									ChoosenCar = cars[CarNumber - 1];
 									State = Meny5;
 									goto Start4;
 								}
@@ -2064,9 +2431,9 @@ void UserTest() {
 
 
 				}
-				locations = readLocationsFromFile("List_Of_Jards.txt");
+				/*locations = readLocationsFromFile("List_Of_Jards.txt");
 
-				OutputLocationsInfo(locations);
+				OutputLocationsInfo(locations);*/
 
 
 				/*COORD cords = CalculateTextPosition("Вы вошли как влаолвоалв");
@@ -2161,12 +2528,292 @@ void UserTest() {
 		OutputCarsInfo(carsFromLocation);*/
 }
 
+enum AdminStates {
+	Userss,
+	Locationss,
+	Carss,
+	PaidReports,
+	UserssInfo,
+	LocationssInfo,
+	CarssInfo,
+	Menyss1,
+	Menyss2,
+	Menyss3,
+	Menyss4
+};
+
+#define Users AdminStates::Userss
+#define Locations AdminStates::Locationss
+#define Cars AdminStates::Carss
+#define PaidReports AdminStates::PaidReports
+#define UsersInfo AdminStates::UserssInfo
+#define LocationsInfo AdminStates::LocationssInfo
+#define CarsInfo AdminStates::CarssInfo
+#define Meny1 AdminStates::Menyss1
+#define Meny2 AdminStates::Menyss2
+#define Meny3 AdminStates::Menyss3
+#define Meny4 AdminStates::Menyss4
+
+
+
+void AdminTest() {
+	AdminStates State;
+	State = Meny1;
+	string login = "", password = "";
+	Admin persondata = Admin(1, "", "", "", "");
+	vector<Admin> admins = readAdminsFromFile("Admins.txt");
+
+	while (true)
+	{
+	Start:
+		system("cls");
+		if (State == Meny1)
+		{
+		Identifications:
+			COORD cords = CalculateTextPosition("Введите логин ");
+			GoToXY(cords.X, cords.Y++);
+
+			cout << "Введите логин (выход на Esc): ";
+			char ch;
+			//Ввод логина
+			while (true) {
+				ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+				if (ch == 27) {// Проверка на Esc
+					system("cls");
+
+					GoToXY(cords.X, cords.Y++);
+					cout << "Выход.";
+					GoToXY(cords.X - 15, cords.Y + 2);
+					cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+					return;
+
+				}
+				else if (ch == 8) {// Проверка на BackSpace
+					if (!login.empty()) {//проверка на пустой пароль
+						cout << "\b \b"; // Удаление последнего символа из консоли
+						login.pop_back(); // Удаление последнего символа из login
+
+					}
+				}
+				else if (ch == 13) {// Проверка на Enter
+					break;  // Завершение ввода при нажатии клавиши Enter
+				}
+				else {
+					if (size(login) < 16)
+					{
+						login += ch;  // Добавление символа 
+						cout << ch;  // Вывод символа
+					}
+
+
+				}
+			}
+
+			// Cверка с существующими логинами(идентификация)
+			for (Admin admin : admins)
+			{
+				if (login == admin.GetName())
+				{
+					persondata = admin;
+					break;
+				}
+			}
+			if (persondata.GetName() == "")
+			{
+				system("cls");
+				GoToXY(cords.X, cords.Y);
+				cout << "Вы ввели неправильный логин\n";
+				login = ""; password = "";
+
+				goto Identifications;
+			}
+
+
+
+
+			// Ввод пароля
+
+			GoToXY(cords.X, cords.Y);
+			cout << "                                               ";
+			GoToXY(cords.X, ++cords.Y);
+			cout << "Введите пароль: ";
+			GoToXY(cords.X, ++cords.Y);
+			while (true) {
+				ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
+				if (ch == 27) {// Проверка на Esc
+					cout << endl << "Выход из входа." << endl;
+					system("cls");
+					persondata = Admin(1, "", "", "", "");
+					login = ""; password = "";
+
+					goto Identifications;
+				}
+				else if (ch == 8) {// Проверка на BackSpace
+
+					if (!password.empty()) {//проверка на пустой пароль
+						cout << "\b \b"; // Удаление последнего символа из консоли
+						password.pop_back(); // Удаление последнего символа из login
+					}
+				}
+				else if (ch == 13) {// Проверка на Enter
+					cout << "\b \b" << "*";
+					cout << endl;
+					break;  // Завершение ввода при нажатии клавиши Enter
+				}
+				else {
+					if (password.empty())
+					{
+						password += ch;  // Добавление символа к переменной password
+						cout << ch;  // Вывод символа
+					}
+					else
+					{
+						if (size(password) < 30)
+						{
+							cout << "\b \b" << "*";
+							password += ch;  // Добавление символа к переменной password
+							cout << ch;  // Вывод символа
+						}
+					}
+				}
+			}
+
+			// Cверка с паролем (аутентификации)
+			if (password != persondata.GetPassword())
+			{
+				system("cls");
+				GoToXY(cords.X, cords.Y - 2);
+
+				cout << "Вы ввели неправильный пароль, войдите еще раз\n";
+				persondata = Admin(1, "", "", "", "");
+				login = ""; password = "";
+				goto Identifications;
+			}
+			login = password = "";
+
+			State = Meny2;
+
+		}
+		if (State == Meny2) {
+			system("cls");
+			COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+			GoToXY(cords.X, cords.Y++);
+			cout << "Здравствуйте,  " << persondata.GetName();
+			//GoToXY(cords.X - 8, ++cords.Y);
+			goto St2;
+			while (true) {
+			Start2:
+				system("cls");
+				if (State == Meny2)
+				{
+				St2:
+					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+					GoToXY(cords.X, ++cords.Y);
+					cout << "Выберите пункт, с которым хотите работать:";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "1.Пользвоатели";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "2.Локации";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "3.Автомобили";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "4.Платные репорты";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "5.Выйти в меню входа";
+					GoToXY(cords.X, ++cords.Y);
+					string rr;
+					char t = _getch(); cout << t;
+					switch (t)
+					{
+					case '1':
+						State = Users;
+						goto Start2;
+						break;
+					case '2':
+						State = Locations;
+						goto Start2;
+						break;
+					case '3':
+						State = Cars;
+						goto Start2;
+						break;
+					case '4':
+						State = PaidReports;
+						goto Start2;
+						break;
+					case '5':
+						State = Meny1;
+						system("cls");
+						COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+						GoToXY(cords.X, ++cords.Y);
+						cout << "Вы точно хотите выйти из аккаунта (да/нет): ";
+						cin >> rr;
+						if (rr == "да" || rr == "Да" || rr == "yes" || rr == "Yes")
+						{
+							goto Start;
+						}
+						else
+						{
+							GoToXY(cords.X, ++cords.Y);
+							State = Meny2; goto Start2;
+						}
+						persondata = Admin(1, "", "", "", "");
+						goto Start;
+						break;
+					default:
+						GoToXY(cords.X, ++cords.Y);
+						cout << "Такой клавиши нет";
+						GoToXY(cords.X - 8, ++cords.Y);
+						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						system("cls");
+						goto Start2;
+					}
+				}
+			}
+		}
+	}
+}
+
+void UserOrAdmin() {
+	while (true)
+	{
+	Start:
+		system("cls");
+		COORD cords = CalculateTextPosition("Выберите, каким способом войти");
+		GoToXY(cords.X, cords.Y);
+		cout << "Выберите, каким способом войти" << endl;
+		GoToXY(cords.X, ++cords.Y);
+		cout << "1.Как Пользователь" << endl;
+		GoToXY(cords.X, ++cords.Y);
+		cout << "2.Как админ" << endl;
+		GoToXY(cords.X, ++cords.Y);
+		int t = _getch() - 48; cout << t;
+		switch (t)
+		{
+		case 1:
+			UserTest();
+			goto Start;
+			break;
+		case 2:
+			AdminTest();
+			goto Start;
+			break;
+		default:
+			GoToXY(cords.X, ++cords.Y);
+			cout << "Такой клавиши нет";
+			GoToXY(cords.X - 8, ++cords.Y);
+			cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+			system("cls");
+			break;
+		}
+	}
+}
 
 
 int main() {
 	MainSettings();
 	try {
-		UserTest();
+		UserOrAdmin();
 	}
 	catch (const exception& e) {
 		cerr << "Исключение: " << e.what() << endl;
@@ -2194,6 +2841,7 @@ int main() {
 //   4. В окне "Список ошибок" можно просматривать ошибки.
 //   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
 //   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+
 
 
 
