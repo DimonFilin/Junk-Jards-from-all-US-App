@@ -4,4 +4,4 @@
 4;Junsolved;2015 Tesla Model S;Front End;Tuesday, April 16, 2024;10:00 AM EDT;5YJSA1E23FF******;377512345;$5,500;https://abetter.bid/en/1037750603-2015-tesla-model_s;;
 4;unsolved;2015 Tesla Model S;Front End;Tuesday, April 16, 2024;10:00 AM EDT;5YJSA1E23FF******;377512345;$5,500;https://abetter.bid/en/1037750603-2015-tesla-model_s;;
 4;unsolved;Name;Primary damage; Sale date; Auction Starts;Vin#;Lot#;Buy now;Link;;
-5;unsolved;2015 Tesla Model S;Front End;Tuesday, April 16, 2024;10:00 AM EDT;5YJSA1E23FF******;377512345;$5,500;https://abetter.bid/en/1037750603-2015-tesla-model_s;;no answer yet
+5;unsolved;2015 Tesla Model S;Front End;Tuesday, April 16, 2024;10:00 AM EDT;5YJSA1E23FF******;377512345;$5,500;https://abetter.bid/en/1037750603-2015-tesla-model_s;;1

@@ -1,21 +1,23 @@
 ﻿  Junk Jards from all US.cpp
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(177,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(398,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(922,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1228,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1405,48): warning C4101: Id: неиспользованная локальная переменная
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1414,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1642,37): warning C4018: >: несоответствие типов со знаком и без знака
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2546,1): warning C4005: Locations: изменение макроопределения
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1688): message : см. предыдущее определение "Locations"
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2547,1): warning C4005: Cars: изменение макроопределения
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1690): message : см. предыдущее определение "Cars"
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2552,1): warning C4005: Meny1: изменение макроопределения
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1692): message : см. предыдущее определение "Meny1"
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2553,1): warning C4005: Meny2: изменение макроопределения
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1693): message : см. предыдущее определение "Meny2"
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2554,1): warning C4005: Meny3: изменение макроопределения
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1694): message : см. предыдущее определение "Meny3"
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2555,1): warning C4005: Meny4: изменение макроопределения
-D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1695): message : см. предыдущее определение "Meny4"
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(178,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(401,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(925,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(960,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1259,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1444,48): warning C4101: Id: неиспользованная локальная переменная
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1453,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1724,37): warning C4018: >: несоответствие типов со знаком и без знака
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2641,1): warning C4005: Locations: изменение макроопределения
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1770): message : см. предыдущее определение "Locations"
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2644,1): warning C4005: Cars: изменение макроопределения
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1772): message : см. предыдущее определение "Cars"
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2655,1): warning C4005: Meny1: изменение макроопределения
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1774): message : см. предыдущее определение "Meny1"
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2656,1): warning C4005: Meny2: изменение макроопределения
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1775): message : см. предыдущее определение "Meny2"
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2657,1): warning C4005: Meny3: изменение макроопределения
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1776): message : см. предыдущее определение "Meny3"
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2658,1): warning C4005: Meny4: изменение макроопределения
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(1777): message : см. предыдущее определение "Meny4"
+D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Junk Jards from all US\Junk Jards from all US.cpp(2969,26): warning C4018: <=: несоответствие типов со знаком и без знака
   Junk Jards from all US.vcxproj -> D:\Dima\Work\C++\repos\Junk-Jards-from-all-US\Junk-Jard-App\Debug\Junk Jards from all US.exe

@@ -156,16 +156,17 @@ Location UpdateLocationField() {
 
 	//Массив для ввода значений
 	string* InfoOfLocation = new string[4];
-
+	COORD cords = CalculateTextPosition("Введите пароль   ");
+	GoToXY(cords.X, ++cords.Y);
 	//Заполним массив
-	cout << "Введите название";
-	cin >> InfoOfLocation[0];
-	cout << "Введите адрес";
-	cin >> InfoOfLocation[1];
-	cout << "Введите город";
-	cin >> InfoOfLocation[2];
-	cout << "Введите код локации";
-	cin >> InfoOfLocation[3];
+	cout << "Введите название: ";
+	cin >> InfoOfLocation[0]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите адрес: ";
+	cin >> InfoOfLocation[1]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите город: ";
+	cin >> InfoOfLocation[2]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите код локации: ";
+	cin >> InfoOfLocation[3]; GoToXY(cords.X, ++cords.Y);
 
 	//Вернем готовый объект для добавления в вектор
 	return Location(InfoOfLocation[0], InfoOfLocation[1], InfoOfLocation[2], InfoOfLocation[3]);
@@ -188,9 +189,9 @@ void InsertLocationsToFile(vector<Location> locationsToFile) {
 		system("cls");
 		COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
-		cout << "Строка успешно записана в файл." << endl;
+		//cout << "Строка успешно записана в файл." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		//cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 		system("cls");// Запись в файл произошла
 	}
 	else {
@@ -340,12 +341,12 @@ vector <Car> readCarsFromFile(const  string filename) {
 				carInfo.push_back(info);
 			}
 
-			if (carInfo.size() == 8) {  // Проверяем корректное количество полей
+			if (carInfo.size() >= 8) {  // Проверяем корректное количество полей
 				Car car(carInfo[0], carInfo[1], carInfo[2], carInfo[3], carInfo[4], carInfo[5], carInfo[6], carInfo[7]);
 				cars.push_back(car);
 			}
 			else {
-				cout << "Некорректное количество полей в строке: " << line << endl;
+				//cout << "Некорректное количество полей в строке: " << line << endl;
 			}
 		}
 		file.close();
@@ -371,30 +372,32 @@ Car UpdateCarsField() {
 	//Массив для ввода значений
 	vector <string> InfoOfCar(8);
 	//Заполним вектор
-	cout << "Введите название";
-	cin >> InfoOfCar[0];
-	cout << "Введите вид ущерба";
-	cin >> InfoOfCar[1];
-	cout << "Введите дату аукциона";
-	cin >> InfoOfCar[2];
-	cout << "Введите время начала аукциона";
-	cin >> InfoOfCar[3];
-	cout << "Введите вин номер автомобиля";
-	cin >> InfoOfCar[4];
-	cout << "Введите номер лота авто";
-	cin >> InfoOfCar[5];
-	cout << "Введите цену покупки автомобиля (Buy now) без знака $";
-	cin >> InfoOfCar[6];
-	cout << "Введите ссылку на аукцион";
-	cin >> InfoOfCar[7];
+	COORD cords = CalculateTextPosition("Введите цену покупки автомобиля (Buy noW)");
+	GoToXY(cords.X, ++cords.Y);
+	cout << "Введите название: ";
+	cin >> InfoOfCar[0]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите вид ущерба: ";
+	cin >> InfoOfCar[1]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите дату аукциона: ";
+	cin >> InfoOfCar[2]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите время начала аукциона: ";
+	cin >> InfoOfCar[3]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите вин номер автомобиля: ";
+	cin >> InfoOfCar[4]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите номер лота авто: ";
+	cin >> InfoOfCar[5]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите цену покупки автомобиля (Buy now) без знака $: ";
+	cin >> InfoOfCar[6]; GoToXY(cords.X, ++cords.Y);
+	cout << "Введите ссылку на аукцион: ";
+	cin >> InfoOfCar[7]; GoToXY(cords.X, ++cords.Y);
 
 	//Вернем готовый объект для добавления в вектор
 	return Car(InfoOfCar[0], InfoOfCar[1], InfoOfCar[2], InfoOfCar[3], InfoOfCar[4], InfoOfCar[5], InfoOfCar[6], InfoOfCar[7]);
 }
 //Ввод списка авто из вектора в файл
-void InsertCarsToFile(vector<Car> carsToFile, const string filename) {
+void InsertCarsToFile(vector<Car> carsToFile, const string filename, string info) {
 
-	string s = "";//строка в которую добавим текст для будущего добавления в файл
+	string s = info + ";;;;;;;\n";//строка в которую добавим текст для будущего добавления в файл
 	for (int i = 0; i < carsToFile.size(); i++)//Введем все данные в строку
 	{
 		s += carsToFile[i].FormStringToAddToFile();
@@ -408,7 +411,7 @@ void InsertCarsToFile(vector<Car> carsToFile, const string filename) {
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
 		system("cls");
-		COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Строка успешно записана в файл.");
 		GoToXY(cords.X, cords.Y);
 		cout << "Строка успешно записана в файл." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
@@ -430,7 +433,7 @@ void InsertCarsToFile(vector<Car> carsToFile, const string filename) {
 }
 //Вывод списка авто
 COORD OutputCarsInfo(vector <Car> Cars, COORD& coords) {
-	system("cls");
+	//	system("cls");
 	int i;
 
 	if (size(Cars) > 2)
@@ -950,10 +953,38 @@ void InsertUserToFile(vector<User> reportsToFile) {
 
 	}
 }
+//Ввод информации из вектора в файл пользователей
+void InsertUserToFileFromAdmin(vector<User> reportsToFile) {
+
+	string s = "";//строка в которую добавим текст для будущего добавления в файл
+	for (int i = 0; i < reportsToFile.size(); i++)//Введем все данные в строку
+	{
+		s += reportsToFile[i].FormStringToAddToFile();
+		s += "\n";//Добавим Enter
+	}
+	//cout << s;//Выведем для проверки действия
+
+	ofstream OutputToFile("Users.txt"); // Открываем файл с данными
+	if (OutputToFile.is_open()) {//Проверим, можно ли открыть файл
+		OutputToFile << s; //Вводим в файл
+		OutputToFile.close();//Закроем файл
+	}
+	else {
+		system("cls");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
+		GoToXY(cords.X, cords.Y);
+		cout << "Ошибка открытия файла для записи." << endl;
+		GoToXY(cords.X - 4, cords.Y + 2);
+		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		system("cls");//Возникла ошибка при открытии файла
+
+
+	}
+}
 //Вывод списка пользователей
-void OutputUsersAll(vector <User> reports) {
+void OutputUsersAll(vector <User> reports, COORD& cords) {
 	system("cls");
-	COORD cords = CalculateTextPosition("1 Aretk artek2001 artek@gmail.com +375303333333");
+	cords = CalculateTextPosition("1 Aretk artek2001 artek@gmail.com +375303333333");
 	int i = size(reports) / 2 * (-1);
 	for (User report : reports) {
 		tuple<int, string, string, string, string> reportsInfo = report.GetAllInfoAboutUser();
@@ -966,8 +997,8 @@ void OutputUsersAll(vector <User> reports) {
 		cout << endl;
 	}
 	GoToXY(cords.X, cords.Y + i); i++;
-	cout << "Нажмите любую клавишу для продолжения "; char t = _getch();
-	GoToXY(cords.X, cords.Y + i);
+
+	cords.Y = cords.Y + i;
 
 }
 
@@ -1289,13 +1320,21 @@ private:
 	Car Title;
 	string Answer;
 public:
-	//Получить имя
 	string GetSolvedOrNot() {
 		return SolvedOrNot;
 	}
 	// Получить айди 
 	int GetId() {
 		return Id;
+	}
+	string GetComment() {
+		return Answer;
+	}
+	void SetComment(string value) {
+		Answer = value;
+	}
+	void AddComment(string value) {
+		Answer += value;
 	}
 	// Конструктор класса для удобного создания и инициализации объектов
 	PaidReport(const int id, const string solved, const Car car, const string answer)
@@ -1443,7 +1482,7 @@ void InsertPaidReportsToFile(vector<PaidReport> reportsToFile) {
 	}
 }
 //Вывод списка запросов
-void OutputPaidReportsAll(vector <PaidReport> reports, COORD& cords, int PersonId) {
+void OutputPaidReportsById(vector <PaidReport> reports, COORD& cords, int PersonId) {
 	if (cords.Y > 0)
 	{
 		cords = CalculateTextPosition("Платный репорт для автомобиля рррррррррррррррррррррррррр");
@@ -1484,7 +1523,50 @@ void OutputPaidReportsAll(vector <PaidReport> reports, COORD& cords, int PersonI
 		cout << endl;*/
 
 }
+//Вывод всех запросов
+void OutputPaidReportsAll(vector <PaidReport> reports, COORD& cords) {
+	if (cords.Y > 0)
+	{
+		cords = CalculateTextPosition("Платный репорт для автомобиля рррррррррррррррррррррррррр");
+	}
+	else
+	{
+		if (size(reports) > 2)
+		{
+			cords.Y -= 8;
+		}
+	}
+	int t = 1;
+	for (PaidReport report : reports) {
+		tuple<int, string, Car, string> reportsInfo = report.GetAllInfoAboutReport();
+		GoToXY(cords.X, ++cords.Y);
 
+		cout << t++ << ". ";
+		GoToXY(cords.X, ++cords.Y);
+		cout << "Id: " << get<0>(reportsInfo) << " ";
+		GoToXY(cords.X, ++cords.Y);
+		cout << "State: " << get<1>(reportsInfo) << " ";
+		GoToXY(cords.X, ++cords.Y);
+		//cout << get<2>(reportsInfo)[i] << " ";
+		get<2>(reportsInfo).CoutAdvancedeInfo(cords);
+		cout << "Comment by Admin:" << get<3>(reportsInfo) << " ";
+
+
+
+	}
+
+	/*for (PaidReport report : reports) {
+		tuple<int, string, vector<string>, string> reportsInfo = report.GetAllInfoAboutReport();
+
+		cout << get<0>(reportsInfo) << " ";
+		for (int i = 0; i < sizeof(get<2>(reportsInfo)); i++)
+		{
+			cout << get<2>(reportsInfo)[1] << " ";
+		}
+		cout << get<3>(reportsInfo) << " ";
+		cout << endl;*/
+
+}
 
 
 
@@ -1710,6 +1792,7 @@ vector<Location> locations;
 vector<PaidReport> reports;
 vector<User> users;
 vector <Car> FindCars;
+vector<Admin> admins;
 Car ChoosenCar;
 COORD cordsempty;
 
@@ -2047,7 +2130,7 @@ void UserTest() {
 				if (State == ShowAllPaidReports)
 				{
 					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
-					OutputPaidReportsAll(reports, cords, persondata.GetId());
+					OutputPaidReportsById(reports, cords, persondata.GetId());
 					GoToXY(cords.X, ++cords.Y);
 					cout << "Нажмите любую клавишу чтобы продолжить\n";
 					char t = _getch();
@@ -2105,7 +2188,7 @@ void UserTest() {
 					cout << "Выберите локацию (напишите номер) ";
 					int LocationChoose;
 					cin >> LocationChoose;
-					string s = "locations\\" + locations[LocationChoose - 1].GetZipCode() + ".txt";// cout << s;
+					string s = "locations\\" + locations[LocationChoose - 1].GetZipCode() + ".txt";// cout << s;ии
 					State = Meny4;
 					cars = readCarsFromFile(s);
 					string Info = cars[0].GetName();
@@ -2530,12 +2613,22 @@ void UserTest() {
 
 enum AdminStates {
 	Userss,
+	AddUser,
+	DeleteUser,
 	Locationss,
+	AddLocation,
+	DeleteLocaiton,
 	Carss,
+	AddCar,
+	DeleteCar,
 	PaidReports,
+	AddPaidReport,
+	DeletePaidReport,
+	CommentPaidReport,
 	UserssInfo,
 	LocationssInfo,
 	CarssInfo,
+	PaidReportssInfo,
 	Menyss1,
 	Menyss2,
 	Menyss3,
@@ -2543,12 +2636,22 @@ enum AdminStates {
 };
 
 #define Users AdminStates::Userss
+#define AddUser AdminStates::AddUser
+#define DeleteUser AdminStates::DeleteUser
 #define Locations AdminStates::Locationss
+#define AddLocation AdminStates::AddLocation
+#define DeleteLocation AdminStates::DeleteLocation
 #define Cars AdminStates::Carss
+#define AddCar AdminStates::AddCar
+#define DeleteCar AdminStates::DeleteCar
 #define PaidReports AdminStates::PaidReports
+#define AddPaidReport AdminStates::AddPaidReport
+#define DeletePaidReport AdminStates::DeletePaidReport
+#define CommentPaidReportPaidReport AdminStates::CommentPaidReportPaidReport
 #define UsersInfo AdminStates::UserssInfo
 #define LocationsInfo AdminStates::LocationssInfo
 #define CarsInfo AdminStates::CarssInfo
+#define PaidReportsInfo AdminStates::PaidReportssInfo
 #define Meny1 AdminStates::Menyss1
 #define Meny2 AdminStates::Menyss2
 #define Meny3 AdminStates::Menyss3
@@ -2561,8 +2664,10 @@ void AdminTest() {
 	State = Meny1;
 	string login = "", password = "";
 	Admin persondata = Admin(1, "", "", "", "");
-	vector<Admin> admins = readAdminsFromFile("Admins.txt");
-
+	admins = readAdminsFromFile("Admins.txt");
+	users = readUsersFromFile("Users.txt");
+	locations = readLocationsFromFile("List_Of_Jards.txt");
+	reports = readPaidReportsFromFile("PaidReports.txt");
 	while (true)
 	{
 	Start:
@@ -2707,11 +2812,11 @@ void AdminTest() {
 				if (State == Meny2)
 				{
 				St2:
-					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+					cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 					GoToXY(cords.X, ++cords.Y);
 					cout << "Выберите пункт, с которым хотите работать:";
 					GoToXY(cords.X, ++cords.Y);
-					cout << "1.Пользвоатели";
+					cout << "1.Пользователи";
 					GoToXY(cords.X, ++cords.Y);
 					cout << "2.Локации";
 					GoToXY(cords.X, ++cords.Y);
@@ -2744,7 +2849,7 @@ void AdminTest() {
 					case '5':
 						State = Meny1;
 						system("cls");
-						COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+						cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Вы точно хотите выйти из аккаунта (да/нет): ";
 						cin >> rr;
@@ -2761,6 +2866,282 @@ void AdminTest() {
 						goto Start;
 						break;
 					default:
+						GoToXY(cords.X, cords.Y++);
+						cout << "Такой клавиши нет";
+						GoToXY(cords.X - 8, cords.Y++);
+						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						system("cls");
+						goto Start2;
+					}
+				}
+				if (State == Users)
+				{
+					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+					GoToXY(cords.X, ++cords.Y);
+					cout << "Выберите пункт из меню:";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "1.Вывести всех пользователей";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "2.Добавить пользователя";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "3.Удалить пользователя";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "4.Выйти в меню выбора работы";
+					GoToXY(cords.X, ++cords.Y);
+					string rr;
+					char t = _getch(); cout << t;
+					switch (t)
+					{
+					case '1':
+						State = UsersInfo;
+						//goto Start2;
+						break;
+					case '2':
+						State = AddUser;
+						//goto Start2;
+						break;
+					case '3':
+						State = DeleteUser;
+						//goto Start2;
+						break;
+					case '4':
+						State = Meny2;
+						system("cls");
+
+						goto Start2;
+						break;
+					default:
+						GoToXY(cords.X, ++cords.Y);
+						cout << "Такой клавиши нет";
+						GoToXY(cords.X - 8, ++cords.Y);
+						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						system("cls");
+						goto Start;
+					}
+
+					while (true)
+					{
+						//	Start3:
+						system("cls");
+						if (State == UsersInfo)
+						{
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							OutputUsersAll(users, cords);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Нажмите любую клавишу для продолжения "; char t = _getch();
+							State = Users;
+							goto Start2;
+						}
+						if (State == AddUser)
+						{
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							User newuser = UpdateUserField();
+							if (newuser.GetName() != "")
+							{
+								users.push_back(newuser);
+
+								InsertUserToFileFromAdmin(users);
+							}
+							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							system("cls");
+							State = Users;
+							goto Start2;
+						}
+						if (State == DeleteUser)
+						{
+
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							OutputUsersAll(users, cords);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Выберите id пользователя или -1 для выхода";
+							GoToXY(cords.X, ++cords.Y);
+							int id;
+							cin >> id;
+							if (id == -1)
+							{
+								State = Users;
+								goto  Start2;
+
+							}
+							for (int i = 0; i <= size(users); i++)
+							{
+								if (id == users[i].GetId())
+								{
+									id = i;
+									break;
+								}
+							}
+							users.erase(users.begin() + id);
+							InsertUserToFileFromAdmin(users);
+							State = Users;
+							goto Start2;
+
+
+						}
+
+					}
+				}
+				if (State == Locations)
+				{
+					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+					GoToXY(cords.X, ++cords.Y);
+					cout << "Выберите пункт из меню:";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "1.Вывести все локации";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "2.Добавить локацию";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "3.Удалить локацию";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "4.Выйти в меню выбора работы";
+					GoToXY(cords.X, ++cords.Y);
+					string rr;
+					char t = _getch(); cout << t;
+					switch (t)
+					{
+					case '1':
+						State = LocationsInfo;
+						//goto Start2;
+						break;
+					case '2':
+						State = AddLocation;
+						//goto Start2;
+						break;
+					case '3':
+						State = DeleteLocaiton;
+						//goto Start2;
+						break;
+					case '4':
+						State = Meny2;
+						system("cls");
+
+						goto Start2;
+						break;
+					default:
+						GoToXY(cords.X, ++cords.Y);
+						cout << "Такой клавиши нет";
+						GoToXY(cords.X - 8, ++cords.Y);
+						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						system("cls");
+						goto Start;
+					}
+
+					while (true)
+					{
+						//Start3L:
+						system("cls");
+						if (State == LocationsInfo)
+						{
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							cords = OutputLocationsInfo(locations);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Нажмите любую клавишу для продолжения "; char t = _getch();
+							State = Locations;
+							goto Start2;
+						}
+						if (State == AddLocation)
+						{
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							Location newlocation = UpdateLocationField();
+							if (newlocation.GetName() != "")
+							{
+								locations.push_back(newlocation);
+
+								InsertLocationsToFile(locations);
+							}
+							GoToXY(cords.X, ++cords.Y);
+
+							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							system("cls");
+							State = Locations;
+							goto Start2;
+						}
+						if (State == DeleteLocaiton)
+						{
+
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							cords = OutputLocationsInfo(locations);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Выберите номер локации или -1 для выхода";
+							GoToXY(cords.X, ++cords.Y);
+							int id;
+							cin >> id;
+							if (id == -1)
+							{
+								State = Locations;
+								goto Start2;
+							}
+							locations.erase(locations.begin() + id - 1);
+							InsertLocationsToFile(locations);
+							State = Locations;
+							goto Start2;
+
+
+						}
+
+					}
+				}
+				if (State == Cars)
+				{
+					cords = OutputLocationsInfo(locations);
+					GoToXY(cords.X, cords.Y++);
+					cout << "Выберите локацию (напишите номер) (-1 для выхода) ";
+					int LocationChoose;
+					cin >> LocationChoose;
+					if (LocationChoose == -1)
+					{
+						State = Meny2;
+						goto Start;
+					}
+					string s = "locations\\" + locations[LocationChoose - 1].GetZipCode() + ".txt";
+
+					cars = readCarsFromFile(s);
+					string Info = cars[0].GetName();
+					cars.erase(cars.begin());
+				Start3C:
+
+					system("cls");
+					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+					GoToXY(cords.X, ++cords.Y);
+					cout << "Выберите пункт из меню:";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "1.Вывести все автомобили на локации";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "2.Добавить автомобиль на локацию";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "3.Удалить автомобиль";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "4.Выйти в меню выбора работы";
+					GoToXY(cords.X, ++cords.Y);
+					string rr;
+					char t = _getch(); cout << t;
+					switch (t)
+					{
+					case '1':
+						State = CarsInfo;
+						//goto Start2;
+						break;
+					case '2':
+						State = AddCar;
+						//goto Start2;
+						break;
+					case '3':
+						State = DeleteCar;
+						//goto Start2;
+						break;
+					case '4':
+						State = Meny2;
+						system("cls");
+
+						goto Start2;
+						break;
+					default:
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Такой клавиши нет";
 						GoToXY(cords.X - 8, ++cords.Y);
@@ -2768,12 +3149,402 @@ void AdminTest() {
 						system("cls");
 						goto Start2;
 					}
+
+					while (true)
+					{
+						system("cls");
+						if (State == CarsInfo)
+						{
+							COORD cords = OutputInfoOf1Location(locations[LocationChoose - 1]);
+							GoToXY(cords.X, cords.Y);
+							COORD position = CalculateTextPosition("Below are the cities that the US Postal Service accepts for the ZIP code 32824. This code is specific toarea, be sure to use this ZIP code to ensure that you");
+
+							int consoleWidth = getConsoleWidth();
+							int maxLineLength = consoleWidth / 2;
+
+							vector<string> shortStrings = splitString(Info, maxLineLength);
+
+							for (const auto& line : shortStrings) {
+								GoToXY(cords.X, cords.Y++);
+								cout << line;
+							}
+
+
+							/*GoToXY(position.X, position.Y);
+							cout << Info;
+							GoToXY(cords.X, cords.Y++);*/
+							//cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+
+							//cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							GoToXY(cords.X, ++cords.Y);
+							cords = OutputCarsInfo(cars, cords);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Нажмите любую клавишу для продолжения "; char t = _getch();
+							State = Cars;
+							goto Start3C;
+						}
+						if (State == AddCar)
+						{
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							Car newcar = UpdateCarsField();
+							if (newcar.GetName() != "")
+							{
+								cars.push_back(newcar);
+
+								InsertCarsToFile(cars, s, Info);
+							}
+							/*GoToXY(cords.X, ++cords.Y);
+
+							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							system("cls");*/
+							State = Cars;
+							goto Start3C;
+						}
+						if (State == DeleteCar)
+						{
+
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							cords = OutputCarsInfo(cars, cords);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Выберите номер автомобиля или -1 для выхода";
+							GoToXY(cords.X, ++cords.Y);
+							int id;
+							cin >> id;
+							if (id == -1)
+							{
+								State = Cars;
+								goto Start3C;
+							}
+							cars.erase(cars.begin() + id - 1);
+							InsertCarsToFile(cars, s, Info);
+							State = Cars;
+							goto Start3C;
+
+
+						}
+
+
+					}
+					if (State == PaidReports)
+					{
+						COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+						GoToXY(cords.X, ++cords.Y);
+						cout << "Выберите пункт из меню:";
+						GoToXY(cords.X, ++cords.Y);
+						cout << "1.Вывести всех пользователей";
+						GoToXY(cords.X, ++cords.Y);
+						cout << "2.Добавить пользователя";
+						GoToXY(cords.X, ++cords.Y);
+						cout << "3.Удалить пользователя";
+						GoToXY(cords.X, ++cords.Y);
+						cout << "4.Выйти в меню выбора работы";
+						GoToXY(cords.X, ++cords.Y);
+						string rr;
+						char t = _getch(); cout << t;
+						switch (t)
+						{
+						case '1':
+							State = LocationsInfo;
+							//goto Start2;
+							break;
+						case '2':
+							State = AddLocation;
+							//goto Start2;
+							break;
+						case '3':
+							State = DeleteLocaiton;
+							//goto Start2;
+							break;
+						case '4':
+							State = Meny2;
+							system("cls");
+
+							goto Start2;
+							break;
+						default:
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Такой клавиши нет";
+							GoToXY(cords.X - 8, ++cords.Y);
+							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							system("cls");
+							goto Start;
+						}
+
+						while (true)
+						{
+							//Start3L:
+							system("cls");
+							if (State == LocationsInfo)
+							{
+								COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+								GoToXY(cords.X, ++cords.Y);
+								cords = OutputLocationsInfo(locations);
+								GoToXY(cords.X, ++cords.Y);
+								cout << "Нажмите любую клавишу для продолжения "; char t = _getch();
+								State = Locations;
+								goto Start2;
+							}
+							if (State == AddLocation)
+							{
+								COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+								GoToXY(cords.X, ++cords.Y);
+								Location newlocation = UpdateLocationField();
+								if (newlocation.GetName() != "")
+								{
+									locations.push_back(newlocation);
+
+									InsertLocationsToFile(locations);
+								}
+								GoToXY(cords.X, ++cords.Y);
+
+								cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+								system("cls");
+								State = Locations;
+								goto Start2;
+							}
+							if (State == DeleteLocaiton)
+							{
+
+								COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+								GoToXY(cords.X, ++cords.Y);
+								cords = OutputLocationsInfo(locations);
+								GoToXY(cords.X, ++cords.Y);
+								cout << "Выберите номер локации или -1 для выхода";
+								GoToXY(cords.X, ++cords.Y);
+								int id;
+								cin >> id;
+								if (id == -1)
+								{
+									State = Locations;
+									goto Start2;
+								}
+								locations.erase(locations.begin() + id - 1);
+								InsertLocationsToFile(locations);
+								State = Locations;
+								goto Start2;
+
+
+							}
+
+						}
+					}
+				}
+				if (State == PaidReports)
+				{
+					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+					GoToXY(cords.X, ++cords.Y);
+					cout << "Выберите пункт из меню:";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "1.Вывести все запросы на осмотр";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "2.Добавить запрос";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "3.Удалить запрос";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "4.Добавить комментарий к запросу";
+					GoToXY(cords.X, ++cords.Y);
+					cout << "5.Выйти в меню выбора работы";
+					GoToXY(cords.X, ++cords.Y);
+					char t = _getch(); cout << t;
+					switch (t)
+					{
+					case '1':
+						State = PaidReportsInfo;
+						//goto Start2;
+						break;
+					case '2':
+						State = AddPaidReport;
+						//goto Start2;
+						break;
+					case '3':
+						State = DeletePaidReport;
+						//goto Start2;
+						break;
+					case '4':
+						State = CommentPaidReport;
+						//goto Start2;
+						break;
+					case '5':
+						State = Meny2;
+						system("cls");
+
+						goto Start2;
+						break;
+					default:
+						GoToXY(cords.X, ++cords.Y);
+						cout << "Такой клавиши нет";
+						GoToXY(cords.X - 8, ++cords.Y);
+						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						system("cls");
+						goto Start;
+					}
+
+					while (true)
+					{
+					Start3P:
+						system("cls");
+						if (State == PaidReportsInfo)
+						{
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							OutputPaidReportsAll(reports, cords);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Нажмите любую клавишу для продолжения "; char t = _getch();
+							State = PaidReports;
+							goto Start2;
+						}
+						if (State == AddPaidReport)
+						{
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							PaidReport newreport = UpdatePaidReportFieldByAdmin();
+							if (newreport.GetSolvedOrNot() != "")
+							{
+								reports.push_back(newreport);
+
+								InsertPaidReportsToFile(reports);
+							}
+							GoToXY(cords.X, ++cords.Y);
+
+							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							system("cls");
+							State = PaidReports;
+							goto Start2;
+						}
+						if (State == DeletePaidReport)
+						{
+
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							OutputPaidReportsAll(reports, cords);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Выберите номер запроса или -1 для выхода";
+							GoToXY(cords.X, ++cords.Y);
+							int id;
+							cin >> id;
+							if (id == -1)
+							{
+								State = PaidReports;
+								goto Start2;
+							}
+							reports.erase(reports.begin() + id - 1);
+							InsertPaidReportsToFile(reports);
+							State = PaidReports;
+							goto Start2;
+
+
+						}
+						if (State == CommentPaidReport)
+						{
+
+							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+							GoToXY(cords.X, ++cords.Y);
+							OutputPaidReportsAll(reports, cords);
+							GoToXY(cords.X, ++cords.Y);
+							cout << "Выберите номер запроса или -1 для выхода";
+							GoToXY(cords.X, ++cords.Y);
+							int id;
+							cin >> id;
+							if (id-- <= -1)
+							{
+								State = PaidReports;
+								goto Start2;
+							}
+							PaidReport choosenreport = reports[id];
+							system("cls");
+							cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+
+							cout << "Выберите, как изменить комментарий:";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "1 - дополнить (в конец)";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "2 - написать заново";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "3 - выйти из изменения комментарив";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "- - переписать ( в разработке )";
+							GoToXY(cords.X, ++cords.Y);
+							string CommAdd;
+							 t = _getch(); cout << t;
+
+							switch (t)
+							{
+							case '1':
+								system("cls");
+								cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+								GoToXY(cords.X, ++cords.Y);
+								cout << "Изначальный комментарий:";
+								GoToXY(cords.X, ++cords.Y);
+								cout << choosenreport.GetComment();
+								GoToXY(cords.X, ++cords.Y);
+								cout << "Дополнение:";
+								GoToXY(cords.X, ++cords.Y);
+								cin >> CommAdd;
+								choosenreport.AddComment(CommAdd);
+
+								if (CommAdd!="")
+								{
+									reports[id].SetComment(choosenreport.GetComment());
+								}
+
+								GoToXY(cords.X - 8, ++cords.Y);
+								cout << "Нажмите любую клавишу чтобы продолжить\n";   t = _getch();
+								system("cls");
+								break;
+							case '2':
+								system("cls");
+								cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+								GoToXY(cords.X, ++cords.Y);
+								cout << "Изначальный комментарий:";
+								GoToXY(cords.X, ++cords.Y);
+								cout << choosenreport.GetComment();
+								GoToXY(cords.X, ++cords.Y);
+								cout << "Ваш комментарий:";
+								GoToXY(cords.X, ++cords.Y);
+								cin >> CommAdd;
+								choosenreport.SetComment(CommAdd);
+
+								if (CommAdd != "")
+								{
+									reports[id].SetComment(choosenreport.GetComment());
+								}
+
+								GoToXY(cords.X - 8, ++cords.Y);
+								cout << "Нажмите любую клавишу чтобы продолжить\n";   t = _getch();
+								system("cls");
+								break;
+							case '3':
+								t = 0;
+								State = PaidReports;
+								goto Start2;
+								break;
+							default:
+								GoToXY(cords.X, ++cords.Y);
+								cout << "Такой клавиши нет";
+								GoToXY(cords.X - 8, ++cords.Y);
+								cout << "Нажмите любую клавишу чтобы продолжить\n";   t = _getch();
+								system("cls");
+								State = CommentPaidReport;
+								goto Start3P;
+							}
+
+
+							InsertPaidReportsToFile(reports);
+							State = PaidReports;
+							goto Start2;
+
+
+						}
+
+					}
 				}
 			}
 		}
 	}
 }
-
 void UserOrAdmin() {
 	while (true)
 	{
@@ -2843,5 +3614,51 @@ int main() {
 //   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
 
 
+
+//в лоакации осздание файла с таким именем и записть в него info Для считывания удобного
+//метод вв запросах не хватает
+
+/*премещение по сообщению
+					case '6':
+						int x = 0, y = 0;
+						bool running = true;
+							while (running) {
+								if (_kbhit()) {
+									int key = _getch();
+									if (key == 224) { // Специальные клавиши (стрелки)
+										key = _getch();
+										switch (key) {
+										case 75: // Стрелка влево
+											if (x > 0) {
+												x--;
+												GoToXY(x, y);
+											}
+											break;
+										case 77: // Стрелка вправо
+											if (x < 79) { // Максимальное значение x для 80-колонной консоли
+												x++;
+												GoToXY(x, y);
+											}
+											break;
+										case 72: // Стрелка вверх
+											if (y > 0) {
+												y--;
+												GoToXY(x, y);
+											}
+											break;
+										case 80: // Стрелка вниз
+											if (y < 24) { // Максимальное значение y для 25-строчной консоли
+												y++;
+												GoToXY(x, y);
+											}
+											break;
+										case 27: // ESC
+											running = false;
+											break;
+										}
+									}
+								}
+							}
+							break;*/
 
 
