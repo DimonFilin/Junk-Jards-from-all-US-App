@@ -26,6 +26,33 @@ using namespace std;
 //Последнее id для юзеров
 int LastId = 0;
 
+HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);// Получаем дескриптор консоли
+void SetConsoleColor(WORD color)
+{
+	SetConsoleTextAttribute(hStdOut, color);
+}
+
+COORD CalculateFlagPosition(int flagWidth, int flagHeight)
+{
+	CONSOLE_FONT_INFO fontInfo;
+	GetCurrentConsoleFont(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &fontInfo);
+	int fontWidth = fontInfo.dwFontSize.X;
+	int fontHeight = fontInfo.dwFontSize.Y;
+
+	int screenWidth = GetSystemMetrics(SM_CXSCREEN); // Получение ширины экрана
+	int screenHeight = GetSystemMetrics(SM_CYSCREEN); // Получение высоты экрана
+	int consoleWidth = screenWidth / fontWidth; // Ширина консоли в символах
+	int consoleHeight = screenHeight / fontHeight; // Высота консоли в строках
+
+	// Вычисляем центр консоли
+	int centerX = consoleWidth / 2;
+	int centerY = consoleHeight / 2;
+
+	int flagStartX = centerX - flagWidth / 2; // Начальная позиция x для вывода флага
+	int flagStartY = centerY - flagHeight / 2; // Начальная позиция y для вывода флага
+
+	return COORD{ static_cast<short>(flagStartX), static_cast<short>(flagStartY) };
+}
 
 
 //Основные настройки
@@ -39,7 +66,7 @@ void MainSettings() {
 }
 
 
-HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE); // Получаем дескриптор консоли
+
 // Текстовый курсор в точку x,y
 void GoToXY(short x, short y)
 {
@@ -74,7 +101,58 @@ bool isCharDigit(char c) {
 	return c >= '0' && c <= '9';
 }
 
+string Flag[] = {
+"**********************=======================================================================",
+"**********************=======================================================================",
+"**********************========./~~===++*******^+:============================================",
+"**********************======./=~=^^*===~~~~*-==-=-|==========================================",
+"**********************===./=-:=**-.       .*:~-~:~|==========================================",
+"**********************./~-.:+*==.         .+:--~:~|==========================================",
+"********__.--=*^^^*><*~:.=+~+++~.   ......:*-=~~-*)<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>><><)))+.==",
+"****/^+-=^*+~-:::--~==:  ~.=+==+++=-::...:----..~~.                                 .::-==|==",
+"===|><>^*=..=^=:.:=*~.   ~.              =>^)= .=~.            ~:-..++=-::~++:.     .+..-~|==",
+"==|=+~ :~>~.-=....:=-.+~.-.              ....- .==.            .=)-..+~...-=:.~+.    -+:-~|==",
+"==|*(**+::=+:.      ---..~-:.................-..=~.........    ...=:~.     .--:.:*^^^^^*>+===",
+"=|*++*++~-:=>-....~*~.~~~-:..............::::-.-+=::::::::::::-~=-::<=....->=.--=~~~~===*+|==",
+"=|<*    .->-.+*^**=.==.~:..                 .- :+-              .:^~.=+**+~.~+::.0000:~ .:|==",
+"=\\^<~:::-^~:^~---~==.*=~--~------------------=-=^+~=============+==.>=~~-=*+:+=+~_____=:-+~|=",
+"===\\:=+-+<~:+-====--.*=:----------~~~~-------------------::::::::==.*=-~=~-~:+~.|     \\~=|===",
+"=========|*-:*+==*+:~=|==========================================|^~.*+*=*+:~+|==============",
+"==========\\++~::::~+~/============================================-|=*~::::~*|===============",
+"============\\-~~~~-/===================================================\\-~~-/================",
+"============================================================================================="
+};
+void DisplayAmericanFlag()
+{
 
+	int scaledWidth = Flag[0].size();  // Get the width of the flag
+	int scaledHeight = sizeof(Flag) / sizeof(Flag[0]);  // Get the height of the flag
+
+
+	COORD flagPosition = CalculateTextPosition("**********************=======================================================================");
+	flagPosition.Y -= 10 + 16;
+
+	for (int i = 0; i < size(Flag); i++)
+	{
+		GoToXY(flagPosition.X, flagPosition.Y + i);
+		for (int j = 0; j < size(Flag[i]); j++)
+		{
+			char ch = Flag[i][j];
+			if (j < 20 && i < 8) {
+				if ((j + i) % 2 == 0 && j > 0 && i > 0) {
+					SetConsoleColor(15); // Set color to white 
+				}
+				else {
+					SetConsoleColor(9); // Set color to blue
+				}
+			}
+			else {
+				SetConsoleColor(12); // Set color to red
+			}
+			cout << ch;
+		}
+	}
+}
 
 //Класс для хранения данных об локации
 class Location {
@@ -775,7 +853,7 @@ User UpdateUserField() {
 
 	//Очистим консоль
 	system("cls");
-
+	DisplayAmericanFlag();
 	//Массив для ввода значений
 	string* InfoOfReport = new string[4]; int Id;
 
@@ -1742,6 +1820,7 @@ vector<string> splitString(const string& str, int maxLength) {
 
 
 
+
 enum class States {
 	Login,
 	Registration,
@@ -1820,8 +1899,9 @@ void UserTest() {
 	while (true) {
 	Start:
 		system("cls");
+		DisplayAmericanFlag();
+
 		if (State == Meny1) {
-			system("cls");
 			COORD cords = CalculateTextPosition("Выберите, как войти");
 			GoToXY(cords.X, cords.Y);
 			cout << "Выберите, как войти" << endl;
@@ -1911,6 +1991,7 @@ void UserTest() {
 			if (persondata.GetName() == "")
 			{
 				system("cls");
+				DisplayAmericanFlag();
 				GoToXY(cords.X, cords.Y);
 				cout << "Вы ввели неправильный логин\n";
 				login = ""; password = "";
@@ -1972,6 +2053,7 @@ void UserTest() {
 			if (password != persondata.GetPassword())
 			{
 				system("cls");
+				DisplayAmericanFlag();
 				GoToXY(cords.X, cords.Y - 2);
 
 				cout << "Вы ввели неправильный пароль, войдите еще раз\n";
@@ -2002,6 +2084,7 @@ void UserTest() {
 		}
 		if (State == Meny2) {
 			system("cls");
+			DisplayAmericanFlag();
 			COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 			GoToXY(cords.X, cords.Y++);
 			cout << "Здравствуйте,  " << persondata.GetName();
@@ -2010,6 +2093,7 @@ void UserTest() {
 			while (true) {
 			Start2:
 				system("cls");
+				DisplayAmericanFlag();
 				if (State == Meny2)
 				{
 				St2:
@@ -2049,7 +2133,8 @@ void UserTest() {
 						break;
 					case '5':
 						State = Meny1;
-						system("cls");
+						system("cls");		
+						DisplayAmericanFlag();
 						COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Вы точно хотите выйти из аккаунта (да/нет): ";
@@ -2672,6 +2757,7 @@ void AdminTest() {
 	{
 	Start:
 		system("cls");
+		DisplayAmericanFlag();
 		if (State == Meny1)
 		{
 		Identifications:
@@ -2685,7 +2771,7 @@ void AdminTest() {
 				ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
 				if (ch == 27) {// Проверка на Esc
 					system("cls");
-
+					DisplayAmericanFlag();
 					GoToXY(cords.X, cords.Y++);
 					cout << "Выход.";
 					GoToXY(cords.X - 15, cords.Y + 2);
@@ -2726,6 +2812,7 @@ void AdminTest() {
 			if (persondata.GetName() == "")
 			{
 				system("cls");
+				DisplayAmericanFlag();
 				GoToXY(cords.X, cords.Y);
 				cout << "Вы ввели неправильный логин\n";
 				login = ""; password = "";
@@ -2787,6 +2874,7 @@ void AdminTest() {
 			if (password != persondata.GetPassword())
 			{
 				system("cls");
+				DisplayAmericanFlag();
 				GoToXY(cords.X, cords.Y - 2);
 
 				cout << "Вы ввели неправильный пароль, войдите еще раз\n";
@@ -2805,10 +2893,12 @@ void AdminTest() {
 			GoToXY(cords.X, cords.Y++);
 			cout << "Здравствуйте,  " << persondata.GetName();
 			//GoToXY(cords.X - 8, ++cords.Y);
+			DisplayAmericanFlag();
 			goto St2;
 			while (true) {
 			Start2:
 				system("cls");
+				DisplayAmericanFlag();
 				if (State == Meny2)
 				{
 				St2:
@@ -2849,6 +2939,7 @@ void AdminTest() {
 					case '5':
 						State = Meny1;
 						system("cls");
+						DisplayAmericanFlag();
 						cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Вы точно хотите выйти из аккаунта (да/нет): ";
@@ -3107,6 +3198,7 @@ void AdminTest() {
 				Start3C:
 
 					system("cls");
+					DisplayAmericanFlag();
 					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 					GoToXY(cords.X, ++cords.Y);
 					cout << "Выберите пункт из меню:";
@@ -3334,6 +3426,7 @@ void AdminTest() {
 				}
 				if (State == PaidReports)
 				{
+
 					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 					GoToXY(cords.X, ++cords.Y);
 					cout << "Выберите пункт из меню:";
@@ -3379,7 +3472,7 @@ void AdminTest() {
 						GoToXY(cords.X - 8, ++cords.Y);
 						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
 						system("cls");
-						goto Start;
+						goto Start2;
 					}
 
 					while (true)
@@ -3550,6 +3643,7 @@ void UserOrAdmin() {
 	{
 	Start:
 		system("cls");
+		DisplayAmericanFlag();
 		COORD cords = CalculateTextPosition("Выберите, каким способом войти");
 		GoToXY(cords.X, cords.Y);
 		cout << "Выберите, каким способом войти" << endl;
@@ -3583,6 +3677,7 @@ void UserOrAdmin() {
 
 int main() {
 	MainSettings();
+	DisplayAmericanFlag();
 	try {
 		UserOrAdmin();
 	}
