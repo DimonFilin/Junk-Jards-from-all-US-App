@@ -102,25 +102,66 @@ bool isCharDigit(char c) {
 }
 
 string Flag[] = {
-"**********************=======================================================================",
-"**********************=======================================================================",
-"**********************========./~~===++*******^+:============================================",
-"**********************======./=~=^^*===~~~~*-==-=-|==========================================",
-"**********************===./=-:=**-.       .*:~-~:~|==========================================",
-"**********************./~-.:+*==.         .+:--~:~|==========================================",
-"********__.--=*^^^*><*~:.=+~+++~.   ......:*-=~~-*)<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>><><)))+.==",
-"****/^+-=^*+~-:::--~==:  ~.=+==+++=-::...:----..~~.                                 .::-==|==",
-"===|><>^*=..=^=:.:=*~.   ~.              =>^)= .=~.            ~:-..++=-::~++:.     .+..-~|==",
-"==|=+~ :~>~.-=....:=-.+~.-.              ....- .==.            .=)-..+~...-=:.~+.    -+:-~|==",
-"==|*(**+::=+:.      ---..~-:.................-..=~.........    ...=:~.     .--:.:*^^^^^*>+===",
-"=|*++*++~-:=>-....~*~.~~~-:..............::::-.-+=::::::::::::-~=-::<=....->=.--=~~~~===*+|==",
-"=|<*    .->-.+*^**=.==.~:..                 .- :+-              .:^~.=+**+~.~+::.0000:~ .:|==",
-"=\\^<~:::-^~:^~---~==.*=~--~------------------=-=^+~=============+==.>=~~-=*+:+=+~_____=:-+~|=",
-"===\\:=+-+<~:+-====--.*=:----------~~~~-------------------::::::::==.*=-~=~-~:+~.|     \\~=|===",
-"=========|*-:*+==*+:~=|==========================================|^~.*+*=*+:~+|==============",
-"==========\\++~::::~+~/============================================-|=*~::::~*|===============",
-"============\\-~~~~-/===================================================\\-~~-/================",
-"============================================================================================="
+"*************************==========================================================================",
+"*************************==========================================================================",
+"*************************==========================================================================",
+"*************************==========================================================================",
+"*************************==============     .:-+=-::::::......::-=+=-:....    =====================",
+"*************************==========    ..-====--:..      ....:+-   -+=--=+=-:..   =================",
+"*************************======     ..=+-=+...               .*.  +#...-*%*-.:==+-.     ===========",
+"*************************    .....:=-==+=..:                .-+. .%+=--=-=+@=  ...-=+=-:::-=:=:\\ ==",
+"=======     ...:=+++==++==--:::==:-=*=++**#*++****++++++-----+-....................      \\...-=: ==",
+"==    .:-+*+-...:-==+=-:..       .=.                   ..==-:::       ....:......   -@@#. \\  --:  =",
+"= .:+=:::::..:::-----:.::.       .-                    ..:::.:: :. .::..:-----.:::. -@@#.   .---  =",
+"=  :-: -.  =.=#@@@%%@@%+=.:.     .-                         .:..- .- =-#@@%%%@@#=-:+-=+++=-.. .+=- ",
+"=  .-=..=:=+#@@@@@%@@@@@@*-::.-:..-                         .:.-.:.:+@@@@@@%@@@@@%=.:.          .- ",
+"= ::::----=@@@@*#*=+#*#@@@#:.:    =      ......::----=====-=+:...::*@@@%*#+==#*@@@@=:=:.::-.    .- ",
+"= ::----=-%@@@*-==--+--#@@@*......=.                       :.    .=@@@@=-----=-=%@@%-:.        .-: ",
+"= .=.    =%%@%=*--==-*++@@@#-     .-                      .:     .+@@@#=-=-=--+=*@%%+.- ....:--/  =",
+"=  :=-...=%#@@*#++*+++*#@@%%+-----::::............................+==@@+*+++++*=@@:.--:../     ====",
+"=======     :%@%++**+*%@%: -_________________________________________-@@*=+++=#@@=         ========",
+"==========   `+@@@@@@@@=    =========================================  *@@@@@@@*    ===============",
+"===================================================================================================",
+
+
+/*"*************************==============================================================================",
+"*************************==============================================================================",
+"*************************==============================================================================",
+"*************************===============    ..:=^>*~~-----::::::--+*>^^=-....     =====================",
+"*************************============   .:=*>>>*++-..      ...:-^^.  ->>*==^>*+~:.     ================",
+"*************************=========   .-^>*^(~..                .>*. =}:..-^]}<~.~^^<+:.   =============",
+"*************************_________-=*=>^)^-.~:                 ~): .^(*******]%*  ...=^>>+=~=^++>: ====",
+"========   ...:~*><<>^>>^^*+=~=+>+~=<]^>)(]]])))((]))))<<<+++++^^-::::::::..::::::--:..     ...-+| ====",
+"=== ..:~>()^~:::-=^>>^+-:.        .+.                    ::^*=-:~       ..:::--::...   :[@@    --| ====",
+"== >>+-=-~~.:~-~=+**+~:~--        :=                     .----.:~ -:  :=-..~++++=:-~~:.:[@%   .-**~  ==",
+  "== +=..=  .+->}@@#{{%@%]^::=      :=                           =..+ .=.:^<#@@{{{@@[**-<~*>)^*~:. -<^~ =",
+"== |*-:~+**)#@%@@%##%@@%@}^-~.=+-.:=                          .+.~.:=:^[@%@@@##%@@%%{<--~         ..*:=",
+  "=  /~%:::=(%%@@][(>>[]]@@%%>-~     =       ..:::-~==++*^^^**+*)~:. =-^#@%@[][>><}(%@%%)~~+:-+:     -=.=",
+	"= |+****~<@%%@>=^>+*<*+(%@%{=..... =.                        ~:    .~}@#@(*=*=*+^=>#@%@^~-.       .=- =",
+	"= <~    -)@%@}*<==>*+))^{@#%>:     :~                       :~.    .*{%%%^>~++^=*<^)@%%(=~...:-=*+~   =",
+"=  ^*-::=(@}@@>(<<)))<])@@[#]*+====-~--::::::::.....................*>:{@(]<<<<<<(^%@>.++~-..      ====",
+	"=====       >@@}<<](>){@%* :^^**********************^^^*^^^*^*^^^*^^>*=+}@#)><)<>[@@)         =========",
+"==========    (@@@@@@@@)   ===========================================    #@@@@@@@]   =================",
+  "====================================================================================================="*/
+  //	"********************=========================================================================",
+  //"********************=========================================================================",
+  //"********************==========./~~===++*******^+:============================================",
+  //"********************========./=~=^^*===~~~~*-==-=-|==========================================",
+  //"********************=====./=-:=**-.       .*:~-~:~|==========================================",
+  //"********************==./~-.:+*==.         .+:--~:~|==========================================",
+  //"********__.--=*^^^*><*~:.=+~+++~.   ......:*-=~~-*)<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>><><)))+.==",
+  //"****/^+-=^*+~-:::--~==:  ~.=+==+++=-::...:----..~~.                                 .::-==|==",
+  //"===|><>^*=..=^=:.:=*~.   ~.              =>^)= .=~.            ~:-..++=-::~++:.     .+..-~|==",
+  //"==|=+~ :~>~.-=....:=-.+~.-.              ....- .==.            .=)-..+~...-=:.~+.    -+:-~|==",
+  //"==|*(**+::=+:.      ---..~-:.................-..=~.........    ...=:~.     .--:.:*^^^^^*>+===",
+  //"=|*++*++~-:=>-....~*~.~~~-:..............::::-.-+=::::::::::::-~=-::<=....->=.--=~~~~===*+|==",
+  //"=|<*    .->-.+*^**=.==.~:..                 .- :+-              .:^~.=+**+~.~+::.0000:~ .:|==",
+  //"=\\^<~:::-^~:^~---~==.*=~--~------------------=-=^+~=============+==.>=~~-=*+:+=+~_____=:-+~|=",
+  //"===\\:=+-+<~:+-====--.*=:----------~~~~-------------------::::::::==.*=-~=~-~:+~.|     \\~=|===",
+  //"=========|*-:*+==*+:~=|==========================================|^~.*+*=*+:~+|==============",
+  //"==========\\++~::::~+~/============================================-|=*~::::~*|===============",
+  //"============\\-~~~~-/===================================================\\-~~-/================",
+  //"=============================================================================================="
 };
 void DisplayAmericanFlag()
 {
@@ -129,7 +170,7 @@ void DisplayAmericanFlag()
 	int scaledHeight = sizeof(Flag) / sizeof(Flag[0]);  // Get the height of the flag
 
 
-	COORD flagPosition = CalculateTextPosition("**********************=======================================================================");
+	COORD flagPosition = CalculateTextPosition(".=:::::--=-#@@@#*#+=*#*@@@@+::.   .:      .....:::----=====--+:.. -.=@@@@##*-+*#*@@@%=.=:.:-:.    .-");
 	flagPosition.Y -= 10 + 16;
 
 	for (int i = 0; i < size(Flag); i++)
@@ -138,7 +179,7 @@ void DisplayAmericanFlag()
 		for (int j = 0; j < size(Flag[i]); j++)
 		{
 			char ch = Flag[i][j];
-			if (j < 20 && i < 8) {
+			if (j < 25 && i < 7) {
 				if ((j + i) % 2 == 0 && j > 0 && i > 0) {
 					SetConsoleColor(15); // Set color to white 
 				}
@@ -147,7 +188,11 @@ void DisplayAmericanFlag()
 				}
 			}
 			else {
+				/*if (i % 2 == 0)*/
 				SetConsoleColor(12); // Set color to red
+			//else
+			//	SetConsoleColor(15); // Set color to white 
+
 			}
 			cout << ch;
 		}
@@ -216,11 +261,11 @@ vector<Location> readLocationsFromFile(const  string filename) {
 	}
 	else {//Не получилось
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");
 	}
 
@@ -233,18 +278,18 @@ Location UpdateLocationField() {
 	system("cls");
 
 	//Массив для ввода значений
-	string* InfoOfLocation = new string[4];
+	string* InfoOfLocation = new string[5];
 	COORD cords = CalculateTextPosition("Введите пароль   ");
 	GoToXY(cords.X, ++cords.Y);
 	//Заполним массив
 	cout << "Введите название: ";
-	cin >> InfoOfLocation[0]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfLocation[0]); GoToXY(cords.X, ++cords.Y);// cin.ignore(); // Очищаем буфер ввода после cin
 	cout << "Введите адрес: ";
-	cin >> InfoOfLocation[1]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfLocation[1]); GoToXY(cords.X, ++cords.Y);// cin.ignore(); // Очищаем буфер ввода после cin
 	cout << "Введите город: ";
-	cin >> InfoOfLocation[2]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfLocation[2]); GoToXY(cords.X, ++cords.Y);// cin.ignore(); // Очищаем буфер ввода после cin
 	cout << "Введите код локации: ";
-	cin >> InfoOfLocation[3]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfLocation[3]); GoToXY(cords.X, ++cords.Y);// cin.ignore(); // Очищаем буфер ввода после cin
 
 	//Вернем готовый объект для добавления в вектор
 	return Location(InfoOfLocation[0], InfoOfLocation[1], InfoOfLocation[2], InfoOfLocation[3]);
@@ -265,20 +310,20 @@ void InsertLocationsToFile(vector<Location> locationsToFile) {
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
 		system("cls");
-		COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		//cout << "Строка успешно записана в файл." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		//cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		//cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");// Запись в файл произошла
 	}
 	else {
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
 	}
@@ -358,7 +403,7 @@ public:
 	void CoutAllInfo()
 	{
 
-		printf("Name: %-10s, Primary Damage: %-10s, Sale Date: %-10s, Auction Time: %-10s, VIN: %-10s, Lot: %-10s, Cost: %-10s, Link: %.10s%s\n", Name.c_str(), PrimaryDamage.c_str(), SaleDate.c_str(), AuctionStartTime.c_str(), Vin.c_str(), Lot.c_str(), BuyNowCost.c_str(), Link.c_str(), (Link.length() > 10) ? "..." : "");
+		printf("Имя: %-10s, Вид дефектов: %-10s, Дата продажи: %-10s, Время аукциона: %-10s, ВИН код: %-10s, Лот: %-10s, Цена: %-10s, Ссылка на сайт: %.10s%s\n", Name.c_str(), PrimaryDamage.c_str(), SaleDate.c_str(), AuctionStartTime.c_str(), Vin.c_str(), Lot.c_str(), BuyNowCost.c_str(), Link.c_str(), (Link.length() > 10) ? "..." : "");
 	}
 
 	//вывод инфы в продвинутом виде
@@ -369,14 +414,14 @@ public:
 			cords = CalculateTextPosition("Primary Damage: %s, PrimaryDamage.c_str()); ");
 		}
 		GoToXY(cords.X, cords.Y++);
-		printf("Name: %s\n", Name.c_str());		GoToXY(cords.X, cords.Y++);
-		printf("Primary Damage: %s\n", PrimaryDamage.c_str());		GoToXY(cords.X, cords.Y++);
-		printf("Sale Date: %s\n", SaleDate.c_str());		GoToXY(cords.X, cords.Y++);
-		printf("Auction Start Time: %s\n", AuctionStartTime.c_str());		GoToXY(cords.X, cords.Y++);
-		printf("Vin: %s\n", Vin.c_str());		GoToXY(cords.X, cords.Y++);
-		printf("Lot: %s\n", Lot.c_str());		GoToXY(cords.X, cords.Y++);
-		printf("Buy Now Cost: %s\n", BuyNowCost.c_str());		GoToXY(cords.X, cords.Y++);
-		printf("Link: %s\n", Link.c_str());		GoToXY(cords.X, cords.Y++);
+		printf("Имя: %s\n", Name.c_str());		GoToXY(cords.X, cords.Y++);
+		printf("Вид дефекто: %s\n", PrimaryDamage.c_str());		GoToXY(cords.X, cords.Y++);
+		printf("Дата продажи: %s\n", SaleDate.c_str());		GoToXY(cords.X, cords.Y++);
+		printf("Время начала аукциона: %s\n", AuctionStartTime.c_str());		GoToXY(cords.X, cords.Y++);
+		printf("ВИН код: %s\n", Vin.c_str());		GoToXY(cords.X, cords.Y++);
+		printf("Лот: %s\n", Lot.c_str());		GoToXY(cords.X, cords.Y++);
+		printf("Цена покупки сейчас: %s\n", BuyNowCost.c_str());		GoToXY(cords.X, cords.Y++);
+		printf("Ссылка: %s\n", Link.c_str());		GoToXY(cords.X, cords.Y++);
 
 	}
 
@@ -431,11 +476,11 @@ vector <Car> readCarsFromFile(const  string filename) {
 	}
 	else {//Не получилось
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");
 	}
 
@@ -453,21 +498,21 @@ Car UpdateCarsField() {
 	COORD cords = CalculateTextPosition("Введите цену покупки автомобиля (Buy noW)");
 	GoToXY(cords.X, ++cords.Y);
 	cout << "Введите название: ";
-	cin >> InfoOfCar[0]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfCar[0]); GoToXY(cords.X, ++cords.Y);
 	cout << "Введите вид ущерба: ";
-	cin >> InfoOfCar[1]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfCar[1]); GoToXY(cords.X, ++cords.Y);
 	cout << "Введите дату аукциона: ";
-	cin >> InfoOfCar[2]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfCar[2]); GoToXY(cords.X, ++cords.Y);
 	cout << "Введите время начала аукциона: ";
-	cin >> InfoOfCar[3]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfCar[3]); GoToXY(cords.X, ++cords.Y);
 	cout << "Введите вин номер автомобиля: ";
-	cin >> InfoOfCar[4]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfCar[4]); GoToXY(cords.X, ++cords.Y);
 	cout << "Введите номер лота авто: ";
-	cin >> InfoOfCar[5]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfCar[5]); GoToXY(cords.X, ++cords.Y);
 	cout << "Введите цену покупки автомобиля (Buy now) без знака $: ";
-	cin >> InfoOfCar[6]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfCar[6]); InfoOfCar[6] = "$" + InfoOfCar[6]; GoToXY(cords.X, ++cords.Y);
 	cout << "Введите ссылку на аукцион: ";
-	cin >> InfoOfCar[7]; GoToXY(cords.X, ++cords.Y);
+	getline(cin, InfoOfCar[7]); GoToXY(cords.X, ++cords.Y);
 
 	//Вернем готовый объект для добавления в вектор
 	return Car(InfoOfCar[0], InfoOfCar[1], InfoOfCar[2], InfoOfCar[3], InfoOfCar[4], InfoOfCar[5], InfoOfCar[6], InfoOfCar[7]);
@@ -493,17 +538,17 @@ void InsertCarsToFile(vector<Car> carsToFile, const string filename, string info
 		GoToXY(cords.X, cords.Y);
 		cout << "Строка успешно записана в файл." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");// Запись в файл произошла
 
 	}
 	else {
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
 
@@ -837,11 +882,11 @@ vector<User> readUsersFromFile(const  string filename) {
 	}
 	else {//Не получилось
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");
 
 	}
@@ -867,7 +912,8 @@ User UpdateUserField() {
 	while (true) {
 		ch = _getch(); // Считывание клавиши без ожидания нажатия Enter
 		if (ch == 27) {// Проверка на Esc
-			cout << endl << "Выход из входа." << endl;
+			GoToXY(cords.X, ++cords.Y);
+			cout << "Выход из входа." << endl;
 			system("cls");
 			InfoOfReport[0] = "";
 
@@ -1016,16 +1062,16 @@ void InsertUserToFile(vector<User> reportsToFile) {
 		GoToXY(cords.X, cords.Y);
 		cout << "Вы успешно зарегистрировались" << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");// Запись в файл произошла
 	}
 	else {
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
 
@@ -1049,22 +1095,22 @@ void InsertUserToFileFromAdmin(vector<User> reportsToFile) {
 	}
 	else {
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
 
 	}
 }
 //Вывод списка пользователей
-void OutputUsersAll(vector <User> reports, COORD& cords) {
+void OutputUsersAll(vector <User> users, COORD& cords) {
 	system("cls");
 	cords = CalculateTextPosition("1 Aretk artek2001 artek@gmail.com +375303333333");
-	int i = size(reports) / 2 * (-1);
-	for (User report : reports) {
+	int i = size(users) / 2 * (-1);
+	for (User report : users) {
 		tuple<int, string, string, string, string> reportsInfo = report.GetAllInfoAboutUser();
 		GoToXY(cords.X, cords.Y + i); i++;
 		cout << get<0>(reportsInfo) << " ";
@@ -1171,11 +1217,11 @@ vector<Admin> readAdminsFromFile(const  string filename) {
 	}
 	else {//Не получилось
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");
 
 	}
@@ -1350,16 +1396,16 @@ void InsertAdminToFile(vector<Admin> reportsToFile) {
 		GoToXY(cords.X, cords.Y);
 		cout << "Вы успешно зарегистрировались" << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");// Запись в файл произошла
 	}
 	else {
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
 
@@ -1466,48 +1512,52 @@ vector<PaidReport> readPaidReportsFromFile(const  string filename) {
 	}
 	else {//Не получилось
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");
 	}
 
 	return PaidReports;
 }
 //Метод для добавления поля в список запросов от админа
-PaidReport UpdatePaidReportFieldByAdmin() {
+PaidReport UpdatePaidReportFieldByAdmin(vector <User> users) {
 
+	COORD cords = CalculateTextPosition("1 Aretk artek2001 artek@gmail.com +375303333333");
+	OutputUsersAll(users, cords);
 	//Очистим консоль
-	system("cls");
 
 	//Массив для ввода значений
 	string* PaidReportsInfo = new string[10]; int Id;
 
+
+	GoToXY(cords.X, cords.Y++);
 	//Заполним массив
-	cout << "Введите id человека, который прислал запрос";
-	cin >> Id;
-	cout << "Введите тип (solved/un solved/problem)";
-	cin >> PaidReportsInfo[0];
-	cout << "Введите название автомобиля";
-	cin >> PaidReportsInfo[1];
-	cout << "Введите вид ущерба автомобиля";
-	cin >> PaidReportsInfo[2];
-	cout << "Введите дату аукциона автомобиля";
-	cin >> PaidReportsInfo[3];
-	cout << "Введите время начала аукциона автомобиля";
-	cin >> PaidReportsInfo[4];
-	cout << "Введите вин номер автомобиля";
-	cin >> PaidReportsInfo[5];
-	cout << "Введите номер лота авто";
-	cin >> PaidReportsInfo[6];
-	cout << "Введите цену покупки автомобиля (Buy now) без знака $";
-	cin >> PaidReportsInfo[7];
-	cout << "Введите ссылку на аукцион авто";
-	cin >> PaidReportsInfo[8];
-	cout << "Введите ответ от администратора";
-	cin >> PaidReportsInfo[9];
+	cout << "Введите id человека, который прислал запрос: ";
+	cin >> Id; GoToXY(cords.X, cords.Y++);
+	cout << "Введите тип (solved/un solved/problem): ";
+	getline(cin, PaidReportsInfo[0]); 	getline(cin, PaidReportsInfo[0]);
+	GoToXY(cords.X, cords.Y++);
+	cout << "Введите название автомобиля: ";
+	getline(cin, PaidReportsInfo[1]); GoToXY(cords.X, cords.Y++);
+	cout << "Введите вид ущерба автомобиля: ";
+	getline(cin, PaidReportsInfo[2]); GoToXY(cords.X, cords.Y++);
+	cout << "Введите дату аукциона автомобиля: ";
+	getline(cin, PaidReportsInfo[3]); GoToXY(cords.X, cords.Y++);
+	cout << "Введите время начала аукциона автомобиля: ";
+	getline(cin, PaidReportsInfo[4]); GoToXY(cords.X, cords.Y++);
+	cout << "Введите вин номер автомобиля: ";
+	getline(cin, PaidReportsInfo[5]); GoToXY(cords.X, cords.Y++);
+	cout << "Введите номер лота авто: ";
+	getline(cin, PaidReportsInfo[6]); GoToXY(cords.X, cords.Y++);
+	cout << "Введите цену покупки автомобиля (Buy now) без знака $: ";
+	getline(cin, PaidReportsInfo[7]); PaidReportsInfo[7] = "$" + PaidReportsInfo[7];  GoToXY(cords.X, cords.Y++);
+	cout << "Введите ссылку на аукцион авто: ";
+	getline(cin, PaidReportsInfo[8]); GoToXY(cords.X, cords.Y++);
+	cout << "Введите ответ от администратора: ";
+	getline(cin, PaidReportsInfo[9]); GoToXY(cords.X, cords.Y++);
 
 	//Вернем готовый объект для добавления в вектор
 	return PaidReport(Id, PaidReportsInfo[0], Car(PaidReportsInfo[1], PaidReportsInfo[2], PaidReportsInfo[3], PaidReportsInfo[4], PaidReportsInfo[5], PaidReportsInfo[6], PaidReportsInfo[7], PaidReportsInfo[8]), PaidReportsInfo[9]);
@@ -1540,20 +1590,20 @@ void InsertPaidReportsToFile(vector<PaidReport> reportsToFile) {
 		OutputToFile << s; //Вводим в файл
 		OutputToFile.close();//Закроем файл
 		system("cls");
-		//COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу чтобы продолжить\n");
+		//COORD cords = CalculateTextPosition("Строка успешно записана в файл.\n Нажмите любую клавишу, чтобы продолжить\n");
 		//GoToXY(cords.X, cords.Y);
 		//cout << "Строка успешно записана в файл." << endl;
 		//GoToXY(cords.X - 4, cords.Y + 2);
-		//cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		//cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		//system("cls");// Запись в файл произошла
 	}
 	else {
 		system("cls");
-		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу чтобы продолжить\n");
+		COORD cords = CalculateTextPosition("Ошибка открытия файла для записи.\n Нажмите любую клавишу, чтобы продолжить\n");
 		GoToXY(cords.X, cords.Y);
 		cout << "Ошибка открытия файла для записи." << endl;
 		GoToXY(cords.X - 4, cords.Y + 2);
-		cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+		cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 		system("cls");//Возникла ошибка при открытии файла
 
 
@@ -1930,7 +1980,7 @@ void UserTest() {
 				GoToXY(cords.X, ++cords.Y);
 				cout << "Такой клавиши нет";
 				GoToXY(cords.X - 8, ++cords.Y);
-				cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+				cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 				system("cls");
 				break;
 			}
@@ -1953,7 +2003,7 @@ void UserTest() {
 					GoToXY(cords.X, cords.Y++);
 					cout << "Выход.";
 					GoToXY(cords.X - 15, cords.Y + 2);
-					cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+					cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 					State = Meny1;
 					goto Start;
 
@@ -2097,11 +2147,11 @@ void UserTest() {
 				if (State == Meny2)
 				{
 				St2:
-					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+					cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 					GoToXY(cords.X, ++cords.Y);
 					cout << "Выберите пункт меню:";
 					GoToXY(cords.X, ++cords.Y);
-					cout << "1.Посмотреть контактные данные";
+					cout << "1.Посмотреть  информацию об аккаунте";
 					GoToXY(cords.X, ++cords.Y);
 					cout << "2.Вывеcти список локаций";
 					GoToXY(cords.X, ++cords.Y);
@@ -2133,7 +2183,7 @@ void UserTest() {
 						break;
 					case '5':
 						State = Meny1;
-						system("cls");		
+						system("cls");
 						DisplayAmericanFlag();
 						COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 						GoToXY(cords.X, ++cords.Y);
@@ -2152,10 +2202,12 @@ void UserTest() {
 						goto Start;
 						break;
 					default:
-						GoToXY(cords.X, ++cords.Y);
+						//COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
+						//cords.Y += 9;
+						GoToXY(91, 37);
 						cout << "Такой клавиши нет";
-						GoToXY(cords.X - 8, ++cords.Y);
-						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						GoToXY(91 - 8, 38);
+						cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 						system("cls");
 						goto Start2;
 					}
@@ -2192,7 +2244,7 @@ void UserTest() {
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Такой клавиши нет";
 						GoToXY(cords.X - 8, ++cords.Y);
-						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 						system("cls");
 						goto Start2;
 					}
@@ -2208,7 +2260,7 @@ void UserTest() {
 
 					calculateShippingCost();
 					GoToXY(cords.X - 6, cords.Y + 5);
-					cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+					cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 					State = Meny2;
 					goto Start2;
 				}
@@ -2217,7 +2269,7 @@ void UserTest() {
 					COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 					OutputPaidReportsById(reports, cords, persondata.GetId());
 					GoToXY(cords.X, ++cords.Y);
-					cout << "Нажмите любую клавишу чтобы продолжить\n";
+					cout << "Нажмите любую клавишу, чтобы продолжить\n";
 					char t = _getch();
 					State = Meny2;
 					goto Start2;
@@ -2260,7 +2312,7 @@ void UserTest() {
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Такой клавиши нет";
 						GoToXY(cords.X - 8, ++cords.Y);
-						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 						system("cls");
 						State = Locations;
 					}
@@ -2321,7 +2373,7 @@ void UserTest() {
 								GoToXY(cords.X, ++cords.Y);
 								cout << "Такой клавиши нет";
 								GoToXY(cords.X - 8, ++cords.Y);
-								cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+								cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 								system("cls");
 								goto Start3;
 							}
@@ -2346,7 +2398,7 @@ void UserTest() {
 							/*GoToXY(position.X, position.Y);
 							cout << Info;
 							GoToXY(cords.X, cords.Y++);*/
-							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 							State = Meny4;
 							goto Start3;
 						}
@@ -2363,6 +2415,8 @@ void UserTest() {
 							cout << "3.Поиск автомобиля по критерию";
 							GoToXY(cords.X, ++cords.Y);
 							cout << "4.Выйти в меню локации";
+							GoToXY(cords.X, ++cords.Y);
+							cout << "5.Выйти в меню пользователя";
 							GoToXY(cords.X, ++cords.Y);
 							char t = _getch(); cout << t;
 							switch (t)
@@ -2383,11 +2437,15 @@ void UserTest() {
 								State = Meny4;
 								goto Start3;
 								break;
+							case '5':
+								State = Meny2;
+								goto Start;
+								break;
 							default:
 								GoToXY(cords.X, ++cords.Y);
 								cout << "Такой клавиши нет";
 								GoToXY(cords.X - 8, ++cords.Y);
-								cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+								cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 								system("cls");
 								goto Start3;
 							}
@@ -2427,7 +2485,7 @@ void UserTest() {
 										GoToXY(cords.X, ++cords.Y);
 										cout << "Такой клавиши нет";
 										GoToXY(cords.X - 8, ++cords.Y);
-										cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+										cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 										system("cls");
 										goto Start4;
 									}
@@ -2440,7 +2498,7 @@ void UserTest() {
 									GoToXY(cords.X, cords.Y++);
 									cout << "Спасибо за ваш запрос, администратор в ближайшее время свяжется с вами по вашему телефону или по email.";
 									GoToXY(cords.X + 25, ++cords.Y);
-									cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+									cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 									system("cls");
 									State = Meny5;
 									goto Start4;
@@ -2449,7 +2507,7 @@ void UserTest() {
 								if (State == CarInfo) {
 									COORD cords;
 									OutputCarInfo(ChoosenCar, cords);
-									cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+									cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 									system("cls");
 									State = Meny5;
 
@@ -2490,14 +2548,14 @@ void UserTest() {
 										break;
 									case '2':
 										GoToXY(cords.X, ++cords.Y);
-										cout << "Введите лот";
+										cout << "Введите вин код";
 										GoToXY(cords.X, ++cords.Y);
 										cin >> str;
 										FindCars = CarByVin(cars, str);
 										break;
 									case '3':
 										GoToXY(cords.X, ++cords.Y);
-										cout << "Введите лот";
+										cout << "Введите цену (buy now)";
 										GoToXY(cords.X, ++cords.Y);
 										cin >> str;
 										FindCars = CarByBuyNow(cars, str);
@@ -2509,7 +2567,7 @@ void UserTest() {
 										GoToXY(cords.X, ++cords.Y);
 										cout << "Такой клавиши нет";
 										GoToXY(cords.X - 8, ++cords.Y);
-										cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+										cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 										system("cls");
 									}
 									if (size(FindCars) == 1)
@@ -2521,7 +2579,7 @@ void UserTest() {
 										GoToXY(cords.X, cords.Y);
 										cout << "По вашему запросу был найден 1 автомобиль";
 										GoToXY(cords.X - 8, ++cords.Y);
-										cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+										cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 										system("cls");
 										State = Meny5;
 										goto Start4;
@@ -2537,7 +2595,7 @@ void UserTest() {
 										cout << "По вашему запросу было найдено " << size(FindCars) << " автомобилей";
 										cords = OutputCarsInfo(FindCars, cords);
 										GoToXY(cords.X - 8, ++cords.Y);
-										cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+										cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 										//system("cls");
 									}
 
@@ -2554,7 +2612,7 @@ void UserTest() {
 									GoToXY(cords.X, ++cords.Y);
 									cout << "2.по дате продажи";
 									GoToXY(cords.X, ++cords.Y);
-									cout << "3.по виду урона";
+									cout << "3.по виду дефектов";
 									GoToXY(cords.X, ++cords.Y);
 									cout << "4.Выйти в выбора автомобиля без изменения сортировки";
 									GoToXY(cords.X, ++cords.Y);
@@ -2578,7 +2636,7 @@ void UserTest() {
 										GoToXY(cords.X, ++cords.Y);
 										cout << "Такой клавиши нет";
 										GoToXY(cords.X - 8, ++cords.Y);
-										cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+										cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 										system("cls");
 									}
 									State = Cars;
@@ -2592,7 +2650,7 @@ void UserTest() {
 						}
 
 						GoToXY(cords.X, cords.Y++);
-						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 						system("cls");
 						goto Start2;
 					}
@@ -2775,7 +2833,7 @@ void AdminTest() {
 					GoToXY(cords.X, cords.Y++);
 					cout << "Выход.";
 					GoToXY(cords.X - 15, cords.Y + 2);
-					cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+					cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 					return;
 
 				}
@@ -2937,7 +2995,7 @@ void AdminTest() {
 						goto Start2;
 						break;
 					case '5':
-						State = Meny1;
+						//State = Meny1;
 						system("cls");
 						DisplayAmericanFlag();
 						cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
@@ -2946,7 +3004,7 @@ void AdminTest() {
 						cin >> rr;
 						if (rr == "да" || rr == "Да" || rr == "yes" || rr == "Yes")
 						{
-							goto Start;
+							return;
 						}
 						else
 						{
@@ -2960,7 +3018,7 @@ void AdminTest() {
 						GoToXY(cords.X, cords.Y++);
 						cout << "Такой клавиши нет";
 						GoToXY(cords.X - 8, cords.Y++);
-						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 						system("cls");
 						goto Start2;
 					}
@@ -2977,7 +3035,7 @@ void AdminTest() {
 					GoToXY(cords.X, ++cords.Y);
 					cout << "3.Удалить пользователя";
 					GoToXY(cords.X, ++cords.Y);
-					cout << "4.Выйти в меню выбора работы";
+					cout << "4.Выйти в меню администратора";
 					GoToXY(cords.X, ++cords.Y);
 					string rr;
 					char t = _getch(); cout << t;
@@ -3005,7 +3063,7 @@ void AdminTest() {
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Такой клавиши нет";
 						GoToXY(cords.X - 8, ++cords.Y);
-						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 						system("cls");
 						goto Start;
 					}
@@ -3035,7 +3093,7 @@ void AdminTest() {
 
 								InsertUserToFileFromAdmin(users);
 							}
-							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 							system("cls");
 							State = Users;
 							goto Start2;
@@ -3087,7 +3145,7 @@ void AdminTest() {
 					GoToXY(cords.X, ++cords.Y);
 					cout << "3.Удалить локацию";
 					GoToXY(cords.X, ++cords.Y);
-					cout << "4.Выйти в меню выбора работы";
+					cout << "4.Выйти в меню администратора";
 					GoToXY(cords.X, ++cords.Y);
 					string rr;
 					char t = _getch(); cout << t;
@@ -3115,7 +3173,7 @@ void AdminTest() {
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Такой клавиши нет";
 						GoToXY(cords.X - 8, ++cords.Y);
-						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 						system("cls");
 						goto Start;
 					}
@@ -3147,7 +3205,7 @@ void AdminTest() {
 							}
 							GoToXY(cords.X, ++cords.Y);
 
-							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 							system("cls");
 							State = Locations;
 							goto Start2;
@@ -3209,7 +3267,7 @@ void AdminTest() {
 					GoToXY(cords.X, ++cords.Y);
 					cout << "3.Удалить автомобиль";
 					GoToXY(cords.X, ++cords.Y);
-					cout << "4.Выйти в меню выбора работы";
+					cout << "4.Выйти в меню администратора";
 					GoToXY(cords.X, ++cords.Y);
 					string rr;
 					char t = _getch(); cout << t;
@@ -3237,7 +3295,7 @@ void AdminTest() {
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Такой клавиши нет";
 						GoToXY(cords.X - 8, ++cords.Y);
-						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 						system("cls");
 						goto Start2;
 					}
@@ -3265,7 +3323,7 @@ void AdminTest() {
 							/*GoToXY(position.X, position.Y);
 							cout << Info;
 							GoToXY(cords.X, cords.Y++);*/
-							//cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							//cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 
 							//cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 							GoToXY(cords.X, ++cords.Y);
@@ -3289,7 +3347,7 @@ void AdminTest() {
 							}
 							/*GoToXY(cords.X, ++cords.Y);
 
-							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 							system("cls");*/
 							State = Cars;
 							goto Start3C;
@@ -3332,7 +3390,7 @@ void AdminTest() {
 						GoToXY(cords.X, ++cords.Y);
 						cout << "3.Удалить пользователя";
 						GoToXY(cords.X, ++cords.Y);
-						cout << "4.Выйти в меню выбора работы";
+						cout << "4.Выйти в меню администратора";
 						GoToXY(cords.X, ++cords.Y);
 						string rr;
 						char t = _getch(); cout << t;
@@ -3360,7 +3418,7 @@ void AdminTest() {
 							GoToXY(cords.X, ++cords.Y);
 							cout << "Такой клавиши нет";
 							GoToXY(cords.X - 8, ++cords.Y);
-							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 							system("cls");
 							goto Start;
 						}
@@ -3392,7 +3450,7 @@ void AdminTest() {
 								}
 								GoToXY(cords.X, ++cords.Y);
 
-								cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+								cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 								system("cls");
 								State = Locations;
 								goto Start2;
@@ -3439,7 +3497,7 @@ void AdminTest() {
 					GoToXY(cords.X, ++cords.Y);
 					cout << "4.Добавить комментарий к запросу";
 					GoToXY(cords.X, ++cords.Y);
-					cout << "5.Выйти в меню выбора работы";
+					cout << "5.Выйти в меню администратора";
 					GoToXY(cords.X, ++cords.Y);
 					char t = _getch(); cout << t;
 					switch (t)
@@ -3470,7 +3528,7 @@ void AdminTest() {
 						GoToXY(cords.X, ++cords.Y);
 						cout << "Такой клавиши нет";
 						GoToXY(cords.X - 8, ++cords.Y);
-						cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+						cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 						system("cls");
 						goto Start2;
 					}
@@ -3493,7 +3551,7 @@ void AdminTest() {
 						{
 							COORD cords = CalculateTextPosition("Нажмите любую клавишу для продолжения");
 							GoToXY(cords.X, ++cords.Y);
-							PaidReport newreport = UpdatePaidReportFieldByAdmin();
+							PaidReport newreport = UpdatePaidReportFieldByAdmin(users);
 							if (newreport.GetSolvedOrNot() != "")
 							{
 								reports.push_back(newreport);
@@ -3502,7 +3560,7 @@ void AdminTest() {
 							}
 							GoToXY(cords.X, ++cords.Y);
 
-							cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+							cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 							system("cls");
 							State = PaidReports;
 							goto Start2;
@@ -3561,7 +3619,7 @@ void AdminTest() {
 							cout << "- - переписать ( в разработке )";
 							GoToXY(cords.X, ++cords.Y);
 							string CommAdd;
-							 t = _getch(); cout << t;
+							t = _getch(); cout << t;
 
 							switch (t)
 							{
@@ -3578,13 +3636,13 @@ void AdminTest() {
 								cin >> CommAdd;
 								choosenreport.AddComment(CommAdd);
 
-								if (CommAdd!="")
+								if (CommAdd != "")
 								{
 									reports[id].SetComment(choosenreport.GetComment());
 								}
 
 								GoToXY(cords.X - 8, ++cords.Y);
-								cout << "Нажмите любую клавишу чтобы продолжить\n";   t = _getch();
+								cout << "Нажмите любую клавишу, чтобы продолжить\n";   t = _getch();
 								system("cls");
 								break;
 							case '2':
@@ -3606,7 +3664,7 @@ void AdminTest() {
 								}
 
 								GoToXY(cords.X - 8, ++cords.Y);
-								cout << "Нажмите любую клавишу чтобы продолжить\n";   t = _getch();
+								cout << "Нажмите любую клавишу, чтобы продолжить\n";   t = _getch();
 								system("cls");
 								break;
 							case '3':
@@ -3618,7 +3676,7 @@ void AdminTest() {
 								GoToXY(cords.X, ++cords.Y);
 								cout << "Такой клавиши нет";
 								GoToXY(cords.X - 8, ++cords.Y);
-								cout << "Нажмите любую клавишу чтобы продолжить\n";   t = _getch();
+								cout << "Нажмите любую клавишу, чтобы продолжить\n";   t = _getch();
 								system("cls");
 								State = CommentPaidReport;
 								goto Start3P;
@@ -3648,7 +3706,7 @@ void UserOrAdmin() {
 		GoToXY(cords.X, cords.Y);
 		cout << "Выберите, каким способом войти" << endl;
 		GoToXY(cords.X, ++cords.Y);
-		cout << "1.Как Пользователь" << endl;
+		cout << "1.Как пользователь" << endl;
 		GoToXY(cords.X, ++cords.Y);
 		cout << "2.Как админ" << endl;
 		GoToXY(cords.X, ++cords.Y);
@@ -3667,7 +3725,7 @@ void UserOrAdmin() {
 			GoToXY(cords.X, ++cords.Y);
 			cout << "Такой клавиши нет";
 			GoToXY(cords.X - 8, ++cords.Y);
-			cout << "Нажмите любую клавишу чтобы продолжить\n";  char t = _getch();
+			cout << "Нажмите любую клавишу, чтобы продолжить\n";  char t = _getch();
 			system("cls");
 			break;
 		}

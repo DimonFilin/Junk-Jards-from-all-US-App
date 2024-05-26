@@ -4,4 +4,7 @@
 4;Junsolved;2015 Tesla Model S;Front End;Tuesday, April 16, 2024;10:00 AM EDT;5YJSA1E23FF******;377512345;$5,500;https://abetter.bid/en/1037750603-2015-tesla-model_s;;
 4;unsolved;2015 Tesla Model S;Front End;Tuesday, April 16, 2024;10:00 AM EDT;5YJSA1E23FF******;377512345;$5,500;https://abetter.bid/en/1037750603-2015-tesla-model_s;;
 4;unsolved;Name;Primary damage; Sale date; Auction Starts;Vin#;Lot#;Buy now;Link;;
-5;unsolved;2015 Tesla Model S;Front End;Tuesday, April 16, 2024;10:00 AM EDT;5YJSA1E23FF******;377512345;$5,500;https://abetter.bid/en/1037750603-2015-tesla-model_s;;1
+5;unsolved;2015 Tesla Model S;Front End;Tuesday, April 16, 2024;10:00 AM EDT;5YJSA1E23FF******;377512345;$5,500;https://abetter.bid/en/1037750603-2015-tesla-model_s;;
+123;123.;123;123;123;13;13;;$1;1;;
+4;unsolved;MG 1976;Front End;05-27-2024;4:00 pm;GHN5UG389522G;50937482;$4800;https://usa-auto-online.com/en/auction/50937482-MG-ALL%20MODELS-1976-ORANGE-VIN_GHN5UG389522G;;no answer yet
+4;unsolved;2024 TOYOTA CAMRY SE NIGHT SHADE;Clean title;Wed. May 29, 2024;07:00 PM MSK;4T1G11AK9RU******;55336604;$26,000;https://www.copart.com/lot/55336604/clean-title-2024-toyota-camry-se-night-shade-fl-west-palm-beach;;no answer yet
