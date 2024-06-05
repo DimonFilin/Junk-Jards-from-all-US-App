@@ -1925,7 +1925,7 @@ vector<Admin> admins;
 Car ChoosenCar;
 COORD cordsempty;
 
-void UserTest() {
+void UserMain() {
 
 
 	States State;
@@ -2802,7 +2802,7 @@ enum AdminStates {
 
 
 
-void AdminTest() {
+void AdminMain() {
 	AdminStates State;
 	State = Meny1;
 	string login = "", password = "";
@@ -3714,11 +3714,11 @@ void UserOrAdmin() {
 		switch (t)
 		{
 		case 1:
-			UserTest();
+			UserMain();
 			goto Start;
 			break;
 		case 2:
-			AdminTest();
+			AdminMain();
 			goto Start;
 			break;
 		default:
